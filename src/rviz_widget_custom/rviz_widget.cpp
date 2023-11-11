@@ -9,7 +9,6 @@ RVIZ_widget::RVIZ_widget(QWidget *parent)
     _rvizBase = new RVIZ_widget_base();
     ui->rv_frame->addWidget(_rvizBase);
     _rvizBase->initialize("");
-    
 }
 
 RVIZ_widget::~RVIZ_widget()
@@ -20,5 +19,10 @@ RVIZ_widget::~RVIZ_widget()
 
 void RVIZ_widget::on_addPanelButton_pressed()
 {
-_rvizBase->openNewPanelDialog();
+    _rvizBase->openNewPanelDialog();
+}
+
+void RVIZ_widget::on_saveButton_pressed()
+{
+    _rvizBase->saveConfig();
 }

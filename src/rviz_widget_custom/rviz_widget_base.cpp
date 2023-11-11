@@ -62,7 +62,6 @@ void RVIZ_widget_base::initialize(const QString &display_config_file)
     else
     {
         this->loadConfig(defoult_config_file);
-        
     }
     centralLayout->addWidget(hide_left_button, 0);
     centralLayout->addWidget(_rvizPanel, 1);
@@ -93,18 +92,40 @@ void RVIZ_widget_base::openNewPanelDialog()
     _rvizManager->startUpdate();
 }
 
+void RVIZ_widget_base::saveConfig()
+{
+
+}
+
 void RVIZ_widget_base::loadConfig(const QString &path)
 {
-    std::string fpath = path.toStdString();
+    this->display_config_file = path;
 
     YamlConfigReader reader;
     Config config;
 
     reader.readFile(config, path);
     // load from config
-    qDebug()<<path;
+    qDebug() << path;
     _rvizManager->load(config.mapGetChild("Visualization Manager"));
     this->loadPanels(config.mapGetChild("Panels"));
+config = config.mapGetChild("Window Geometry");
+QString main_window_config;
+   if( config.mapGetString( "QMainWindow State", &main_window_config ))
+   {
+     restoreState( QByteArray::fromHex( qPrintable( main_window_config )));
+   }
+//     QList<PanelDockWidget *> dock_widgets = findChildren<PanelDockWidget *>();
+ 
+//    for ( QList<PanelDockWidget *>::iterator it=dock_widgets.begin(); it!=dock_widgets.end(); it++ )
+//    {
+//      Config itConfig = config.mapGetChild((*it)->windowTitle());
+ 
+//      if (itConfig.isValid())
+//      {
+//        (*it)->load(itConfig);
+//      }
+//    }
 }
 
 void RVIZ_widget_base::onDockPanelVisiblityChange(bool state)
@@ -138,6 +159,7 @@ PanelDockWidget *RVIZ_widget_base::addPane(const QString &name, QWidget *pane, Q
     dock->setContentWidget(pane);
     dock->setFloating(floating);
     dock->setObjectName(name);
+    
     addDockWidget(area, dock);
 
     connect(dock, &PanelDockWidget::visibilityChanged, this, &RVIZ_widget_base::onDockPanelVisiblityChange);
@@ -150,6 +172,7 @@ QDockWidget *RVIZ_widget_base::addPanelByName(const QString &name, const QString
 {
     QString error;
     Panel *panel = _panelFactory->make(class_id, &error);
+    
     if (!panel)
     {
         panel = new FailedPanel(class_id, error);
@@ -180,7 +203,7 @@ void RVIZ_widget_base::loadPanels(const Config &config)
         QString classId, name;
         if (panelConfig.mapGetString("Class", &classId) &&
             panelConfig.mapGetString("Name", &name))
-        {            
+        {
             QDockWidget *dock = this->addPanelByName(name, classId);
             if (dock)
             {

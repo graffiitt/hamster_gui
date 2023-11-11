@@ -50,6 +50,7 @@ public:
     void initialize(const QString &display_config_file);
     void openNewPanelDialog();
     void loadConfig(const QString &path);
+    void saveConfig();
 
 signals:
     void statusUpdate(const QString &message);
@@ -88,7 +89,7 @@ private:
     QDockWidget *addPanelByName(const QString &name,
                                 const QString &class_id,
                                 Qt::DockWidgetArea area = Qt::LeftDockWidgetArea,
-                                bool floating = false);
+                                bool floating = true);
     void loadPanels(const Config& config);
     void hideDockImpl(Qt::DockWidgetArea area, bool hide);
     void hideLeftDock(bool hide);

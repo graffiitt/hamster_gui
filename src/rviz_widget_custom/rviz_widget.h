@@ -21,6 +21,7 @@ public:
 
 private slots:
     void on_addPanelButton_pressed();
+    void on_saveButton_pressed();
 
 private:
     Ui::RVIZ_widget *ui;
