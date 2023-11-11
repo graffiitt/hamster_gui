@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>314</width>
-    <height>52</height>
+    <height>53</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
@@ -21,22 +27,32 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>3</number>
+    <number>1</number>
    </property>
    <property name="topMargin">
-    <number>1</number>
-   </property>
-   <property name="rightMargin">
-    <number>3</number>
-   </property>
-   <property name="bottomMargin">
-    <number>1</number>
-   </property>
-   <property name="verticalSpacing">
     <number>0</number>
    </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="horizontalSpacing">
+    <number>6</number>
+   </property>
+   <property name="verticalSpacing">
+    <number>1</number>
+   </property>
    <item row="1" column="4">
-    <widget class="QSpinBox" name="q_spinBox"/>
+    <widget class="QSpinBox" name="q_spinBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="1" column="3">
     <widget class="QLabel" name="label_4">
@@ -55,7 +71,14 @@
     </widget>
    </item>
    <item row="1" column="2">
-    <widget class="QSpinBox" name="y_spinBox"/>
+    <widget class="QSpinBox" name="y_spinBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="0" column="3">
     <widget class="QLabel" name="label_3">
@@ -74,7 +97,14 @@
     </widget>
    </item>
    <item row="0" column="2">
-    <widget class="QSpinBox" name="x_spinBox"/>
+    <widget class="QSpinBox" name="x_spinBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="1" column="1">
     <widget class="QLabel" name="label_2">
@@ -93,7 +123,14 @@
     </widget>
    </item>
    <item row="0" column="4">
-    <widget class="QSpinBox" name="z_spinBox"/>
+    <widget class="QSpinBox" name="z_spinBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
    <item row="0" column="1">
     <widget class="QLabel" name="label">
@@ -112,7 +149,26 @@
     </widget>
    </item>
    <item row="0" column="0" rowspan="2">
-    <widget class="QLineEdit" name="nameEdit"/>
+    <widget class="QLineEdit" name="nameEdit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>80</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>12345678</string>
+     </property>
+     <property name="maxLength">
+      <number>8</number>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
