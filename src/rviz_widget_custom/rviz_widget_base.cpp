@@ -11,7 +11,7 @@ RVIZ_widget_base::RVIZ_widget_base(QWidget *parent)
 
     // this->initialize("");
     pakagePath = ros::package::getPath("hamster_gui");
-    defoult_config_file = QString::fromStdString(pakagePath + "/config/default.rviz"); 
+    defoult_config_file = QString::fromStdString(pakagePath + "/config/default.rviz");
 }
 
 RVIZ_widget_base::~RVIZ_widget_base()
@@ -55,16 +55,15 @@ void RVIZ_widget_base::initialize(const QString &display_config_file)
     _rvizPanel->initialize(_rvizManager->getSceneManager(), _rvizManager);
     _rvizManager->initialize();
 
-if(display_config_file == "")
-{
-    this->loadConfig(display_config_file);
-}
-else
-{
-    this->loadConfig(defoult_config_file);
-}
-
-
+    if (display_config_file != "")
+    {
+        this->loadConfig(display_config_file);
+    }
+    else
+    {
+        this->loadConfig(defoult_config_file);
+        
+    }
     centralLayout->addWidget(hide_left_button, 0);
     centralLayout->addWidget(_rvizPanel, 1);
     centralWidget->setLayout(centralLayout);
@@ -98,6 +97,14 @@ void RVIZ_widget_base::loadConfig(const QString &path)
 {
     std::string fpath = path.toStdString();
 
+    YamlConfigReader reader;
+    Config config;
+
+    reader.readFile(config, path);
+    // load from config
+    qDebug()<<path;
+    _rvizManager->load(config.mapGetChild("Visualization Manager"));
+    this->loadPanels(config.mapGetChild("Panels"));
 }
 
 void RVIZ_widget_base::onDockPanelVisiblityChange(bool state)
@@ -156,6 +163,35 @@ QDockWidget *RVIZ_widget_base::addPanelByName(const QString &name, const QString
     record.panel->initialize(_rvizManager);
     record.dock->setIcon(_panelFactory->getIcon(class_id));
     return record.dock;
+}
+
+void RVIZ_widget_base::loadPanels(const Config &config)
+{
+    for (int i = 0; i < _customPanels.size(); i++)
+    {
+        delete _customPanels[i].dock;
+    }
+    _customPanels.clear();
+
+    int numPanels = config.listLength();
+    for (int i = 0; i < numPanels; i++)
+    {
+        Config panelConfig = config.listChildAt(i);
+        QString classId, name;
+        if (panelConfig.mapGetString("Class", &classId) &&
+            panelConfig.mapGetString("Name", &name))
+        {            
+            QDockWidget *dock = this->addPanelByName(name, classId);
+            if (dock)
+            {
+                Panel *panel = qobject_cast<Panel *>(dock->widget());
+                if (panel)
+                {
+                    panel->load(panelConfig);
+                }
+            }
+        }
+    }
 }
 
 void RVIZ_widget_base::hideDockImpl(Qt::DockWidgetArea area, bool hide)

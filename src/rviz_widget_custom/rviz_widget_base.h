@@ -3,6 +3,7 @@
 
 #include <fstream>
 
+#include <QDebug>
 #include <QMainWindow>
 #include <QDockWidget>
 #include <QHBoxLayout>
@@ -26,6 +27,8 @@
 #include <rviz/visualization_manager.h>
 #include <rviz/window_manager_interface.h>
 #include <rviz/panel_dock_widget.h>
+#include <rviz/yaml_config_reader.h>
+#include <rviz/yaml_config_writer.h>
 
 namespace fs = boost::filesystem;
 using namespace rviz;
@@ -73,7 +76,7 @@ private:
         PanelDockWidget *dock;
         QString name;
         QString classId;
-        QAction *deleteAction;
+     //   QAction *deleteAction;
     };
     QList<PanelRecord> _customPanels;
 
@@ -86,6 +89,7 @@ private:
                                 const QString &class_id,
                                 Qt::DockWidgetArea area = Qt::LeftDockWidgetArea,
                                 bool floating = false);
+    void loadPanels(const Config& config);
     void hideDockImpl(Qt::DockWidgetArea area, bool hide);
     void hideLeftDock(bool hide);
 };
