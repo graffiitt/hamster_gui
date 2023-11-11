@@ -1,0 +1,53 @@
+#ifndef IEXECUTOR_H
+#define IEXECUTOR_H
+
+#include <QThread>
+#include <QTime>
+#include <QCoreApplication>
+
+#include "../JSONmodule/jsonmodule.h"
+#include "../RegisterWidget/registerdto.h"
+
+
+
+class IExecutor : public QThread
+{
+    Q_OBJECT
+public:
+    IExecutor();
+    ~IExecutor();
+
+    void loadProgramm(QString pathFolder, QString ProgName);
+
+private:
+    Programm programm;
+    JSONmodule *jsonLoad;
+    Safety *safety;
+    RegisterDTO *regDTO;
+
+    int _currentLine;
+    bool stepMode, stepTrig, errorState;
+    QString pathFolder;
+    QList<QString> listProgram;
+    QList<int> lineProgramm;
+
+    virtual void run() override;
+    void execCall(QJsonObject obj);
+    void execMath(QJsonObject obj);
+    int getNumber(int num, QJsonObject obj);
+    void execIf(QJsonObject obj);
+    void execJump(QJsonObject obj);
+    void execPoint(QJsonObject obj);
+    void execWait(QJsonObject obj);
+
+
+private slots:
+    void errorSlot(bool state);
+    void changeMode(bool stepMode);
+
+signals:
+    void setMode(bool StepMode);
+    void updateModel(Programm programm);
+};
+
+#endif // IEXECUTOR_H
