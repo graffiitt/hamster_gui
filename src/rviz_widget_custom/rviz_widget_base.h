@@ -50,6 +50,7 @@ public:
     void initialize(const QString &display_config_file);
     void openNewPanelDialog();
     void loadConfig(const QString &path);
+    void saveConfig();
 
 signals:
     void statusUpdate(const QString &message);
@@ -76,10 +77,11 @@ private:
         PanelDockWidget *dock;
         QString name;
         QString classId;
-     //   QAction *deleteAction;
+        //   QAction *deleteAction;
     };
     QList<PanelRecord> _customPanels;
 
+    virtual void save(Config config);
     virtual QWidget *getParentWindow();
     virtual PanelDockWidget *addPane(const QString &name,
                                      QWidget *pane,
@@ -88,8 +90,9 @@ private:
     QDockWidget *addPanelByName(const QString &name,
                                 const QString &class_id,
                                 Qt::DockWidgetArea area = Qt::LeftDockWidgetArea,
-                                bool floating = false);
-    void loadPanels(const Config& config);
+                                bool floating = true);
+    void loadPanels(const Config &config);
+    void savePanels(Config config);
     void hideDockImpl(Qt::DockWidgetArea area, bool hide);
     void hideLeftDock(bool hide);
 };
