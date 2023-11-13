@@ -12,6 +12,7 @@ RVIZ_widget_base::RVIZ_widget_base(QWidget *parent)
     // this->initialize("");
     pakagePath = ros::package::getPath("hamster_gui");
     defoult_config_file = QString::fromStdString(pakagePath + "/config/default.rviz");
+    safety = Safety::getInstance();
 }
 
 RVIZ_widget_base::~RVIZ_widget_base()
@@ -102,6 +103,7 @@ void RVIZ_widget_base::saveConfig()
     if (writer.error())
     {
         ROS_ERROR("%s", qPrintable(writer.errorMessage()));
+        safety->setError(writer.errorMessage());
     }
 }
 
