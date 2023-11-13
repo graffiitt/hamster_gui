@@ -30,6 +30,8 @@
 #include <rviz/yaml_config_reader.h>
 #include <rviz/yaml_config_writer.h>
 
+#include "../stateWidget/safety.h"
+
 namespace fs = boost::filesystem;
 using namespace rviz;
 
@@ -70,6 +72,7 @@ private:
     QString defoult_config_file;
     QString display_config_file;
     std::string pakagePath;
+    Safety *safety;
 
     struct PanelRecord
     {
