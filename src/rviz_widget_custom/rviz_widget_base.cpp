@@ -94,7 +94,15 @@ void RVIZ_widget_base::openNewPanelDialog()
 
 void RVIZ_widget_base::saveConfig()
 {
+    Config config;
+    save(config);
 
+    YamlConfigWriter writer;
+    writer.writeFile(config, display_config_file);
+    if (writer.error())
+    {
+        ROS_ERROR("%s", qPrintable(writer.errorMessage()));
+    }
 }
 
 void RVIZ_widget_base::loadConfig(const QString &path)
@@ -106,26 +114,14 @@ void RVIZ_widget_base::loadConfig(const QString &path)
 
     reader.readFile(config, path);
     // load from config
-    qDebug() << path;
     _rvizManager->load(config.mapGetChild("Visualization Manager"));
     this->loadPanels(config.mapGetChild("Panels"));
-config = config.mapGetChild("Window Geometry");
-QString main_window_config;
-   if( config.mapGetString( "QMainWindow State", &main_window_config ))
-   {
-     restoreState( QByteArray::fromHex( qPrintable( main_window_config )));
-   }
-//     QList<PanelDockWidget *> dock_widgets = findChildren<PanelDockWidget *>();
- 
-//    for ( QList<PanelDockWidget *>::iterator it=dock_widgets.begin(); it!=dock_widgets.end(); it++ )
-//    {
-//      Config itConfig = config.mapGetChild((*it)->windowTitle());
- 
-//      if (itConfig.isValid())
-//      {
-//        (*it)->load(itConfig);
-//      }
-//    }
+    config = config.mapGetChild("Window Geometry");
+    QString main_window_config;
+    if (config.mapGetString("QMainWindow State", &main_window_config))
+    {
+        restoreState(QByteArray::fromHex(qPrintable(main_window_config)));
+    }
 }
 
 void RVIZ_widget_base::onDockPanelVisiblityChange(bool state)
@@ -147,6 +143,22 @@ void RVIZ_widget_base::onDockPanelVisiblityChange(bool state)
     }
 }
 
+void RVIZ_widget_base::save(Config config)
+{
+    _rvizManager->save(config.mapMakeChild("Visualization Manager"));
+    savePanels(config.mapMakeChild("Panels"));
+    //saveWindowGeometry(config.mapMakeChild("Window Geometry"));
+    config = config.mapMakeChild("Window Geometry");
+    QByteArray windowState = saveState().toHex();
+    config.mapSetValue("QMainWindow State", windowState.constData());
+   
+    QList<PanelDockWidget*> dockWidget = findChildren<PanelDockWidget*>();
+    for(QList<PanelDockWidget*>::iterator it = dockWidget.begin(); it != dockWidget.end(); it++)
+    {
+        (*it)->save(config.mapGetChild((*it)->windowTitle()));
+    }
+}
+
 QWidget *RVIZ_widget_base::getParentWindow()
 {
     return this;
@@ -159,7 +171,7 @@ PanelDockWidget *RVIZ_widget_base::addPane(const QString &name, QWidget *pane, Q
     dock->setContentWidget(pane);
     dock->setFloating(floating);
     dock->setObjectName(name);
-    
+
     addDockWidget(area, dock);
 
     connect(dock, &PanelDockWidget::visibilityChanged, this, &RVIZ_widget_base::onDockPanelVisiblityChange);
@@ -172,7 +184,7 @@ QDockWidget *RVIZ_widget_base::addPanelByName(const QString &name, const QString
 {
     QString error;
     Panel *panel = _panelFactory->make(class_id, &error);
-    
+
     if (!panel)
     {
         panel = new FailedPanel(class_id, error);
@@ -214,6 +226,15 @@ void RVIZ_widget_base::loadPanels(const Config &config)
                 }
             }
         }
+    }
+}
+
+void RVIZ_widget_base::savePanels(Config config)
+{
+    config.setType(Config::List);
+    for (int i = 0; i < _customPanels.size(); i++)
+    {
+        _customPanels[i].panel->save(config.listAppendNew());
     }
 }
 

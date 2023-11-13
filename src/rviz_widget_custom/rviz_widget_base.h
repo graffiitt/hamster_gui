@@ -77,10 +77,11 @@ private:
         PanelDockWidget *dock;
         QString name;
         QString classId;
-     //   QAction *deleteAction;
+        //   QAction *deleteAction;
     };
     QList<PanelRecord> _customPanels;
 
+    virtual void save(Config config);
     virtual QWidget *getParentWindow();
     virtual PanelDockWidget *addPane(const QString &name,
                                      QWidget *pane,
@@ -90,7 +91,8 @@ private:
                                 const QString &class_id,
                                 Qt::DockWidgetArea area = Qt::LeftDockWidgetArea,
                                 bool floating = true);
-    void loadPanels(const Config& config);
+    void loadPanels(const Config &config);
+    void savePanels(Config config);
     void hideDockImpl(Qt::DockWidgetArea area, bool hide);
     void hideLeftDock(bool hide);
 };
