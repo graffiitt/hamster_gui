@@ -1,10 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     safety = Safety::getInstance();
@@ -30,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
     programmWidget->openProgramm(_pathProgramm);
 }
 
-
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -42,97 +39,108 @@ MainWindow::~MainWindow()
     delete rviz_widget;
 }
 
-
 void MainWindow::on_homeButton_pressed()
 {
-    if(ui->viewerWidget->currentIndex() != 0)
+    if (ui->viewerWidget->currentIndex() != 0)
     {
         ui->viewerWidget->setCurrentIndex(0);
     }
 }
 
-
 void MainWindow::on_progButton_pressed()
 {
-    if(ui->viewerWidget->currentIndex() != 1)
+    if (ui->viewerWidget->currentIndex() != 1)
         ui->viewerWidget->setCurrentIndex(1);
 }
 
-
 void MainWindow::on_regButton_pressed()
 {
-    if(ui->viewerWidget->currentIndex() != 3)
+    if (ui->viewerWidget->currentIndex() != 3)
     {
         ui->viewerWidget->setCurrentIndex(3);
-
     }
 }
 
 void MainWindow::on_runButton_pressed()
 {
-    if(ui->viewerWidget->currentIndex() != 2)
+    if (ui->viewerWidget->currentIndex() != 2)
     {
         ui->viewerWidget->setCurrentIndex(2);
-
     }
 }
 
-
 void MainWindow::on_createFileAction_triggered()
 {
-    _pathProgramm = QFileDialog::getSaveFileName(this,
-                                                 "create programm",
-                                                 _path +"/programms",
-                                                 "*.prg ;; *.json");
-    qDebug()<< "mainwindow save as file" + _pathProgramm;
-    programmWidget->createNewProgramm(_pathProgramm);
+    QString path = QFileDialog::getSaveFileName(this,
+                                                "create programm",
+                                                _path + "/programms",
+                                                "*.prg");
+    if (!path.isEmpty())
+    {
+        if (!path.endsWith(".prg"))
+        {
+            path = path + ".prg";
+        }
+        _pathProgramm = path;
+        qDebug() << "mainwindow save as file" + path;
+        programmWidget->createNewProgramm(_pathProgramm);
+    }
 }
-
 
 void MainWindow::on_openFileAction_triggered()
 {
-    _pathProgramm = QFileDialog::getOpenFileName(this,
-                                                 "open programm",
-                                                 _path, "*.prg ;; *.json");
-    programmWidget->openProgramm(_pathProgramm);
+    QString path = QFileDialog::getOpenFileName(this,
+                                                "open programm",
+                                                _path, "*.prg ;; *.json");
+    if (!path.isEmpty())
+    {
+        if (!path.endsWith(".prg"))
+        {
+            path = path + ".prg";
+        }
+        _pathProgramm = path;
+        programmWidget->openProgramm(_pathProgramm);
+    }
 }
-
 
 void MainWindow::on_saveAsFileAction_triggered()
 {
-    _pathProgramm = QFileDialog::getSaveFileName(this, "create programm",
-                                                 _path, "*.prg ;; *.json");
-    qDebug()<< "mainwindow save as file" + _pathProgramm;
-    programmWidget->saveProgramm(_pathProgramm);
-}
 
+    QString path = QFileDialog::getSaveFileName(this, "save as programm",
+                                                _path, tr("programm(*.prg)"));
+
+    if (!path.isEmpty())
+    {
+        if (!path.endsWith(".prg"))
+        {
+            path = path + ".prg";
+        }
+        _pathProgramm = path;
+        programmWidget->saveProgramm(_pathProgramm);
+        programmWidget->openProgramm(_pathProgramm);
+    }
+}
 
 void MainWindow::on_motorContrlAction_triggered()
 {
-
 }
-
 
 void MainWindow::on_resetAction_triggered()
 {
-safety->resetErrors();
+    safety->resetErrors();
 }
-
 
 void MainWindow::on_connectSTM_action_triggered()
 {
     connectWidget->show();
-//    connectWidget->updateComPorts();
 }
-
 
 void MainWindow::on_saveAction_triggered()
 {
-programmWidget->saveProgramm(_pathProgramm);
+    programmWidget->saveProgramm(_pathProgramm);
 }
 
 void MainWindow::checkFiles()
 {
     // check files in jsonModel
 }
-
