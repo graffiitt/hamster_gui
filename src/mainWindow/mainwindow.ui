@@ -183,7 +183,7 @@
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>файл</string>
+     <string>file</string>
     </property>
     <addaction name="createFileAction"/>
     <addaction name="openFileAction"/>
@@ -192,14 +192,28 @@
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
-     <string>управление</string>
+     <string>contol</string>
     </property>
     <addaction name="motorContrlAction"/>
     <addaction name="resetAction"/>
     <addaction name="connectSTM_action"/>
    </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>settings</string>
+    </property>
+    <widget class="QMenu" name="menu_4">
+     <property name="title">
+      <string>coose language</string>
+     </property>
+     <addaction name="changeLanguageEnglish"/>
+     <addaction name="changeLanguageRussian"/>
+    </widget>
+    <addaction name="menu_4"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
   </widget>
   <action name="createFileAction">
    <property name="icon">
@@ -207,7 +221,7 @@
      <normaloff>:/icons/img/file-plus.svg</normaloff>:/icons/img/file-plus.svg</iconset>
    </property>
    <property name="text">
-    <string>создать файл</string>
+    <string>create file</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
@@ -219,7 +233,7 @@
      <normaloff>:/icons/img/file.svg</normaloff>:/icons/img/file.svg</iconset>
    </property>
    <property name="text">
-    <string>открыть файл</string>
+    <string>open file</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -231,7 +245,7 @@
      <normaloff>:/icons/img/file-text.svg</normaloff>:/icons/img/file-text.svg</iconset>
    </property>
    <property name="text">
-    <string>сохранить файл как ...</string>
+    <string>save file as ...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
@@ -243,7 +257,7 @@
      <normaloff>:/icons/img/trello.svg</normaloff>:/icons/img/trello.svg</iconset>
    </property>
    <property name="text">
-    <string>контроллер перемещений</string>
+    <string>motion control</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
@@ -255,7 +269,7 @@
      <normaloff>:/icons/img/repeat.svg</normaloff>:/icons/img/repeat.svg</iconset>
    </property>
    <property name="text">
-    <string>сброс ошибок</string>
+    <string>reset errors</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
@@ -267,7 +281,7 @@
      <normaloff>:/icons/img/shuffle.svg</normaloff>:/icons/img/shuffle.svg</iconset>
    </property>
    <property name="text">
-    <string>подключение stm</string>
+    <string>connect mcu</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+K</string>
@@ -279,10 +293,20 @@
      <normaloff>:/icons/img/save.svg</normaloff>:/icons/img/save.svg</iconset>
    </property>
    <property name="text">
-    <string>сохранить</string>
+    <string>save</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="changeLanguageEnglish">
+   <property name="text">
+    <string>english</string>
+   </property>
+  </action>
+  <action name="changeLanguageRussian">
+   <property name="text">
+    <string>russian</string>
    </property>
   </action>
  </widget>

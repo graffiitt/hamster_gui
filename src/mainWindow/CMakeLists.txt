@@ -18,7 +18,7 @@ include_directories(${catkin_INCLUDE_DIRS})
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS SerialPort)
+find_package(Qt5 REQUIRED COMPONENTS SerialPort LinguistTools)
 
 
 catkin_package(
@@ -62,6 +62,9 @@ foreach(source ${UIFILE})
 endforeach(source)
 
 set(QRCFILE ../../resource/resource.qrc)
+#qt5_add_translation(TSFILE mainWindow_en_US.ts  mainWindow_ru_RU.ts)
+#${CMAKE_INSTALL_INCLUDEDIR}/myproj
+qt5_create_translation(TSFILE ${CMAKE_CURRENT_SOURCE_DIR} mainWindow_en_US.ts  mainWindow_ru_RU.ts)
 
 message("buliding ${PROJECT_NAME} node: ")
 
@@ -71,13 +74,13 @@ add_library(
     ${HFILE}
     ${UIFILE}
     ${QRCFILE}
+    ${TSFILE}
     )
 
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} Qt5::Widgets Qt5::SerialPort CommunicateWidget ProgEditorWidget ExectutorWidget rviz_widget_custom)
 target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
 
 project(run_mainWindow)
 
@@ -93,6 +96,7 @@ add_executable(
     ${PROJECT_NAME}
     main.cpp
     ${QRCFILE}
+    ${TSFILE}
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE ${catkin_LIBRARIES} Qt5::Widgets Qt5::SerialPort mainWindow)
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

@@ -26,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
     _pathProgramm = _path + "/default.json";
     _pathRegisters = _path + "/register.json";
     programmWidget->openProgramm(_pathProgramm);
+
+    this->on_changeLanguageRussian_triggered();
 }
 
 MainWindow::~MainWindow()
@@ -143,4 +145,53 @@ void MainWindow::on_saveAction_triggered()
 void MainWindow::checkFiles()
 {
     // check files in jsonModel
+}
+
+void MainWindow::on_changeLanguageEnglish_triggered()
+{
+        QLocale locale = QLocale("en_US");
+    QLocale::setDefault(locale);
+
+    QString path = QApplication::applicationDirPath();
+    QString fileName = "/mainWindow_en_US.qm";
+    // QString fileName = "/mainWindow_ru_RU.qm";
+
+    qApp->removeTranslator(&translate);
+    if (translate.load(path + fileName))
+    {
+        qApp->installTranslator(&translate);
+    }
+    
+    programmWidget->updateLanguage();
+    
+}
+ 
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        QLocale locale;
+        ui->retranslateUi(this);
+        qDebug() << "mainwindow change lang event " << QLocale::languageToString(locale.language());
+    }
+}
+
+void MainWindow::on_changeLanguageRussian_triggered()
+{
+    QLocale locale = QLocale("ru_RU");
+    QLocale::setDefault(locale);
+
+    QString path = QApplication::applicationDirPath();
+    // QString fileName = "/mainWindow_en_US.qm";
+    QString fileName = "/mainWindow_ru_RU.qm";
+
+    qApp->removeTranslator(&translate);
+    if (translate.load(path + fileName))
+    {
+        qApp->installTranslator(&translate);
+    }
+    
+    programmWidget->updateLanguage();
+    
 }
