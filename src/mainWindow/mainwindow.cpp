@@ -147,26 +147,6 @@ void MainWindow::checkFiles()
     // check files in jsonModel
 }
 
-void MainWindow::on_changeLanguageEnglish_triggered()
-{
-        QLocale locale = QLocale("en_US");
-    QLocale::setDefault(locale);
-
-    QString path = QApplication::applicationDirPath();
-    QString fileName = "/mainWindow_en_US.qm";
-    // QString fileName = "/mainWindow_ru_RU.qm";
-
-    qApp->removeTranslator(&translate);
-    if (translate.load(path + fileName))
-    {
-        qApp->installTranslator(&translate);
-    }
-    
-    programmWidget->updateLanguage();
-    
-}
- 
-
 void MainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -177,21 +157,30 @@ void MainWindow::changeEvent(QEvent *event)
     }
 }
 
-void MainWindow::on_changeLanguageRussian_triggered()
+void MainWindow::on_changeLanguageEnglish_triggered()
 {
-    QLocale locale = QLocale("ru_RU");
+    locale = QLocale("en_US");
     QLocale::setDefault(locale);
 
+    this->loadLanguage();
+}
+
+void MainWindow::on_changeLanguageRussian_triggered()
+{
+    locale = QLocale("ru_RU");
+    QLocale::setDefault(locale);
+    this->loadLanguage();
+}
+
+void MainWindow::loadLanguage()
+{
     QString path = QApplication::applicationDirPath();
-    // QString fileName = "/mainWindow_en_US.qm";
-    QString fileName = "/mainWindow_ru_RU.qm";
+    QString fileName = QString("/mainWindow_%1.qm").arg(locale.name());
 
     qApp->removeTranslator(&translate);
     if (translate.load(path + fileName))
     {
         qApp->installTranslator(&translate);
     }
-    
     programmWidget->updateLanguage();
-    
 }

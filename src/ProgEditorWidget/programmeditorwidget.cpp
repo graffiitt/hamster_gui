@@ -374,7 +374,7 @@ void ProgrammEditorWidget::updateLanguage()
     qDebug() << translate.load(path + fileName);
     if (translate.load(path + fileName))
     {
-        qDebug() << "progEdit " << qApp->installTranslator(&translate);
+         qApp->installTranslator(&translate);
     }
 }
 

@@ -48,6 +48,15 @@
         <translation >подключение stm</translation>
     </message>
 
-    
+    <message>
+        <source>settings</source>
+        <translation >настройки</translation>
+    </message>
+
+    <message>
+        <source>choose language</source>
+        <translation >выбор языка</translation>
+    </message>
+
 </context>
 </TS>
