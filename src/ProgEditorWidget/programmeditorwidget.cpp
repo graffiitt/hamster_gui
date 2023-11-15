@@ -1,35 +1,32 @@
 ﻿#include "programmeditorwidget.h"
 #include "ui_programmeditorwidget.h"
 
-
 ProgrammEditorWidget::ProgrammEditorWidget(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::ProgrammEditorWidget)
+    : QWidget(parent), ui(new Ui::ProgrammEditorWidget)
 {
     ui->setupUi(this);
 
     commentCmd = new CommentCommand();
     emptyCmd = new EmptyCommand();
     mathCmd = new MathCommand();
-    callCmd  = new CallCommand();
+    callCmd = new CallCommand();
     jmpCmd = new JumpCommand();
     waitCmd = new WaitCommand();
     moveCmd = new MoveCommand();
     ifCmd = new IfCommand();
 
-    programm = new  Programm();
+    programm = new Programm();
     programmModel = new ProgrammModel(programm);
     ui->programmView->setModel(programmModel);
     jsonLoad = new JSONmodule();
 }
 
-
 ProgrammEditorWidget::~ProgrammEditorWidget()
 {
     delete ui;
     delete programmModel;
-    for(int i=programm->size(); i > 0; i--)
-        delete programm->takeAt(i-1);
+    for (int i = programm->size(); i > 0; i--)
+        delete programm->takeAt(i - 1);
     delete programm;
     delete commentCmd;
     delete emptyCmd;
@@ -42,12 +39,10 @@ ProgrammEditorWidget::~ProgrammEditorWidget()
     delete jsonLoad;
 }
 
-
 void ProgrammEditorWidget::openProgramm(QString path)
 {
     programmModel->updateProgramm(jsonLoad->openFile(path));
 }
-
 
 void ProgrammEditorWidget::createNewProgramm(QString path)
 {
@@ -63,16 +58,14 @@ void ProgrammEditorWidget::saveProgramm(QString path)
     jsonLoad->saveFile(programm, path);
 }
 
-
 void ProgrammEditorWidget::on_moveButton_clicked()
 {
-    if(ui->toolEditWidget->currentIndex() != 0)
+    if (ui->toolEditWidget->currentIndex() != 0)
     {
         ui->toolEditWidget->setCurrentIndex(0);
         ui->addButton->setEnabled(true);
     }
 }
-
 
 void ProgrammEditorWidget::on_logicButton_clicked()
 {
@@ -83,7 +76,6 @@ void ProgrammEditorWidget::on_logicButton_clicked()
     }
 }
 
-
 void ProgrammEditorWidget::on_mathButton_clicked()
 {
     if (ui->toolEditWidget->currentIndex() != 2)
@@ -92,7 +84,6 @@ void ProgrammEditorWidget::on_mathButton_clicked()
         ui->addButton->setEnabled(true);
     }
 }
-
 
 void ProgrammEditorWidget::on_addButton_clicked()
 {
@@ -104,9 +95,7 @@ void ProgrammEditorWidget::on_addButton_clicked()
         mathCmd = new MathCommand();
         break;
     }
-
 }
-
 
 void ProgrammEditorWidget::on_addLineButton_clicked()
 {
@@ -115,21 +104,20 @@ void ProgrammEditorWidget::on_addLineButton_clicked()
     emptyCmd = new EmptyCommand();
 }
 
-
 void ProgrammEditorWidget::on_deleteButton_clicked()
 {
     programmModel->deleteCommand(ui->programmView->currentIndex());
 }
 
-
 void ProgrammEditorWidget::on_programmView_clicked(const QModelIndex &index)
 {
-    switch (programmModel->getId(index)) {
+    switch (programmModel->getId(index))
+    {
     case Command::Comment:
     {
         this->on_logicButton_clicked();
 
-        QString dt = programmModel->getData(index , "data").toString();
+        QString dt = programmModel->getData(index, "data").toString();
         ui->commentLineEdit->setText(dt);
         break;
     }
@@ -179,220 +167,193 @@ void ProgrammEditorWidget::on_programmView_clicked(const QModelIndex &index)
         break;
     }
     }
-
 }
-
 
 void ProgrammEditorWidget::on_commentButton_clicked()
 {
     QModelIndex idx = ui->programmView->currentIndex();
     programmModel->addComand(idx, commentCmd);
-    programmModel->setData(ui->commentLineEdit->text()
-                           , "data", Command::Comment, idx);
+    programmModel->setData(ui->commentLineEdit->text(), "data", Command::Comment, idx);
     commentCmd = new CommentCommand();
 }
-
 
 void ProgrammEditorWidget::on_commentLineEdit_textChanged(const QString &arg1)
 {
     programmModel->setData(arg1, "data", Command::Comment, ui->programmView->currentIndex());
 }
 
-
 void ProgrammEditorWidget::on_regOutBox_currentIndexChanged(int index)
 {
     QModelIndex idx = ui->programmView->currentIndex();
-    programmModel->setData(index ? 2 : 1
-                                   , "regOutType", Command::Math, idx);
-    index ? ui->registerBox_2->setEnabled(true) : ui->registerBox_2->setEnabled(false) ;
+    programmModel->setData(index ? 2 : 1, "regOutType", Command::Math, idx);
+    index ? ui->registerBox_2->setEnabled(true) : ui->registerBox_2->setEnabled(false);
     this->updateUIMathReg(idx);
 }
-
 
 void ProgrammEditorWidget::on_registerBox_valueChanged(int arg1)
 {
     QModelIndex idx = ui->programmView->currentIndex();
 
-    switch (programmModel->getData(idx, "regOutType").toInt()) {
+    switch (programmModel->getData(idx, "regOutType").toInt())
+    {
     case 1:
     {
-        programmModel->setData(arg1
-                               , "regOut", Command::Math, idx);
+        programmModel->setData(arg1, "regOut", Command::Math, idx);
         break;
     }
     case 2:
     {
-        programmModel->setData(arg1
-                               , "poseReg", Command::Math, idx);
+        programmModel->setData(arg1, "poseReg", Command::Math, idx);
         break;
     }
     }
 }
 
-
 void ProgrammEditorWidget::on_registerBox_2_valueChanged(int arg1)
 {
     QModelIndex idx = ui->programmView->currentIndex();
-    programmModel->setData(arg1
-                           , "poseRegItem", Command::Math, idx);
+    programmModel->setData(arg1, "poseRegItem", Command::Math, idx);
 }
-
 
 void ProgrammEditorWidget::on_typeComboBox_2_activated(int index)
 {
     QModelIndex idx = ui->programmView->currentIndex();
-    programmModel->setData(index
-                           , "itemType_2", Command::Math, idx);
+    programmModel->setData(index, "itemType_2", Command::Math, idx);
     if (index == 2 && programmModel->getId(idx) == Command::Math)
         ui->itemPoseReg_2->setEnabled(true);
     else
         ui->itemPoseReg_2->setEnabled(false);
 }
 
-
 void ProgrammEditorWidget::on_typeComboBox_1_activated(int index)
 {
     QModelIndex idx = ui->programmView->currentIndex();
-    programmModel->setData(index
-                           , "itemType_1", Command::Math, idx);
+    programmModel->setData(index, "itemType_1", Command::Math, idx);
     if (index == 2 && programmModel->getId(idx) == Command::Math)
         ui->itemPoseReg_1->setEnabled(true);
     else
         ui->itemPoseReg_1->setEnabled(false);
-
 }
-
 
 void ProgrammEditorWidget::on_operatorComboBox_activated(int index)
 {
     QModelIndex idx = ui->programmView->currentIndex();
-    programmModel->setData(index
-                           , "operator", Command::Math, idx);
+    programmModel->setData(index, "operator", Command::Math, idx);
 }
-
 
 void ProgrammEditorWidget::on_firstNumBox_valueChanged(int arg1)
 {
     QModelIndex idx = ui->programmView->currentIndex();
 
-    switch (programmModel->getData(idx, "itemType_1").toInt()) {
+    switch (programmModel->getData(idx, "itemType_1").toInt())
+    {
     case 0:
     {
-        programmModel->setData(arg1
-                               , "number_1", Command::Math, idx);
+        programmModel->setData(arg1, "number_1", Command::Math, idx);
         break;
     }
     case 1:
     {
-        programmModel->setData(arg1
-                               , "register_1", Command::Math, idx);
+        programmModel->setData(arg1, "register_1", Command::Math, idx);
         break;
     }
     case 2:
     {
-        programmModel->setData(arg1
-                               , "poseReg_1", Command::Math, idx);
+        programmModel->setData(arg1, "poseReg_1", Command::Math, idx);
         break;
     }
     }
 }
 
-
 void ProgrammEditorWidget::on_itemPoseReg_1_valueChanged(int arg1)
 {
     QModelIndex idx = ui->programmView->currentIndex();
-    programmModel->setData(arg1
-                           , "poseRegItem_1", Command::Math, idx);
+    programmModel->setData(arg1, "poseRegItem_1", Command::Math, idx);
 }
-
 
 void ProgrammEditorWidget::on_itemPoseReg_2_valueChanged(int arg1)
 {
     QModelIndex idx = ui->programmView->currentIndex();
-    programmModel->setData(arg1
-                           , "poseRegItem_2", Command::Math, idx);
+    programmModel->setData(arg1, "poseRegItem_2", Command::Math, idx);
 }
-
 
 void ProgrammEditorWidget::on_secondNumBox_valueChanged(int arg1)
 {
     QModelIndex idx = ui->programmView->currentIndex();
 
-    switch (programmModel->getData(idx, "itemType_2").toInt()) {
+    switch (programmModel->getData(idx, "itemType_2").toInt())
+    {
     case 0:
     {
-        programmModel->setData(arg1
-                               , "number_2", Command::Math, idx);
+        programmModel->setData(arg1, "number_2", Command::Math, idx);
         break;
     }
     case 1:
     {
-        programmModel->setData(arg1
-                               , "register_2", Command::Math, idx);
+        programmModel->setData(arg1, "register_2", Command::Math, idx);
         break;
     }
     case 2:
     {
-        programmModel->setData(arg1
-                               , "poseReg_2", Command::Math, idx);
+        programmModel->setData(arg1, "poseReg_2", Command::Math, idx);
         break;
     }
     }
 }
 
-
 void ProgrammEditorWidget::updateUIMathReg(QModelIndex index)
 {
     // QModelIndex index = ui->programmView->currentIndex();
 
-    int regType = programmModel->getData(index , "regOutType").toInt() - 1;
-    int regNum = regType ?  programmModel->getData(index , "poseReg").toInt()
-                          : programmModel->getData(index , "regOut").toInt();
+    int regType = programmModel->getData(index, "regOutType").toInt() - 1;
+    int regNum = regType ? programmModel->getData(index, "poseReg").toInt()
+                         : programmModel->getData(index, "regOut").toInt();
 
     ui->registerBox_2->setValue(programmModel->getData(index, "poseRegItem").toInt());
     ui->registerBox->setValue(regNum);
     ui->regOutBox->setCurrentIndex(regType);
 }
 
-
 void ProgrammEditorWidget::updateUINumbers(QModelIndex index)
 {
     int num;
-    ui->typeComboBox_1->setCurrentIndex(programmModel->getData(index , "itemType_1").toInt() );
-    switch (programmModel->getData(index , "itemType_1").toInt() ) {
+    ui->typeComboBox_1->setCurrentIndex(programmModel->getData(index, "itemType_1").toInt());
+    switch (programmModel->getData(index, "itemType_1").toInt())
+    {
     case 0:
     {
-        num = programmModel->getData(index , "number_1").toInt();
+        num = programmModel->getData(index, "number_1").toInt();
         break;
     }
     case 1:
     {
-        num = programmModel->getData(index , "register_1").toInt();
+        num = programmModel->getData(index, "register_1").toInt();
         break;
     }
     case 2:
     {
-        num = programmModel->getData(index , "poseReg_1").toInt();
+        num = programmModel->getData(index, "poseReg_1").toInt();
         break;
     }
     }
     ui->firstNumBox->setValue(num);
-    ui->typeComboBox_2->setCurrentIndex(programmModel->getData(index , "itemType_2").toInt() );
+    ui->typeComboBox_2->setCurrentIndex(programmModel->getData(index, "itemType_2").toInt());
 
-    switch (programmModel->getData(index , "itemType_2").toInt() ) {
+    switch (programmModel->getData(index, "itemType_2").toInt())
+    {
     case 0:
     {
-        num = programmModel->getData(index , "number_2").toInt();
+        num = programmModel->getData(index, "number_2").toInt();
         break;
     }
     case 1:
     {
-        num = programmModel->getData(index , "register_2").toInt();
+        num = programmModel->getData(index, "register_2").toInt();
         break;
     }
     case 2:
     {
-        num = programmModel->getData(index , "poseReg_2").toInt();
+        num = programmModel->getData(index, "poseReg_2").toInt();
         break;
     }
     }
@@ -403,47 +364,56 @@ void ProgrammEditorWidget::updateUINumbers(QModelIndex index)
     ui->itemPoseReg_2->setValue(programmModel->getData(index, "poseRegItem_2").toInt());
 }
 
+void ProgrammEditorWidget::updateLanguage()
+{
+    QLocale locale;
+    QString path = QApplication::applicationDirPath();
+    QString fileName = QString("/ProgEditorWidget_%1.qm").arg(locale.name());
+
+    qApp->removeTranslator(&translate);
+    qDebug() << translate.load(path + fileName);
+    if (translate.load(path + fileName))
+    {
+         qApp->installTranslator(&translate);
+    }
+}
 
 void ProgrammEditorWidget::on_callButton_clicked()
 {
     QModelIndex idx = ui->programmView->currentIndex();
     QString name = JSONmodule::getPathGUI(this);
 
-    if(!name.isEmpty()){
+    if (!name.isEmpty())
+    {
         programmModel->addComand(idx, callCmd);
         programmModel->setData(name, "namePrg", Command::Call, idx);
         callCmd = new CallCommand();
     }
 }
 
-
 void ProgrammEditorWidget::on_lblButton_clicked()
 {
     QModelIndex idx = ui->programmView->currentIndex();
     programmModel->addComand(idx, jmpCmd);
-    //programmModel->setData(name, "namePrg", Command::Call, idx);
+    // programmModel->setData(name, "namePrg", Command::Call, idx);
     jmpCmd = new JumpCommand();
 }
-
 
 void ProgrammEditorWidget::on_waitButton_clicked()
 {
     QModelIndex idx = ui->programmView->currentIndex();
     programmModel->addComand(idx, waitCmd);
-    //programmModel->setData(name, "namePrg", Command::Call, idx);
+    // programmModel->setData(name, "namePrg", Command::Call, idx);
     waitCmd = new WaitCommand();
 }
-
 
 void ProgrammEditorWidget::on_ifButton_clicked()
 {
     QModelIndex idx = ui->programmView->currentIndex();
     programmModel->addComand(idx, ifCmd);
-    //programmModel->setData(name, "namePrg", Command::Call, idx);
+    // programmModel->setData(name, "namePrg", Command::Call, idx);
     ifCmd = new IfCommand();
-
 }
-
 
 void ProgrammEditorWidget::on_waitBox_activated(int index)
 {
@@ -454,15 +424,13 @@ void ProgrammEditorWidget::on_waitBox_activated(int index)
         ui->waitSpinBox->setValue(programmModel->getData(idx, "time").toInt());
     else
         ui->waitSpinBox->setValue(programmModel->getData(idx, "pinIn").toInt());
-
 }
-
 
 void ProgrammEditorWidget::on_waitSpinBox_valueChanged(int arg1)
 {
     QModelIndex idx = ui->programmView->currentIndex();
 
-    switch(programmModel->getData(idx, "waitType").toInt())
+    switch (programmModel->getData(idx, "waitType").toInt())
     {
     case WaitType::timer:
     {
@@ -478,19 +446,23 @@ void ProgrammEditorWidget::on_waitSpinBox_valueChanged(int arg1)
     }
 }
 
-
 void ProgrammEditorWidget::on_lblSpinBox_valueChanged(int arg1)
 {
     QModelIndex idx = ui->programmView->currentIndex();
     programmModel->setData(arg1, "lbl", Command::Jump, idx);
-
 }
-
 
 void ProgrammEditorWidget::on_lblComboBox_activated(int index)
 {
     QModelIndex idx = ui->programmView->currentIndex();
     programmModel->setData(index, "mode", Command::Jump, idx);
-
 }
 
+void ProgrammEditorWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        qDebug() << "load";
+        ui->retranslateUi(this);
+    }
+}

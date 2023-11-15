@@ -1,13 +1,17 @@
 #ifndef PROGRAMMEDITORWIDGET_H
 #define PROGRAMMEDITORWIDGET_H
 
+#include <QTranslator>
 #include <QWidget>
 #include <QDebug>
 #include "programmmodel.h"
 #include "../JSONmodule/jsonmodule.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class ProgrammEditorWidget; }
+namespace Ui
+{
+    class ProgrammEditorWidget;
+}
 QT_END_NAMESPACE
 
 class ProgrammEditorWidget : public QWidget
@@ -22,6 +26,7 @@ public:
     void createNewProgramm(QString path);
     void saveProgramm(QString path);
 
+    void updateLanguage();
 
 private slots:
     void on_moveButton_clicked();
@@ -52,17 +57,13 @@ private slots:
     void on_ifButton_clicked();
 
     void on_waitBox_activated(int index);
-
     void on_waitSpinBox_valueChanged(int arg1);
-
     void on_lblSpinBox_valueChanged(int arg1);
-
     void on_lblComboBox_activated(int index);
 
-private:
-    void updateUIMathReg(QModelIndex index);
-    void updateUINumbers(QModelIndex index);
+    void changeEvent(QEvent *event);
 
+private:
     Ui::ProgrammEditorWidget *ui;
     ProgrammModel *programmModel;
 
@@ -78,5 +79,9 @@ private:
     MoveCommand *moveCmd;
     IfCommand *ifCmd;
 
+    QTranslator translate;
+
+    void updateUIMathReg(QModelIndex index);
+    void updateUINumbers(QModelIndex index);
 };
 #endif // PROGRAMMEDITORWIDGET_H

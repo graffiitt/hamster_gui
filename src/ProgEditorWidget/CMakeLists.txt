@@ -8,7 +8,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 
 include_directories(${catkin_INCLUDE_DIRS})
 
@@ -54,6 +54,8 @@ foreach(source ${UIFILE})
 endforeach(source)
 
 set(QRCFILE ../../resource/resource.qrc)
+qt5_add_translation(TSFILE ProgEditorWidget_en_US.ts ProgEditorWidget_ru_RU.ts)
+#qt5_create_translation(TSFILE ${CMAKE_SOURCE_DIR} )
 
 message("buliding ${PROJECT_NAME} node: ")
 
@@ -63,6 +65,7 @@ add_library(
     ${HFILE}
     ${UIFILE}
     ${QRCFILE}
+    ${TSFILE}
     )
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} Qt5::Widgets JSONmodule ICommand)
