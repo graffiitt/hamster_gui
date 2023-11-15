@@ -54,7 +54,17 @@ private slots:
     void on_callButton_clicked();
     void on_lblButton_clicked();
     void on_waitButton_clicked();
+
     void on_ifButton_clicked();
+    void on_ifBeheviorBox_currentIndexChanged(int index);
+    void on_ifItem_1_Box_currentIndexChanged(int index);
+    void on_ifItem_2_Box_currentIndexChanged(int index);
+    void on_ifItem_1_Spin_valueChanged(int arg1);
+    void on_ifItem_2_Spin_valueChanged(int arg1);
+    void on_ifItem_1_Spin_2_valueChanged(int arg1);
+    void on_ifItem_2_Spin_2_valueChanged(int arg1);
+    void on_iflLblBox_valueChanged(int arg1);
+    void on_ifIOstate_stateChanged(int state);
 
     void on_waitBox_activated(int index);
     void on_waitSpinBox_valueChanged(int arg1);
@@ -83,5 +93,6 @@ private:
 
     void updateUIMathReg(QModelIndex index);
     void updateUINumbers(QModelIndex index);
+    void updateRegItem(int arg1, int number, Command id);
 };
 #endif // PROGRAMMEDITORWIDGET_H

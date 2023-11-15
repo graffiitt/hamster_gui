@@ -283,34 +283,18 @@
        <property name="spacing">
         <number>6</number>
        </property>
-       <item row="5" column="4">
-        <widget class="QSpinBox" name="IOSpinBox">
-         <property name="wrapping">
-          <bool>true</bool>
-         </property>
-         <property name="accelerated">
-          <bool>false</bool>
-         </property>
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>50</number>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QPushButton" name="callButton">
-         <property name="text">
-          <string>call</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QPushButton" name="waitButton">
-         <property name="text">
-          <string>wait</string>
-         </property>
+       <item row="5" column="2">
+        <widget class="QComboBox" name="IOComboBox">
+         <item>
+          <property name="text">
+           <string>input</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>output</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="4" column="2" colspan="2">
@@ -332,6 +316,19 @@
          </item>
         </widget>
        </item>
+       <item row="9" column="0" colspan="7">
+        <spacer name="verticalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="6" column="2">
         <widget class="QSpinBox" name="lblSpinBox">
          <property name="minimum">
@@ -342,6 +339,9 @@
          </property>
         </widget>
        </item>
+       <item row="7" column="2" colspan="5">
+        <widget class="QLineEdit" name="commentLineEdit"/>
+       </item>
        <item row="6" column="0">
         <widget class="QPushButton" name="lblButton">
          <property name="text">
@@ -349,12 +349,8 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="ifButton">
-         <property name="text">
-          <string>if</string>
-         </property>
-        </widget>
+       <item row="3" column="4">
+        <widget class="QSpinBox" name="ifItem_2_Spin"/>
        </item>
        <item row="5" column="0">
         <widget class="QPushButton" name="ioButton">
@@ -363,58 +359,77 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="4">
-        <widget class="QSpinBox" name="ifItem_1_Spin"/>
+       <item row="2" column="6">
+        <widget class="QCheckBox" name="ifIOstate">
+         <property name="text">
+          <string>state</string>
+         </property>
+        </widget>
        </item>
-       <item row="7" column="2" colspan="4">
-        <widget class="QLineEdit" name="commentLineEdit"/>
-       </item>
-       <item row="5" column="5">
+       <item row="5" column="6">
         <widget class="QCheckBox" name="IOcheckBox">
          <property name="text">
           <string>state</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QComboBox" name="ifBeheviorBox">
-         <item>
-          <property name="text">
-           <string>...=...</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>...&lt;...</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>...&gt;...</string>
-          </property>
-         </item>
+       <item row="8" column="0">
+        <widget class="QPushButton" name="callButton">
+         <property name="text">
+          <string>call</string>
+         </property>
         </widget>
        </item>
-       <item row="2" column="2" colspan="2">
-        <widget class="QComboBox" name="ifItem_1_Box">
+       <item row="4" column="0">
+        <widget class="QPushButton" name="waitButton">
+         <property name="text">
+          <string>wait</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3" colspan="2">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>jump_lbl</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="4">
+        <widget class="QSpinBox" name="IOSpinBox">
+         <property name="wrapping">
+          <bool>true</bool>
+         </property>
+         <property name="accelerated">
+          <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>50</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QSpinBox" name="ifItem_1_Spin"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="ifButton">
+         <property name="text">
+          <string>if</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="4">
+        <widget class="QComboBox" name="lblComboBox">
          <item>
           <property name="text">
-           <string>number</string>
+           <string>lbl</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>register</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>pose registerr</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>input i/o</string>
+           <string>jump</string>
           </property>
          </item>
         </widget>
@@ -438,29 +453,6 @@
          </item>
         </widget>
        </item>
-       <item row="9" column="0" colspan="6">
-        <spacer name="verticalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="4">
-        <widget class="QSpinBox" name="waitSpinBox"/>
-       </item>
-       <item row="1" column="3" colspan="2">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>jump_lbl</string>
-         </property>
-        </widget>
-       </item>
        <item row="7" column="0">
         <widget class="QPushButton" name="commentButton">
          <property name="text">
@@ -468,43 +460,65 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="2">
+        <widget class="QComboBox" name="ifBeheviorBox">
+         <item>
+          <property name="text">
+           <string>...=...</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>...&lt;...</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>...&gt;...</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="6">
+        <widget class="QSpinBox" name="iflLblBox"/>
+       </item>
+       <item row="4" column="4">
+        <widget class="QSpinBox" name="waitSpinBox"/>
+       </item>
        <item row="2" column="5">
-        <widget class="QCheckBox" name="ifIOstate">
-         <property name="text">
-          <string>state</string>
+        <widget class="QSpinBox" name="ifItem_1_Spin_2">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="3" column="4">
-        <widget class="QSpinBox" name="ifItem_2_Spin"/>
-       </item>
-       <item row="6" column="4">
-        <widget class="QComboBox" name="lblComboBox">
-         <item>
-          <property name="text">
-           <string>lbl</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>jump</string>
-          </property>
-         </item>
+       <item row="3" column="5">
+        <widget class="QSpinBox" name="ifItem_2_Spin_2">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
-       <item row="1" column="5">
-        <widget class="QSpinBox" name="iflLblBox"/>
-       </item>
-       <item row="5" column="2">
-        <widget class="QComboBox" name="IOComboBox">
+       <item row="2" column="2" colspan="2">
+        <widget class="QComboBox" name="ifItem_1_Box">
          <item>
           <property name="text">
-           <string>input</string>
+           <string>number</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>output</string>
+           <string>register</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>pose register</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>input i/o</string>
           </property>
          </item>
         </widget>

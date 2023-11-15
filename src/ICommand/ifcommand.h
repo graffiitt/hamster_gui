@@ -4,10 +4,11 @@
 #include "icommand.h"
 #include "mathcommand.h"
 
-enum MathBehivor {
+enum MathBehivor
+{
     equal,
-    more,
-    less
+    less,
+    more
 };
 
 class IfCommand : public ICommand
@@ -19,6 +20,7 @@ public:
 
 private:
     QString getLine();
+    QString getItem(int number);
 };
 
 #endif // IFCOMMAND_H

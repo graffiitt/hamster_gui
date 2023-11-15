@@ -25,18 +25,16 @@ MathCommand::MathCommand()
     _type = "math";
 }
 
-
 MathCommand::~MathCommand()
 {
-
 }
-
 
 QString MathCommand::getDescription()
 {
     QString str;
 
-    switch (_data.value("operator").toInt()) {
+    switch (_data.value("operator").toInt())
+    {
     case MathOperator::none:
     {
         str = this->getItem(0) + " = " + this->getItem(1);
@@ -67,18 +65,19 @@ QString MathCommand::getDescription()
     return str;
 }
 
-
-QString MathCommand::getItem(int it)
+QString MathCommand::getItem(int number)
 {
     QString str;
-    switch (it) {
+    switch (number)
+    {
     case 0:
     {
-        switch (_data.value("regOutType").toInt()) {
+        switch (_data.value("regOutType").toInt())
+        {
         case TypeItem::posReg:
         {
             str = "PR[" + QString::number(_data.value("poseReg").toInt()) +
-                    ", " + QString::number(_data.value("poseRegItem").toInt()) + "]" ;
+                  ", " + QString::number(_data.value("poseRegItem").toInt()) + "]";
             break;
         }
         case TypeItem::reg:
@@ -89,51 +88,28 @@ QString MathCommand::getItem(int it)
         }
         break;
     }
-    case 1:
+    default:
     {
-        switch (_data.value("itemType_1").toInt()) {
+        switch (_data.value(QString("itemType_%1").arg(number)).toInt())
+        {
         case TypeItem::number:
         {
-            str = QString::number(_data.value("number_1").toInt());
+            str = QString::number(_data.value(QString("number_%1").arg(number)).toInt());
             break;
         }
         case TypeItem::posReg:
         {
-            str = "PR[" + QString::number(_data.value("poseReg_1").toInt()) +
-                    ", " + QString::number(_data.value("poseRegItem_1").toInt()) + "]" ;
+            str = "PR[" + QString::number(_data.value(QString("poseReg_%1").arg(number)).toInt()) +
+                  ", " + QString::number(_data.value(QString("poseRegItem_%1").arg(number)).toInt()) + "]";
             break;
         }
         case TypeItem::reg:
         {
-            str = "R[" + QString::number(_data.value("register_1").toInt()) + "]";
+            str = "R[" + QString::number(_data.value(QString("register_%1").arg(number)).toInt()) + "]";
             break;
         }
         }
-        break;
-    }
-    case 2:
-    {
-        switch (_data.value("itemType_2").toInt()) {
-        case TypeItem::number:
-        {
-            str = QString::number(_data.value("number_2").toInt());
-            break;
-        }
-        case TypeItem::posReg:
-        {
-            str = "PR[" + QString::number(_data.value("poseReg_2").toInt()) +
-                    ", " + QString::number(_data.value("poseRegItem_2").toInt()) + "]" ;
-            break;
-        }
-        case TypeItem::reg:
-        {
-            str = "R[" + QString::number(_data.value("register_2").toInt()) + "]";
-            break;
-        }
-        }
-        break;
     }
     }
-
     return str;
 }

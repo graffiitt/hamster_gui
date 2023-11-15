@@ -3,8 +3,8 @@
 
 #include "icommand.h"
 
-
-enum MathOperator{
+enum MathOperator
+{
     none,
     summ,
     minus,
@@ -12,10 +12,13 @@ enum MathOperator{
     multiplication
 
 };
-enum TypeItem{
+
+enum TypeItem
+{
     number,
     reg,
-    posReg
+    posReg,
+    IO
 };
 
 class MathCommand : public ICommand
@@ -27,8 +30,7 @@ public:
     QString getDescription() override;
 
 private:
-    QString getItem(int it);
-
+    QString getItem(int number);
 };
 
 #endif // MATHCOMMAND_H
