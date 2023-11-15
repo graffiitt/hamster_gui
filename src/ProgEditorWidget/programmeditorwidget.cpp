@@ -353,7 +353,7 @@ void ProgrammEditorWidget::updateRegItem(int arg1, int number, Command id)
         break;
     }
     case 3:
-            programmModel->setData(arg1, QString("ioPin_%1").arg(number), id, idx);
+        programmModel->setData(arg1, QString("ioPin_%1").arg(number), id, idx);
         break;
     }
 }
@@ -422,6 +422,21 @@ void ProgrammEditorWidget::on_ifItem_1_Box_currentIndexChanged(int index)
             ui->ifItem_1_Spin_2->setEnabled(true);
         else
             ui->ifItem_1_Spin_2->setEnabled(false);
+
+        if (index == 3 && programmModel->getId(idx) == Command::If)
+        {
+            ui->ifIOstate->setEnabled(true);
+            ui->ifItem_2_Box->setEnabled(false);
+            ui->ifItem_2_Spin->setEnabled(false);
+            ui->ifItem_2_Spin_2->setEnabled(false);
+        }
+        else
+        {
+            ui->ifIOstate->setEnabled(false);
+            ui->ifItem_2_Box->setEnabled(true);
+            ui->ifItem_2_Spin->setEnabled(true);
+
+        }
     }
 }
 
