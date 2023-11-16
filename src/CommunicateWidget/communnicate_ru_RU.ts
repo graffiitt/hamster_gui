@@ -6,8 +6,8 @@
     <name>CommunicatorWidget</name>
     
     <message>
-        <source>add</source>
-        <translation >добавить</translation>
+        <source>connect</source>
+        <translation >подключить</translation>
     </message>
     
 </context>

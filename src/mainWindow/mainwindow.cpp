@@ -183,4 +183,7 @@ void MainWindow::loadLanguage()
         qApp->installTranslator(&translate);
     }
     programmWidget->updateLanguage();
+execWidget->updateLanguage();
+rviz_widget->updateLanguage();
+
 }

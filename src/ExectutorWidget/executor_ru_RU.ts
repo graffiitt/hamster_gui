@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
-    <name>ProgrammEditorWidget</name>
+    <name>ExecturtorWidget</name>
     
     <message>
         <source>RUN</source>
@@ -15,7 +15,7 @@
     </message>
 
     <message>
-        <source>step</source>
+        <source>STEP</source>
         <translation >шаг</translation>
     </message>
 

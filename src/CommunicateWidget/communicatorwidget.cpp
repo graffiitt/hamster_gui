@@ -93,7 +93,7 @@ void CommunicatorWidget::updateLanguage()
 {
     QLocale locale;
     QString path = QApplication::applicationDirPath();
-    QString fileName = QString("/ProgEditorWidget_%1.qm").arg(locale.name());
+    QString fileName = QString("/communnicate_%1.qm").arg(locale.name());
 
     qApp->removeTranslator(&translate);
     qDebug() << translate.load(path + fileName);
