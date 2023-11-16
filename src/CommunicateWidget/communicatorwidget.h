@@ -3,6 +3,7 @@
 
 
 #include <QDialog>
+#include <QTranslator>
 #include <QListWidgetItem>
 #include "serialtranslator.h"
 
@@ -35,6 +36,9 @@ private:
     QList<QSerialPortInfo> list;
     Ui::CommunicatorWidget *ui;
     SerialTranslator *mcu;
+
+    void updateLanguage();
+
 
 };
 #endif // COMMUNICATORWIDGET_H

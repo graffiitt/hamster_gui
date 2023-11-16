@@ -1,8 +1,10 @@
 #ifndef EXECTURTORWIDGET_H
 #define EXECTURTORWIDGET_H
 
-#include <QWidget>
 #include <QDebug>
+
+#include <QWidget>
+#include <QTranslator>
 
 #include "iexecutor.h"
 #include "../ProgEditorWidget/programmmodel.h"
@@ -19,6 +21,7 @@ public:
     ExecturtorWidget(QWidget *parent = nullptr);
     ~ExecturtorWidget();
 
+    void updateLanguage();
 
 private slots:
     void on_runButton_clicked();
@@ -30,6 +33,8 @@ private slots:
 
     void changeProgramm(Programm prg);
     void changeCurrLine(int line);
+
+    void changeEvent(QEvent *event);
 
 private:
 

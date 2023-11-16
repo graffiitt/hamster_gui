@@ -28,6 +28,19 @@ ExecturtorWidget::~ExecturtorWidget()
     delete programm;
 }
 
+void ExecturtorWidget::updateLanguage()
+{
+    QLocale locale;
+    QString path = QApplication::applicationDirPath();
+    QString fileName = QString("/executor_%1.qm").arg(locale.name());
+
+    qApp->removeTranslator(&translate);
+    qDebug() << translate.load(path + fileName);
+    if (translate.load(path + fileName))
+    {
+        qApp->installTranslator(&translate);
+    }
+}
 
 void ExecturtorWidget::on_runButton_clicked()
 {
@@ -76,6 +89,13 @@ void ExecturtorWidget::changeCurrLine(int line)
     ui->tableView->selectRow(line);
 }
 
+void ExecturtorWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+}
 
 void ExecturtorWidget::on_stepButton_clicked(bool checked)
 {

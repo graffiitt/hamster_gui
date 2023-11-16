@@ -14,7 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   rviz
 )
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 
 include_directories(${catkin_INCLUDE_DIRS})
 
@@ -62,6 +62,8 @@ foreach(source ${UIFILE})
     message("  - " ${source})
 endforeach(source)
 
+qt5_create_translation(TSFILE ${CMAKE_CURRENT_SOURCE_DIR} rviz_widget_en_US.ts  rviz_widget_ru_RU.ts)
+
 
 message("buliding ${PROJECT_NAME} node: ")
 
@@ -70,6 +72,7 @@ add_library(
     ${CPPFILE}
     ${HFILE}
     ${UIFILE}
+    ${TSFILE}
     )
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} Qt5::Widgets stateWidget)

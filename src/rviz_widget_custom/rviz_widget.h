@@ -2,6 +2,8 @@
 #define RVIZ_WIDGET_H
 
 #include <QWidget>
+#include <QTranslator>
+
 #include "rviz_widget_base.h"
 
 QT_BEGIN_NAMESPACE
@@ -19,9 +21,13 @@ public:
     RVIZ_widget(QWidget *parent = nullptr);
     ~RVIZ_widget();
 
+    void updateLanguage();
+
 private slots:
     void on_addPanelButton_pressed();
     void on_saveButton_pressed();
+
+    void changeEvent(QEvent *event);
 
 private:
     Ui::RVIZ_widget *ui;

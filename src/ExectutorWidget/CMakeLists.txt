@@ -8,7 +8,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 
 include_directories(${catkin_INCLUDE_DIRS})
 
@@ -54,6 +54,8 @@ foreach(source ${UIFILE})
 endforeach(source)
 
 set(QRCFILE ../../resource/resource.qrc)
+qt5_add_translation(TSFILE executor_en_US.ts executor_ru_RU.ts)
+
 #qt5_add_resources(QRCFILE ../../resource/resource.qrc)
 message("buliding ${PROJECT_NAME} node: ")
 

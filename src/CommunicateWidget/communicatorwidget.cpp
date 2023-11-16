@@ -77,6 +77,7 @@ void CommunicatorWidget::on_sendButton_clicked()
 
 void CommunicatorWidget::show()
 {
+    this->updateLanguage();
     this->updateComPorts();
     ui->msgLabel->setText(mcu->isConnected()? "connected" : "disconnected");
     this->QWidget::show();
@@ -88,3 +89,17 @@ void CommunicatorWidget::on_commandList_itemActivated(QListWidgetItem *item)
     ui->commandLine->setText(item->text());
 }
 
+void CommunicatorWidget::updateLanguage()
+{
+    QLocale locale;
+    QString path = QApplication::applicationDirPath();
+    QString fileName = QString("/ProgEditorWidget_%1.qm").arg(locale.name());
+
+    qApp->removeTranslator(&translate);
+    qDebug() << translate.load(path + fileName);
+    if (translate.load(path + fileName))
+    {
+        qApp->installTranslator(&translate);
+    }
+    ui->retranslateUi(this);
+}
