@@ -37,15 +37,14 @@ private slots:
     void changeEvent(QEvent *event);
 
 private:
-
     QStringList progFiles;
     QString pathFolder;
 
     Ui::ExecturtorWidget *ui;
     IExecutor *exec;
     Programm *programm;
-
     ProgrammModel *prgModel;
     Safety *safety;
+    QTranslator translate;
 };
 #endif // EXECTURTORWIDGET_H

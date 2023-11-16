@@ -36,6 +36,7 @@ private:
     QList<QSerialPortInfo> list;
     Ui::CommunicatorWidget *ui;
     SerialTranslator *mcu;
+    QTranslator translate;
 
     void updateLanguage();
 

@@ -32,5 +32,6 @@ private slots:
 private:
     Ui::RVIZ_widget *ui;
     RVIZ_widget_base *_rvizBase;
+    QTranslator translate;
 };
 #endif // RVIZ_WIDGET_H
