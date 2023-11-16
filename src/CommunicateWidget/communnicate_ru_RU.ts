@@ -10,5 +10,30 @@
         <translation >подключить</translation>
     </message>
     
+    <message>
+        <source>disconnect</source>
+        <translation >отключить</translation>
+    </message>
+
+    <message>
+        <source>close</source>
+        <translation >закрыть</translation>
+    </message>
+    
+    <message>
+        <source>status:</source>
+        <translation >статус:</translation>
+    </message>
+
+    <message>
+        <source>serial port:</source>
+        <translation >com порт:</translation>
+    </message>
+
+    <message>
+        <source>send</source>
+        <translation >отправить</translation>
+    </message>
+
 </context>
 </TS>

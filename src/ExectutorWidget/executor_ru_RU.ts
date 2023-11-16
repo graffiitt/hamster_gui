@@ -18,6 +18,10 @@
         <source>STEP</source>
         <translation >шаг</translation>
     </message>
+    <message>
+        <source>open dir</source>
+        <translation >папка</translation>
+    </message>
 
     </context>
 </TS>

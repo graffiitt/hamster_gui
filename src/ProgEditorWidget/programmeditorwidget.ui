@@ -361,6 +361,9 @@
        </item>
        <item row="2" column="6">
         <widget class="QCheckBox" name="ifIOstate">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>state</string>
          </property>

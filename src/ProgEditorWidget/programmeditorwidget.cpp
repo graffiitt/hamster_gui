@@ -365,7 +365,6 @@ void ProgrammEditorWidget::updateLanguage()
     QString fileName = QString("/ProgEditorWidget_%1.qm").arg(locale.name());
 
     qApp->removeTranslator(&translate);
-    qDebug() << translate.load(path + fileName);
     if (translate.load(path + fileName))
     {
         qApp->installTranslator(&translate);
@@ -435,7 +434,6 @@ void ProgrammEditorWidget::on_ifItem_1_Box_currentIndexChanged(int index)
             ui->ifIOstate->setEnabled(false);
             ui->ifItem_2_Box->setEnabled(true);
             ui->ifItem_2_Spin->setEnabled(true);
-
         }
     }
 }

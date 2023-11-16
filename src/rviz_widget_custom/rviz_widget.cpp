@@ -29,7 +29,6 @@ void RVIZ_widget::updateLanguage()
     QString fileName = QString("/rviz_widget_%1.qm").arg(locale.name());
 
     qApp->removeTranslator(&translate);
-    qDebug() << translate.load(path + fileName);
     if (translate.load(path + fileName))
     {
         qApp->installTranslator(&translate);

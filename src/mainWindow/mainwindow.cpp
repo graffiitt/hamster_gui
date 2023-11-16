@@ -153,7 +153,6 @@ void MainWindow::changeEvent(QEvent *event)
     {
         QLocale locale;
         ui->retranslateUi(this);
-        qDebug() << "mainwindow change lang event " << QLocale::languageToString(locale.language());
     }
 }
 
@@ -183,7 +182,6 @@ void MainWindow::loadLanguage()
         qApp->installTranslator(&translate);
     }
     programmWidget->updateLanguage();
-execWidget->updateLanguage();
-rviz_widget->updateLanguage();
-
+    execWidget->updateLanguage();
+    rviz_widget->updateLanguage();
 }

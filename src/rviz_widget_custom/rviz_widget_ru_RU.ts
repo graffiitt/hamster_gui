@@ -9,7 +9,7 @@
     </message>
   
     <message>
-        <source>add panel</source>
+        <source>add Panel</source>
         <translation>панели</translation>
     </message>
 

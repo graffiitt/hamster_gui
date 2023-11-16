@@ -35,7 +35,6 @@ void ExecturtorWidget::updateLanguage()
     QString fileName = QString("/executor_%1.qm").arg(locale.name());
 
     qApp->removeTranslator(&translate);
-    qDebug() << translate.load(path + fileName);
     if (translate.load(path + fileName))
     {
         qApp->installTranslator(&translate);
