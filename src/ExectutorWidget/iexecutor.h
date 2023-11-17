@@ -8,8 +8,6 @@
 #include "../JSONmodule/jsonmodule.h"
 #include "../RegisterWidget/registerdto.h"
 
-
-
 class IExecutor : public QThread
 {
     Q_OBJECT
@@ -36,10 +34,11 @@ private:
     void execMath(QJsonObject obj);
     int getNumber(int num, QJsonObject obj);
     void execIf(QJsonObject obj);
+    bool compressionItem(QJsonObject num);
     void execJump(QJsonObject obj);
+    int searchLBLtoJump(int lbl);
     void execPoint(QJsonObject obj);
     void execWait(QJsonObject obj);
-
 
 private slots:
     void errorSlot(bool state);

@@ -15,7 +15,7 @@ ExecturtorWidget::ExecturtorWidget(QWidget *parent)
 
     safety = Safety::getInstance();
 
-    connect(exec, &IExecutor::updateModel, this, &ExecturtorWidget::changeProgramm, Qt::DirectConnection);
+    connect(exec, &IExecutor::updateModel, prgModel, &ProgrammModel::updateProgramm, Qt::DirectConnection);
     connect(safety, &Safety::changeCurrentLine, this, &ExecturtorWidget::changeCurrLine);
 }
 
@@ -78,11 +78,7 @@ void ExecturtorWidget::on_tableView_clicked(const QModelIndex &index)
 }
 
 
-void ExecturtorWidget::changeProgramm(Programm prg)
-{
-    prgModel->updateProgramm(prg);
-}
-
+ 
 void ExecturtorWidget::changeCurrLine(int line)
 {
     ui->tableView->selectRow(line);

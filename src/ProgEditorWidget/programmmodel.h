@@ -10,7 +10,6 @@ public:
     ProgrammModel(Programm *pr);
 
     void addComand(QModelIndex ind, ICommand *cmd);
-    void updateProgramm(QList <ICommand *> pr);
     void deleteCommands();
     void deleteCommand(QModelIndex idx);
 
@@ -22,6 +21,9 @@ public:
     int columnCount(const QModelIndex &parent) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant data(const QModelIndex &index, int role) const;
+
+public slots:
+    void updateProgramm(QList<ICommand *> pr);
 
 private:
     Programm *programm;

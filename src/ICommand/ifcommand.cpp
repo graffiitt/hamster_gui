@@ -87,7 +87,7 @@ QString IfCommand::getItem(int number)
     }
     case TypeItem::IO:
     {
-        str = "IO[" + QString::number(_data.value(QString("ioPin_%1").arg(number)).toInt()) + "]" +
+        str = "IO[" + QString::number(_data["ioPin_1"].toInt()) + "]" +
              " = " + (_data.value("ioPinState_1").toInt() ? "TRUE" : "FALSE");
         break;
     }
