@@ -26,7 +26,7 @@ public:
     void updateLanguage();
 
 signals:
-    void updateFinish();
+    void updateProgFinished();
 
 private slots:
     void on_runButton_clicked();
@@ -36,6 +36,7 @@ private slots:
     void on_tableView_clicked(const QModelIndex &index);
     void on_stepButton_clicked(bool checked);
 
+    void changeProgramm(QString path);
     void changeCurrLine(int line);
 
     void changeEvent(QEvent *event);
@@ -43,7 +44,7 @@ private slots:
 private:
     QStringList progFiles;
     QString pathFolder;
-
+ 
     Ui::ExecturtorWidget *ui;
     IExecutor *exec;
     Programm *programm;

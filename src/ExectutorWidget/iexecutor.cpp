@@ -7,7 +7,7 @@ IExecutor::IExecutor()
     safety = Safety::getInstance();
 
     _currentLine = 0;
-    errorState = stepMode = stepTrig = false;
+    errorState = stepMode = stepTrig = updateTable = false;
 
     connect(this, &IExecutor::setMode, this, &IExecutor::changeMode, Qt::DirectConnection);
     connect(safety, &Safety::outError, this, &IExecutor::errorSlot, Qt::DirectConnection);
@@ -29,9 +29,12 @@ void IExecutor::loadProgramm(QString pathFolder, QString ProgName)
     lineProgramm.clear();
     listProgram.push_back(ProgName);
 
-    _currentLine = 0;
-    emit updateModel(programm);
+    emit updateModel(pathFolder + "/" + ProgName);
 
+    while (!updateTable)
+    {
+    }
+    updateTable = false;
     qDebug() << "iexec " << lineProgramm << "  " << listProgram;
 }
 
@@ -45,7 +48,7 @@ void IExecutor::execCall(QJsonObject obj)
     {
         qDebug() << "change prog";
         programm = jsonLoad->openFile(path);
-        emit updateModel(programm);
+        emit updateModel(path);
 
         lineProgramm.push_back(_currentLine);
         listProgram.push_back(progName);
@@ -308,7 +311,7 @@ void IExecutor::run()
                 _currentLine = lineProgramm.takeLast() + 1;
                 listProgram.removeLast();
                 programm = jsonLoad->openFile(pathFolder + "/" + listProgram.last());
-                emit updateModel(programm);
+                emit updateModel(pathFolder + "/" + listProgram.last());
                 safety->changeCurrentLine(_currentLine);
             }
             else
@@ -336,4 +339,9 @@ void IExecutor::changeMode(bool stepMode)
 {
     this->stepMode = stepMode;
     safety->step(stepMode);
+}
+
+void IExecutor::finishUpdateTable()
+{
+    updateTable = true;
 }

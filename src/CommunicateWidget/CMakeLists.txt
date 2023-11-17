@@ -67,8 +67,7 @@ add_library(
     ${HFILE}
     ${UIFILE}
     ${QRCFILE}
-    ${TSFILE}
-    )
+     )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${catkin_LIBRARIES} Qt5::Widgets Qt5::SerialPort stateWidget)
 target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
