@@ -13,7 +13,7 @@ ExecturtorWidget::ExecturtorWidget(QWidget *parent)
 
     safety = Safety::getInstance();
 
-    connect(exec, &IExecutor::updateModel, prgModel, &ProgrammModel::updateProgramm, Qt::DirectConnection);
+    connect(exec, &IExecutor::updateModel, this, &ExecturtorWidget::changeProgramm, Qt::DirectConnection);
     connect(safety, &Safety::changeCurrentLine, this, &ExecturtorWidget::changeCurrLine);
     connect(this, &ExecturtorWidget::updateProgFinished, exec, &IExecutor::finishUpdateTable, Qt::DirectConnection);
 }

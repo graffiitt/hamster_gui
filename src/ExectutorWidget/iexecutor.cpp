@@ -11,7 +11,6 @@ IExecutor::IExecutor()
 
     connect(this, &IExecutor::setMode, this, &IExecutor::changeMode, Qt::DirectConnection);
     connect(safety, &Safety::outError, this, &IExecutor::errorSlot, Qt::DirectConnection);
-    
 }
 
 IExecutor::~IExecutor()
@@ -28,7 +27,7 @@ void IExecutor::loadProgramm(QString pathFolder, QString ProgName)
     listProgram.clear();
     lineProgramm.clear();
     listProgram.push_back(ProgName);
-
+    _currentLine = 0;
     emit updateModel(pathFolder + "/" + ProgName);
 
     while (!updateTable)
