@@ -74,8 +74,7 @@ add_library(
     ${HFILE}
     ${UIFILE}
     ${QRCFILE}
-    ${TSFILE}
-    )
+     )
 
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} Qt5::Widgets Qt5::SerialPort CommunicateWidget ProgEditorWidget ExectutorWidget rviz_widget_custom)
@@ -96,7 +95,7 @@ add_executable(
     ${PROJECT_NAME}
     main.cpp
     ${QRCFILE}
-    ${TSFILE}
+ 
 )
 target_link_libraries(${PROJECT_NAME} PRIVATE ${catkin_LIBRARIES} Qt5::Widgets Qt5::SerialPort mainWindow)
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

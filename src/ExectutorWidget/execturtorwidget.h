@@ -9,9 +9,11 @@
 #include "iexecutor.h"
 #include "../ProgEditorWidget/programmmodel.h"
 
-
 QT_BEGIN_NAMESPACE
-namespace Ui { class ExecturtorWidget; }
+namespace Ui
+{
+    class ExecturtorWidget;
+}
 QT_END_NAMESPACE
 
 class ExecturtorWidget : public QWidget
@@ -23,6 +25,9 @@ public:
 
     void updateLanguage();
 
+signals:
+    void updateProgFinished();
+
 private slots:
     void on_runButton_clicked();
     void on_holdButton_clicked();
@@ -31,7 +36,7 @@ private slots:
     void on_tableView_clicked(const QModelIndex &index);
     void on_stepButton_clicked(bool checked);
 
-    void changeProgramm(Programm prg);
+    void changeProgramm(QString path);
     void changeCurrLine(int line);
 
     void changeEvent(QEvent *event);
@@ -39,7 +44,7 @@ private slots:
 private:
     QStringList progFiles;
     QString pathFolder;
-
+ 
     Ui::ExecturtorWidget *ui;
     IExecutor *exec;
     Programm *programm;

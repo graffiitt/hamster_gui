@@ -26,7 +26,7 @@ private:
     RegisterDTO *regDTO;
 
     int _currentLine;
-    bool stepMode, stepTrig, errorState;
+    bool stepMode, stepTrig, errorState, updateTable;
     QString pathFolder;
     QList<QString> listProgram;
     QList<int> lineProgramm;
@@ -40,14 +40,18 @@ private:
     void execPoint(QJsonObject obj);
     void execWait(QJsonObject obj);
 
+public slots:
+    void finishUpdateTable();
+
+signals:
+    void setMode(bool StepMode);
+    void updateModel(QString path);
 
 private slots:
     void errorSlot(bool state);
     void changeMode(bool stepMode);
 
-signals:
-    void setMode(bool StepMode);
-    void updateModel(Programm programm);
+
 };
 
 #endif // IEXECUTOR_H

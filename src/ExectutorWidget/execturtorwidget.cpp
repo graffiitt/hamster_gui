@@ -1,10 +1,8 @@
 #include "execturtorwidget.h"
 #include "ui_execturtorwidget.h"
 
-
 ExecturtorWidget::ExecturtorWidget(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::ExecturtorWidget)
+    : QWidget(parent), ui(new Ui::ExecturtorWidget)
 {
     ui->setupUi(this);
     exec = new IExecutor();
@@ -17,8 +15,8 @@ ExecturtorWidget::ExecturtorWidget(QWidget *parent)
 
     connect(exec, &IExecutor::updateModel, this, &ExecturtorWidget::changeProgramm, Qt::DirectConnection);
     connect(safety, &Safety::changeCurrentLine, this, &ExecturtorWidget::changeCurrLine);
+    connect(this, &ExecturtorWidget::updateProgFinished, exec, &IExecutor::finishUpdateTable, Qt::DirectConnection);
 }
-
 
 ExecturtorWidget::~ExecturtorWidget()
 {
@@ -44,16 +42,12 @@ void ExecturtorWidget::updateLanguage()
 void ExecturtorWidget::on_runButton_clicked()
 {
     exec->start();
-
 }
-
 
 void ExecturtorWidget::on_holdButton_clicked()
 {
     exec->requestInterruption();
-
 }
-
 
 void ExecturtorWidget::on_openFileButton_clicked()
 {
@@ -63,7 +57,6 @@ void ExecturtorWidget::on_openFileButton_clicked()
     ui->fileBox->addItems(progFiles);
 }
 
-
 void ExecturtorWidget::on_fileBox_activated(int index)
 {
     exec->loadProgramm(pathFolder, progFiles.value(index));
@@ -71,16 +64,19 @@ void ExecturtorWidget::on_fileBox_activated(int index)
     //    prgModel->updateProgramm(jsonLoad->openFile(path));
 }
 
-
 void ExecturtorWidget::on_tableView_clicked(const QModelIndex &index)
 {
-
 }
 
-
-void ExecturtorWidget::changeProgramm(Programm prg)
+void ExecturtorWidget::changeProgramm(QString path)
 {
+    JSONmodule loader;
+    qDebug() << "execWidg open " << path;
+    Programm prg = loader.openFile(path);
     prgModel->updateProgramm(prg);
+    qDebug() << "execWidg load finish ";
+    emit this->updateProgFinished();
+    // prgModel->updateProgramm(prg);
 }
 
 void ExecturtorWidget::changeCurrLine(int line)
@@ -99,6 +95,4 @@ void ExecturtorWidget::changeEvent(QEvent *event)
 void ExecturtorWidget::on_stepButton_clicked(bool checked)
 {
     emit exec->setMode(checked);
-
 }
-

@@ -1,6 +1,5 @@
 #include "iexecutor.h"
 
-
 IExecutor::IExecutor()
 {
     regDTO = new RegisterDTO();
@@ -8,12 +7,11 @@ IExecutor::IExecutor()
     safety = Safety::getInstance();
 
     _currentLine = 0;
-    errorState = stepMode = stepTrig = false;
+    errorState = stepMode = stepTrig = updateTable = false;
 
     connect(this, &IExecutor::setMode, this, &IExecutor::changeMode, Qt::DirectConnection);
     connect(safety, &Safety::outError, this, &IExecutor::errorSlot, Qt::DirectConnection);
 }
-
 
 IExecutor::~IExecutor()
 {
@@ -21,20 +19,23 @@ IExecutor::~IExecutor()
     delete jsonLoad;
 }
 
-
 void IExecutor::loadProgramm(QString pathFolder, QString ProgName)
 {
     this->pathFolder = pathFolder;
-    programm = jsonLoad->openFile(pathFolder+"/"+ProgName);
+    programm = jsonLoad->openFile(pathFolder + "/" + ProgName);
 
-    listProgram.clear();lineProgramm.clear();
+    listProgram.clear();
+    lineProgramm.clear();
     listProgram.push_back(ProgName);
 
-    emit updateModel(programm);
+    emit updateModel(pathFolder + "/" + ProgName);
 
-    qDebug()<< "iexec " << lineProgramm<< "  "<< listProgram;
+    while (!updateTable)
+    {
+    }
+    updateTable = false;
+    qDebug() << "iexec " << lineProgramm << "  " << listProgram;
 }
-
 
 void IExecutor::execCall(QJsonObject obj)
 {
@@ -42,11 +43,11 @@ void IExecutor::execCall(QJsonObject obj)
     QString progName = programm.at(_currentLine)->getData()["namePrg"].toString();
     QString path = pathFolder + "/" + progName;
 
-    if(jsonLoad->isExist(path))
+    if (jsonLoad->isExist(path))
     {
-        qDebug()<<"change prog";
+        qDebug() << "change prog";
         programm = jsonLoad->openFile(path);
-        emit updateModel(programm);
+        emit updateModel(path);
 
         lineProgramm.push_back(_currentLine);
         listProgram.push_back(progName);
@@ -58,15 +59,14 @@ void IExecutor::execCall(QJsonObject obj)
     else
     {
         safety->setError("file " + progName + " not found");
-
     }
 }
-
 
 void IExecutor::execMath(QJsonObject obj)
 {
     int outNum;
-    switch (obj["operator"].toInt()) {
+    switch (obj["operator"].toInt())
+    {
     case MathOperator::none:
     {
         outNum = this->getNumber(1, obj);
@@ -89,7 +89,7 @@ void IExecutor::execMath(QJsonObject obj)
     }
     case MathOperator::divide:
     {
-        if(this->getNumber(2, obj) != 0)
+        if (this->getNumber(2, obj) != 0)
             outNum = this->getNumber(1, obj) / this->getNumber(2, obj);
         else
         {
@@ -101,7 +101,8 @@ void IExecutor::execMath(QJsonObject obj)
     default:
         outNum = 0;
     }
-    switch (obj["regOutType"].toInt()) {
+    switch (obj["regOutType"].toInt())
+    {
     case TypeItem::reg:
     {
         regDTO->changeRegister(obj["regOut"].toInt(), outNum, "regData");
@@ -117,25 +118,25 @@ void IExecutor::execMath(QJsonObject obj)
     regDTO->save();
 }
 
-
 int IExecutor::getNumber(int num, QJsonObject obj)
 {
     int out;
-    switch (obj["itemType_"+QString::number(num)].toInt()) {
+    switch (obj["itemType_" + QString::number(num)].toInt())
+    {
     case TypeItem::number:
     {
-        out = obj["number_"+QString::number(num)].toInt();
+        out = obj["number_" + QString::number(num)].toInt();
         break;
     }
     case TypeItem::reg:
     {
-        int val = obj["register_"+QString::number(num)].toInt();
+        int val = obj["register_" + QString::number(num)].toInt();
         out = regDTO->getRegister(val).toInt();
         break;
     }
     case TypeItem::posReg:
     {
-        int val = obj["poseReg_"+QString::number(num)].toInt();
+        int val = obj["poseReg_" + QString::number(num)].toInt();
         int item = obj["poseRegItem_" + QString::number(num)].toInt();
         out = regDTO->getRawRegister(val)["poseRegItem_" + QString::number(item)].toInt();
         break;
@@ -147,21 +148,18 @@ int IExecutor::getNumber(int num, QJsonObject obj)
     return out;
 }
 
-
 void IExecutor::execIf(QJsonObject obj)
 {
-
 }
-
 
 void IExecutor::execJump(QJsonObject obj)
 {
-    if(programm.at(_currentLine)->getData()["mode"].toInt() == JumpMode::jump)
-        for ( int i = 0; i < programm.size(); i++)
+    if (programm.at(_currentLine)->getData()["mode"].toInt() == JumpMode::jump)
+        for (int i = 0; i < programm.size(); i++)
         {
-            if ( programm.at(i)->getType() == "jump" &&
-                 programm.at(i)->getData()["mode"].toInt() == JumpMode::lbl &&
-                 programm.at(i)->getData()["lbl"].toInt() == obj["lbl"].toInt())
+            if (programm.at(i)->getType() == "jump" &&
+                programm.at(i)->getData()["mode"].toInt() == JumpMode::lbl &&
+                programm.at(i)->getData()["lbl"].toInt() == obj["lbl"].toInt())
             {
                 _currentLine = i;
                 i = programm.size();
@@ -169,22 +167,20 @@ void IExecutor::execJump(QJsonObject obj)
         }
 }
 
-
 void IExecutor::execPoint(QJsonObject obj)
 {
-
 }
-
 
 void IExecutor::execWait(QJsonObject obj)
 {
-    switch (obj["waitType"].toInt()) {
+    switch (obj["waitType"].toInt())
+    {
     case WaitType::timer: // time
     {
         QTime timer = QTime::currentTime().addSecs(obj["time"].toInt());
-        while(QTime::currentTime()<timer && !errorState && !this->isInterruptionRequested())
+        while (QTime::currentTime() < timer && !errorState && !this->isInterruptionRequested())
         {
-            QCoreApplication::processEvents( QEventLoop::AllEvents, 100 );
+            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
         }
         break;
     }
@@ -201,25 +197,24 @@ void IExecutor::execWait(QJsonObject obj)
     }
 }
 
-
 void IExecutor::errorSlot(bool state)
 {
     errorState = state;
 }
 
-
 void IExecutor::run()
 {
-    qDebug()<<"exec start err "<< errorState << "stpe "<< stepTrig;
+    qDebug() << "exec start err " << errorState << "stpe " << stepTrig;
     safety->run(true);
     stepTrig = true;
 
-    while(!errorState && stepTrig && programm.size() != _currentLine  && !this->isInterruptionRequested())
+    while (!errorState && stepTrig && programm.size() != _currentLine && !this->isInterruptionRequested())
     {
         QJsonObject obj = programm.at(_currentLine)->getData();
 
         safety->changeCurrentLine(_currentLine);
-        switch (programm.at(_currentLine)->getId()) {
+        switch (programm.at(_currentLine)->getId())
+        {
         case Command::Call:
         {
             this->execCall(obj);
@@ -259,30 +254,29 @@ void IExecutor::run()
         }
         }
 
-        if (programm.size() == _currentLine + 1 )
+        if (programm.size() == _currentLine + 1)
         {
             if (listProgram.size() != 1)
             {
-                qDebug()<<"change prog";
+                qDebug() << "change prog";
 
                 _currentLine = lineProgramm.takeLast() + 1;
                 listProgram.removeLast();
                 programm = jsonLoad->openFile(pathFolder + "/" + listProgram.last());
-                emit updateModel(programm);
+                emit updateModel(pathFolder + "/" + listProgram.last());
                 safety->changeCurrentLine(_currentLine);
-
             }
             else
             {
                 _currentLine = -1;
-                qDebug()<<"exec break";
+                qDebug() << "exec break";
                 stepTrig = false;
-                //this->requestInterruption();
-                qDebug()<<"stop requset";
+                // this->requestInterruption();
+                qDebug() << "stop requset";
             }
         }
 
-        if(stepMode)
+        if (stepMode)
         {
             stepTrig = false;
         }
@@ -290,12 +284,16 @@ void IExecutor::run()
         _currentLine++;
     }
     safety->run(false);
-    qDebug()<<"exec stop";
+    qDebug() << "exec stop";
 }
-
 
 void IExecutor::changeMode(bool stepMode)
 {
     this->stepMode = stepMode;
     safety->step(stepMode);
+}
+
+void IExecutor::finishUpdateTable()
+{
+    updateTable = true;
 }

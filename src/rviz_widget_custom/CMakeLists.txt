@@ -72,7 +72,7 @@ add_library(
     ${CPPFILE}
     ${HFILE}
     ${UIFILE}
-    ${TSFILE}
+    
     )
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} Qt5::Widgets stateWidget)
