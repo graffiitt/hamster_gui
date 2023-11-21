@@ -13,6 +13,7 @@
 #include "../RegisterWidget/registerwidget.h"
 #include "../CommunicateWidget/communicatorwidget.h"
 #include "../rviz_widget_custom/rviz_widget.h"
+#include "../IOwidget/ioWidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -34,6 +35,7 @@ private slots:
     void on_progButton_pressed();
     void on_regButton_pressed();
     void on_runButton_pressed();
+    void on_ioButton_pressed();
 
     void on_createFileAction_triggered();
     void on_openFileAction_triggered();
@@ -59,6 +61,7 @@ private:
     RegisterWidget *regWidget;
     CommunicatorWidget *connectWidget;
     RVIZ_widget *rviz_widget;
+    IOWidget *ioWidget;
 
     QTranslator translate;
     QLocale locale;

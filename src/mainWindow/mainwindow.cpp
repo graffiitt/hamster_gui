@@ -21,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent)
     rviz_widget = new RVIZ_widget();
     ui->rviz_layout->addWidget(rviz_widget);
 
+    ioWidget = new IOWidget();
+    ui->ioLayout->addWidget(ioWidget);
+
     _path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
             "/GraffitRobotics";
     _pathProgramm = _path + "/default.json";
@@ -39,6 +42,7 @@ MainWindow::~MainWindow()
     delete safety;
     delete connectWidget;
     delete rviz_widget;
+    delete ioWidget;
 }
 
 void MainWindow::on_homeButton_pressed()
@@ -68,6 +72,14 @@ void MainWindow::on_runButton_pressed()
     if (ui->viewerWidget->currentIndex() != 2)
     {
         ui->viewerWidget->setCurrentIndex(2);
+    }
+}
+
+void MainWindow::on_ioButton_pressed()
+{
+    if (ui->viewerWidget->currentIndex() != 4)
+    {
+        ui->viewerWidget->setCurrentIndex(4);
     }
 }
 

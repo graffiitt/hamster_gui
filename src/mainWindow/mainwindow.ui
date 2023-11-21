@@ -454,30 +454,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal, QScrollBar::ad
     <property name="spacing">
      <number>6</number>
     </property>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="homeButton">
-      <property name="maximumSize">
-       <size>
-        <width>60</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="toolTip">
-       <string>main</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="../../resource/resource.qrc">
-        <normaloff>:/icons/img/home.svg</normaloff>:/icons/img/home.svg</iconset>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="2">
-     <layout class="QHBoxLayout" name="infoLayout"/>
-    </item>
-    <item row="1" column="1" rowspan="6">
+    <item row="1" column="1" rowspan="7">
      <widget class="QStackedWidget" name="viewerWidget">
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="rviz_layout"/>
@@ -490,6 +467,9 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal, QScrollBar::ad
       </widget>
       <widget class="QWidget" name="rigister">
        <layout class="QVBoxLayout" name="registerLayout"/>
+      </widget>
+      <widget class="QWidget" name="io">
+       <layout class="QHBoxLayout" name="ioLayout"/>
       </widget>
      </widget>
     </item>
@@ -513,6 +493,19 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal, QScrollBar::ad
       </property>
      </widget>
     </item>
+    <item row="7" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>303</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item row="1" column="0">
      <spacer name="verticalSpacer_3">
       <property name="orientation">
@@ -528,6 +521,29 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal, QScrollBar::ad
        </size>
       </property>
      </spacer>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="homeButton">
+      <property name="maximumSize">
+       <size>
+        <width>60</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>main</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="../../resource/resource.qrc">
+        <normaloff>:/icons/img/home.svg</normaloff>:/icons/img/home.svg</iconset>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <layout class="QHBoxLayout" name="infoLayout"/>
     </item>
     <item row="3" column="0">
      <widget class="QPushButton" name="progButton">
@@ -549,19 +565,6 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal, QScrollBar::ad
       </property>
      </widget>
     </item>
-    <item row="6" column="0">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>303</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
     <item row="5" column="0">
      <widget class="QPushButton" name="regButton">
       <property name="maximumSize">
@@ -582,12 +585,33 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal, QScrollBar::ad
       </property>
      </widget>
     </item>
+    <item row="6" column="0">
+     <widget class="QPushButton" name="ioButton">
+      <property name="maximumSize">
+       <size>
+        <width>60</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>register editor</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="../../resource/resource.qrc">
+        <normaloff>:/icons/img/shuffle.svg</normaloff>:/icons/img/shuffle.svg</iconset>
+      </property>
+     </widget>
+    </item>
    </layout>
    <zorder>viewerWidget</zorder>
-   <zorder>regButton</zorder>
    <zorder>homeButton</zorder>
    <zorder>runButton</zorder>
    <zorder>progButton</zorder>
+   <zorder>regButton</zorder>
+   <zorder>ioButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
