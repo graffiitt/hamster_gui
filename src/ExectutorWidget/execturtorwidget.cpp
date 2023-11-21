@@ -60,8 +60,6 @@ void ExecturtorWidget::on_openFileButton_clicked()
 void ExecturtorWidget::on_fileBox_activated(int index)
 {
     exec->loadProgramm(pathFolder, progFiles.value(index));
-
-    //    prgModel->updateProgramm(jsonLoad->openFile(path));
 }
 
 void ExecturtorWidget::on_tableView_clicked(const QModelIndex &index)

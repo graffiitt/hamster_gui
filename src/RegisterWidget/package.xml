@@ -2,9 +2,8 @@
 <package format="2">
   <name>RegisterWidget</name>
   <version>0.1.0</version>
-  <description>The rviz_widget_custom package create qwidget with custom settings</description>
-  <maintainer email="macubuntu@todo.todo">macubuntu</maintainer>
-
+  <description>contains ui for edit variable</description>
+   <maintainer email="vladikkopylov31@gmail.com">vlad</maintainer>
 
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->

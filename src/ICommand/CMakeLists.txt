@@ -58,7 +58,7 @@ set(QRCFILE ../../resource/resource.qrc)
 message("buliding ${PROJECT_NAME} node: ")
 
 add_library(
-    ${PROJECT_NAME} STATIC
+    ${PROJECT_NAME} SHARED
     ${CPPFILE}
     ${HFILE}
     ${UIFILE}
@@ -67,5 +67,4 @@ add_library(
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} Qt5::Widgets)
 target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
-
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

@@ -2,13 +2,9 @@
 <package format="2">
   <name>CommunicateWidget</name>
   <version>0.2.0</version>
-  <description>The rviz_widget_custom package create qwidget with custom settings</description>
-  <maintainer email="macubuntu@todo.todo">macubuntu</maintainer>
-
-
-  <!-- One license tag required, multiple allowed, one license per tag -->
-  <!-- Commonly used license strings: -->
-  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <description>The  package contains dialog for connect to mcu</description>
+  <maintainer email="vladikkopylov31@gmail.com">vlad</maintainer>
+ 
   <license>TODO</license>
 
   <buildtool_depend>catkin</buildtool_depend>

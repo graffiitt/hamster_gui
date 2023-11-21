@@ -1,8 +1,6 @@
 #ifndef RVIZ_WIDGET_BASE_H
 #define RVIZ_WIDGET_BASE_H
 
-#include <fstream>
-
 #include <QDebug>
 #include <QMainWindow>
 #include <QDockWidget>
@@ -10,11 +8,6 @@
 #include <QToolButton>
 #include <QPushButton>
 #include <ros/ros.h>
-
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/trim.hpp>
-#include <boost/bind.hpp>
-#include <boost/filesystem.hpp>
 
 #include <rviz/widget_geometry_change_detector.h>
 #include <rviz/new_object_dialog.h>
@@ -32,7 +25,6 @@
 
 #include "../stateWidget/safety.h"
 
-namespace fs = boost::filesystem;
 using namespace rviz;
 
 QT_BEGIN_NAMESPACE
@@ -62,7 +54,6 @@ private slots:
     void onDockPanelVisiblityChange(bool state);
 
 private:
-    WidgetGeometryChangeDetector *_geom_change_detector;
     rviz::VisualizationManager *_rvizManager;
     rviz::RenderPanel *_rvizPanel;
     rviz::Display *_rvizDisplay;
@@ -80,7 +71,6 @@ private:
         PanelDockWidget *dock;
         QString name;
         QString classId;
-        //   QAction *deleteAction;
     };
     QList<PanelRecord> _customPanels;
 

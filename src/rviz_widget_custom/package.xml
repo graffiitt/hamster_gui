@@ -2,9 +2,8 @@
 <package format="2">
   <name>rviz_widget_custom</name>
   <version>0.0.1</version>
-  <description>The rviz_widget_custom package create qwidget with custom settings</description>
-  <maintainer email="macubuntu@todo.todo">macubuntu</maintainer>
-
+  <description>The ros package for vizualize rviz</description>
+   <maintainer email="vladikkopylov31@gmail.com">vlad</maintainer>
 
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->

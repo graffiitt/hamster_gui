@@ -2,7 +2,7 @@
 #define PROGRAMMMODEL_H
 
 #include <QAbstractItemView>
-#include <../ICommand/icommand.h>
+#include "../ICommand/icommand.h"
 
 class ProgrammModel : public QAbstractTableModel
 {

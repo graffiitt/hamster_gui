@@ -1,15 +1,10 @@
 #include "rviz_widget_base.h"
 
 RVIZ_widget_base::RVIZ_widget_base(QWidget *parent)
-    : QMainWindow(parent), _geom_change_detector(new WidgetGeometryChangeDetector(this))
-
+    : QMainWindow(parent)
 {
     _panelFactory = new PanelFactory();
-    installEventFilter(_geom_change_detector);
 
-    ROS_ASSERT(_rvizDisplay != NULL);
-
-    // this->initialize("");
     pakagePath = ros::package::getPath("hamster_gui");
     defoult_config_file = QString::fromStdString(pakagePath + "/config/default.rviz");
     safety = Safety::getInstance();
@@ -40,7 +35,7 @@ void RVIZ_widget_base::initialize(const QString &display_config_file)
     centralLayout->setSpacing(0);
     centralLayout->setMargin(0);
 
-    // add left and right button
+    // add left button
     hide_left_button = new QToolButton();
     hide_left_button->setContentsMargins(0, 0, 0, 0);
     hide_left_button->setArrowType(Qt::LeftArrow);
@@ -149,13 +144,13 @@ void RVIZ_widget_base::save(Config config)
 {
     _rvizManager->save(config.mapMakeChild("Visualization Manager"));
     savePanels(config.mapMakeChild("Panels"));
-    //saveWindowGeometry(config.mapMakeChild("Window Geometry"));
+    // saveWindowGeometry(config.mapMakeChild("Window Geometry"));
     config = config.mapMakeChild("Window Geometry");
     QByteArray windowState = saveState().toHex();
     config.mapSetValue("QMainWindow State", windowState.constData());
-   
-    QList<PanelDockWidget*> dockWidget = findChildren<PanelDockWidget*>();
-    for(QList<PanelDockWidget*>::iterator it = dockWidget.begin(); it != dockWidget.end(); it++)
+
+    QList<PanelDockWidget *> dockWidget = findChildren<PanelDockWidget *>();
+    for (QList<PanelDockWidget *>::iterator it = dockWidget.begin(); it != dockWidget.end(); it++)
     {
         (*it)->save(config.mapGetChild((*it)->windowTitle()));
     }
@@ -173,12 +168,9 @@ PanelDockWidget *RVIZ_widget_base::addPane(const QString &name, QWidget *pane, Q
     dock->setContentWidget(pane);
     dock->setFloating(floating);
     dock->setObjectName(name);
-
     addDockWidget(area, dock);
 
     connect(dock, &PanelDockWidget::visibilityChanged, this, &RVIZ_widget_base::onDockPanelVisiblityChange);
-    dock->installEventFilter(_geom_change_detector);
-
     return dock;
 }
 
