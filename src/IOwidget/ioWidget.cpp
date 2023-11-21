@@ -26,6 +26,11 @@ IOWidget::IOWidget(QWidget *parent)
         vboxOUT->addWidget(item);
     }
     ui->outputBox->setLayout(vboxOUT);
+
+    safety = Safety::getInstance();
+    serial = SerialTranslator::getInstance();
+
+    connect(serial, &SerialTranslator::read, this, &IOWidget::readMCUpackage, Qt::DirectConnection);
 }
 
 IOWidget::~IOWidget()
@@ -36,8 +41,15 @@ IOWidget::~IOWidget()
     ioItems.clear();
 }
 
+void IOWidget::readMCUpackage(QString data)
+{
+
+}
+
 void IOWidget::requestMCU(bool state)
 {
     IOItem *item = qobject_cast<IOItem *>(sender());
-    qDebug() << item->getNumberIO();
+    serial->write("0221"+QString::number(item->getNumberIO())+QString::number(state));
+
+    // qDebug() << item->getNumberIO();
 }

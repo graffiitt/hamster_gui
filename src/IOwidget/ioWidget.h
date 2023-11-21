@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "ioItem.h"
+#include "../stateWidget/safety.h"
+#include "../CommunicateWidget/serialtranslator.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -21,9 +23,13 @@ public:
 
 private slots:
     void requestMCU(bool state);
+    void readMCUpackage(QString data);
 
 private:
     Ui::IOWidget *ui;
-    QList<IOItem*> ioItems;
+    QList<IOItem *> ioItems;
+
+    Safety *safety;
+    SerialTranslator *serial;
 };
 #endif

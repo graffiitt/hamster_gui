@@ -1,7 +1,6 @@
 #include "serialtranslator.h"
 
-SerialTranslator* SerialTranslator::_instance = 0;
-
+SerialTranslator *SerialTranslator::_instance = 0;
 
 SerialTranslator::SerialTranslator()
 {
@@ -13,12 +12,10 @@ SerialTranslator::SerialTranslator()
     QObject::connect(this, &SerialTranslator::write, this, &SerialTranslator::writeMCU);
 }
 
-
 SerialTranslator::~SerialTranslator()
 {
     delete port;
 }
-
 
 SerialTranslator *SerialTranslator::getInstance()
 {
@@ -27,24 +24,27 @@ SerialTranslator *SerialTranslator::getInstance()
     return _instance;
 }
 
-
 void SerialTranslator::disconnect()
 {
     this->port->close();
 }
-
 
 bool SerialTranslator::isConnected()
 {
     return port->isOpen();
 }
 
-
 void SerialTranslator::writeMCU(QString data)
 {
-    port->write(data.toLatin1());
+    if (port->isOpen())
+    {
+        port->write(data.toLatin1());
+    }
+    else
+    {
+        safety->setInfo("mcu not connected");
+    }
 }
-
 
 void SerialTranslator::readPort()
 {
@@ -53,7 +53,7 @@ void SerialTranslator::readPort()
 
 void SerialTranslator::errorPort(QSerialPort::SerialPortError err)
 {
-    qDebug()<<"serial err: "<<err;
+    qDebug() << "serial err: " << err;
     switch (err)
     {
     case QSerialPort::NoError:
@@ -83,7 +83,6 @@ void SerialTranslator::errorPort(QSerialPort::SerialPortError err)
     }
     }
 }
-
 
 void SerialTranslator::connect(const QSerialPortInfo &port)
 {

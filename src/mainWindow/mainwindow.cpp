@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     _pathRegisters = _path + "/register.json";
     programmWidget->openProgramm(_pathProgramm);
 
-    this->on_changeLanguageRussian_triggered();
+   // this->on_changeLanguageRussian_triggered();
 }
 
 MainWindow::~MainWindow()

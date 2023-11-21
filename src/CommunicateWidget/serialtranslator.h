@@ -8,19 +8,17 @@
 #include <QDebug>
 #include "../stateWidget/safety.h"
 
-
-class SerialTranslator: public QObject
+class SerialTranslator : public QObject
 {
     Q_OBJECT
 public:
     SerialTranslator();
     ~SerialTranslator();
 
-    static SerialTranslator* getInstance();
+    static SerialTranslator *getInstance();
     void connect(const QSerialPortInfo &port);
     void disconnect();
     bool isConnected();
-
 
 signals:
     void read(QString data);
@@ -32,9 +30,8 @@ private slots:
     void errorPort(QSerialPort::SerialPortError err);
     void writeMCU(QString data);
 
-
 private:
-    static SerialTranslator* _instance;
+    static SerialTranslator *_instance;
     Safety *safety;
     QSerialPort *port;
 };
