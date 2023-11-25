@@ -48,7 +48,9 @@ void SerialTranslator::writeMCU(QString data)
 
 void SerialTranslator::readPort()
 {
-    emit this->read(port->readAll());
+    QByteArray data = port->readAll();
+    qDebug()<<data;
+    emit this->read(data);
 }
 
 void SerialTranslator::errorPort(QSerialPort::SerialPortError err)

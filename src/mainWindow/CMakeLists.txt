@@ -64,6 +64,7 @@ add_library(
     ${HFILE}
     ${UIFILE}
     ${QRCFILE}
+    ${TSFILE}
      )
 
 

@@ -60,7 +60,7 @@ add_library(
     ${HFILE}
     ${UIFILE}
     ${QRCFILE}
- 
+    ${TSFILE}
     )
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} Qt5::Widgets JSONmodule ICommand ProgEditorWidget)
