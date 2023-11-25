@@ -18,5 +18,5 @@ add_subdirectory(src/mainWindow)
 add_subdirectory(src/ProgEditorWidget)
 
 add_subdirectory(src/RegisterWidget)
-add_subdirectory(src/rviz_widget_custom)
+
 add_subdirectory(src/stateWidget)

@@ -13,12 +13,6 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 include_directories(${catkin_INCLUDE_DIRS})
 
 
-catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES qt_template
-#  CATKIN_DEPENDS roscpp rospy std_msgs
-#  DEPENDS system_lib
-)
 
 ###########
 ## Build ##

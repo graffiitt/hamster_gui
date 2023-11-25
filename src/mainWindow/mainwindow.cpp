@@ -18,8 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->executorLayout->addWidget(execWidget);
 
     connectWidget = new CommunicatorWidget();
-    rviz_widget = new RVIZ_widget();
-    ui->rviz_layout->addWidget(rviz_widget);
 
     ioWidget = new IOWidget();
     ui->ioLayout->addWidget(ioWidget);
@@ -41,7 +39,7 @@ MainWindow::~MainWindow()
     delete execWidget;
     delete safety;
     delete connectWidget;
-    delete rviz_widget;
+
     delete ioWidget;
 }
 
@@ -195,5 +193,4 @@ void MainWindow::loadLanguage()
     }
     programmWidget->updateLanguage();
     execWidget->updateLanguage();
-    rviz_widget->updateLanguage();
 }

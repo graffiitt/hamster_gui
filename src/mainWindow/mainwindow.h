@@ -12,7 +12,6 @@
 #include "../ExectutorWidget/execturtorwidget.h"
 #include "../RegisterWidget/registerwidget.h"
 #include "../CommunicateWidget/communicatorwidget.h"
-#include "../rviz_widget_custom/rviz_widget.h"
 #include "../IOwidget/ioWidget.h"
 
 QT_BEGIN_NAMESPACE
@@ -60,7 +59,6 @@ private:
     ExecturtorWidget *execWidget;
     RegisterWidget *regWidget;
     CommunicatorWidget *connectWidget;
-    RVIZ_widget *rviz_widget;
     IOWidget *ioWidget;
 
     QTranslator translate;
