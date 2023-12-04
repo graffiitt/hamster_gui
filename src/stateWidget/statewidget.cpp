@@ -63,7 +63,6 @@ void StateWidget::setIOicon(bool state)
 void StateWidget::setMCUicon(bool state)
 {
     state ? ui->mcuLabel->setStyleSheet(yellowColor) : ui->stepLabel->setStyleSheet("");
-
 }
 
 bool StateWidget::getStateError()

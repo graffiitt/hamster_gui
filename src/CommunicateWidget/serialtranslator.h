@@ -23,7 +23,7 @@ public:
 signals:
     void read(QString data);
     void write(QString data);
-    void connect();
+    void connectSignal(bool state);
 
 private slots:
     void readPort();

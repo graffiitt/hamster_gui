@@ -31,6 +31,7 @@ private slots:
     void on_disconnectButton_clicked();
     void on_sendButton_clicked();
     void on_commandList_itemActivated(QListWidgetItem *item);
+    void connectSlot(bool state);
 
 private:
     QList<QSerialPortInfo> list;

@@ -27,6 +27,7 @@ SerialTranslator *SerialTranslator::getInstance()
 void SerialTranslator::disconnect()
 {
     this->port->close();
+    emit this->connectSignal(false);
 }
 
 bool SerialTranslator::isConnected()
@@ -42,14 +43,14 @@ void SerialTranslator::writeMCU(QString data)
     }
     else
     {
-        safety->setInfo("mcu not connected");
+        safety->setError("mcu not connected");
     }
 }
 
 void SerialTranslator::readPort()
 {
     QByteArray data = port->readAll();
-    qDebug()<<data;
+    qDebug()<<QString(data)<<data;
     emit this->read(data);
 }
 
@@ -60,7 +61,18 @@ void SerialTranslator::errorPort(QSerialPort::SerialPortError err)
     {
     case QSerialPort::NoError:
     {
-        safety->setInfo("");
+        safety->setMCU(false);
+    }
+    case QSerialPort::PermissionError:
+    case QSerialPort::ParityError:
+    case QSerialPort::BreakConditionError:
+    case QSerialPort::FramingError:
+    case QSerialPort::WriteError:
+    case QSerialPort::ReadError:
+    case QSerialPort::UnsupportedOperationError:
+    case QSerialPort::UnknownError:
+    case QSerialPort::TimeoutError:
+    {
         break;
     }
     case QSerialPort::OpenError:
@@ -81,14 +93,18 @@ void SerialTranslator::errorPort(QSerialPort::SerialPortError err)
     case QSerialPort::ResourceError:
     {
         safety->setError("port connection lose");
+        this->disconnect();
         break;
     }
     }
+    if(err != QSerialPort::NoError)
+        safety->setMCU(true);
 }
 
 void SerialTranslator::connect(const QSerialPortInfo &port)
 {
     this->port->setPort(port);
     this->port->open(QIODevice::ReadWrite);
-    emit this->connect();
+    if(this->port->isOpen())
+    emit this->connectSignal(true);
 }

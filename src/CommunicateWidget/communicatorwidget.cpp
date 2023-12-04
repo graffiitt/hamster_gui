@@ -8,6 +8,7 @@ CommunicatorWidget::CommunicatorWidget(QWidget *parent)
     this->setWindowTitle("connection");
 
     mcu = SerialTranslator::getInstance();
+    QObject::connect(mcu, &SerialTranslator::connectSignal, this, &CommunicatorWidget::connectSlot);
 }
 
 CommunicatorWidget::~CommunicatorWidget()
@@ -79,6 +80,18 @@ void CommunicatorWidget::show()
 void CommunicatorWidget::on_commandList_itemActivated(QListWidgetItem *item)
 {
     ui->commandLine->setText(item->text());
+}
+
+void CommunicatorWidget::connectSlot(bool state)
+{
+if(!state){
+ if (!mcu->isConnected())
+    {
+        ui->connectButton->setDisabled(false);
+        ui->msgLabel->setText("disconnected");
+        ui->commandLine->setEnabled(false);
+        ui->sendButton->setEnabled(false);
+    }}
 }
 
 void CommunicatorWidget::updateLanguage()
