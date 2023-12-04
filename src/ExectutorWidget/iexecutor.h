@@ -16,6 +16,7 @@ public:
     ~IExecutor();
 
     void loadProgramm(QString pathFolder, QString ProgName);
+    void changeExecLine(int line);
 
 private:
     Programm programm;
@@ -45,6 +46,7 @@ public slots:
 
 signals:
     void setMode(bool StepMode);
+
     void updateModel(QString path);
 
 private slots:

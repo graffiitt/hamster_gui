@@ -64,6 +64,8 @@ void ExecturtorWidget::on_fileBox_activated(int index)
 
 void ExecturtorWidget::on_tableView_clicked(const QModelIndex &index)
 {
+    if (exec->isFinished())
+    exec->changeExecLine(index.row());
 }
 
 void ExecturtorWidget::changeProgramm(QString path)
@@ -74,11 +76,11 @@ void ExecturtorWidget::changeProgramm(QString path)
     prgModel->updateProgramm(prg);
     qDebug() << "execWidg load finish ";
     emit this->updateProgFinished();
-    // prgModel->updateProgramm(prg);
 }
 
 void ExecturtorWidget::changeCurrLine(int line)
 {
+    if(line <= programm->size())
     ui->tableView->selectRow(line);
 }
 
