@@ -1,6 +1,8 @@
 #include "ioWidget.h"
 #include "ui_ioWidget.h"
 
+QList<IOItem *> IOWidget::ioItems;
+
 IOWidget::IOWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::IOWidget)
 {
@@ -43,13 +45,15 @@ IOWidget::~IOWidget()
 
 void IOWidget::readMCUpackage(QString data)
 {
+}
 
+void IOWidget::changePin(int numPin, bool state)
+{
+    qDebug() << "io widget   " << numPin << " " << state;
 }
 
 void IOWidget::requestMCU(bool state)
 {
     IOItem *item = qobject_cast<IOItem *>(sender());
-    serial->write("0221"+QString::number(item->getNumberIO())+QString::number(state));
-
-    // qDebug() << item->getNumberIO();
+    serial->write("0221" + QString::number(item->getNumberIO()) + QString::number(state));
 }

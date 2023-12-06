@@ -7,6 +7,7 @@
 
 #include "../JSONmodule/jsonmodule.h"
 #include "../RegisterWidget/registerdto.h"
+#include "../IOwidget/ioWidget.h"
 
 class IExecutor : public QThread
 {
@@ -39,6 +40,7 @@ private:
     int searchLBLtoJump(int lbl);
     void execPoint(QJsonObject obj);
     void execWait(QJsonObject obj);
+    void execIO(QJsonObject obj);
 
 public slots:
     void finishUpdateTable();

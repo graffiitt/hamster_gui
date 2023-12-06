@@ -287,11 +287,6 @@
         <widget class="QComboBox" name="IOComboBox">
          <item>
           <property name="text">
-           <string>input</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>output</string>
           </property>
          </item>

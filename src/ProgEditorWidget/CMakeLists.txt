@@ -63,7 +63,7 @@ add_library(
     ${TSFILE}
      )
 
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} Qt5::Widgets JSONmodule ICommand)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} Qt5::Widgets JSONmodule ICommand IOWidget)
 target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 

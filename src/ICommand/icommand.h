@@ -13,7 +13,8 @@ enum Command {
     Wait,
     Jump,
     If,
-    Call
+    Call,
+    Io
 };
 
 class ICommand
@@ -47,5 +48,6 @@ typedef QList<ICommand *> Programm;
 #include "mathcommand.h"
 #include "movecommand.h"
 #include "waitcommand.h"
+#include "iocommand.h"
 
 #endif // ICOMMAND_H

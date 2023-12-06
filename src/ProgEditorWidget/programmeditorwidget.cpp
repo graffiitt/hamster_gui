@@ -14,6 +14,7 @@ ProgrammEditorWidget::ProgrammEditorWidget(QWidget *parent)
     waitCmd = new WaitCommand();
     moveCmd = new MoveCommand();
     ifCmd = new IfCommand();
+    ioCmd = new IoCommand();
 
     programm = new Programm();
     programmModel = new ProgrammModel(programm);
@@ -36,6 +37,7 @@ ProgrammEditorWidget::~ProgrammEditorWidget()
     delete waitCmd;
     delete moveCmd;
     delete ifCmd;
+    delete ioCmd;
     delete jsonLoad;
 }
 
@@ -166,6 +168,11 @@ void ProgrammEditorWidget::on_programmView_clicked(const QModelIndex &index)
         else
             ui->waitSpinBox->setValue(programmModel->getData(index, "pinIn").toInt());
 
+        break;
+    }
+    case Command::Io:
+    {
+        
         break;
     }
     }

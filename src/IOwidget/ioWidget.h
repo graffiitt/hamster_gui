@@ -20,6 +20,7 @@ class IOWidget : public QWidget
 public:
     IOWidget(QWidget *parent = nullptr);
     ~IOWidget();
+    static void changePin(int numPin, bool state);
 
 private slots:
     void requestMCU(bool state);
@@ -27,7 +28,7 @@ private slots:
 
 private:
     Ui::IOWidget *ui;
-    QList<IOItem *> ioItems;
+    static QList<IOItem *> ioItems;
 
     Safety *safety;
     SerialTranslator *serial;

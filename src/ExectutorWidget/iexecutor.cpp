@@ -243,6 +243,12 @@ void IExecutor::execWait(QJsonObject obj)
     }
 }
 
+void IExecutor::execIO(QJsonObject obj)
+{
+
+IOWidget::changePin(8, true);
+}
+
 void IExecutor::errorSlot(bool state)
 {
     errorState = state;
@@ -257,7 +263,6 @@ void IExecutor::run()
     while (!errorState && stepTrig && programm.size() != _currentLine && !this->isInterruptionRequested())
     {
         QJsonObject obj = programm.at(_currentLine)->getData();
-
         safety->changeCurrentLine(_currentLine);
         switch (programm.at(_currentLine)->getId())
         {
@@ -297,6 +302,11 @@ void IExecutor::run()
         case Command::Wait:
         {
             this->execWait(obj);
+            break;
+        }
+        case Command::Io:
+        {
+            this->execIO(obj);
             break;
         }
         }
