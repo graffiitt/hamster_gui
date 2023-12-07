@@ -37,6 +37,12 @@ void IExecutor::loadProgramm(QString pathFolder, QString ProgName)
     qDebug() << "iexec " << lineProgramm << "  " << listProgram;
 }
 
+void IExecutor::changeExecLine(int line)
+{
+    if(programm.size() > line)
+    _currentLine = line;
+}
+
 void IExecutor::execCall(QJsonObject obj)
 {
     Q_UNUSED(obj);
