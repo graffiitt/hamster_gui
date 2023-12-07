@@ -45,15 +45,17 @@ IOWidget::~IOWidget()
 
 void IOWidget::readMCUpackage(QString data)
 {
+
 }
 
 void IOWidget::changePin(int numPin, bool state)
 {
     qDebug() << "io widget   " << numPin << " " << state;
+
 }
 
 void IOWidget::requestMCU(bool state)
 {
     IOItem *item = qobject_cast<IOItem *>(sender());
-
+    this->changePin(item->getNumberIO(), state);
 }
