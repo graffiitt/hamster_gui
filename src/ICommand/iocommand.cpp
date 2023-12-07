@@ -8,7 +8,7 @@ enum PINOUT
 
 IoCommand::IoCommand()
 {
-    _data.insert("pin", 0);
+    _data.insert("pin", 1);
     _data.insert("state", 0);
     _data.insert("type", PINOUT::output);
     _id = Command::Io;
@@ -21,7 +21,7 @@ IoCommand::~IoCommand()
 
 QString IoCommand::getDescription()
 {
-    return getPin(_data["pin"].toInt()) + "";
+    return getPin(_data["pin"].toInt()) + "    " + getState();
 }
 
 QString IoCommand::getPin(const int numPin)
@@ -32,7 +32,7 @@ QString IoCommand::getPin(const int numPin)
     else
         str = "DO";
 
-    return str + "[" + QString::number(numPin) + "]" + getState();
+    return str + "[" + QString::number(numPin) + "]" ;
 }
 
 QString IoCommand::getState()

@@ -14,6 +14,7 @@ public:
     void deleteCommand(QModelIndex idx);
 
     Command getId(QModelIndex idx);
+    bool isEmpty();
     QJsonValue getData(QModelIndex idx, QString key);
     void setData(QJsonValue data, QString key, Command id, QModelIndex idx);
 

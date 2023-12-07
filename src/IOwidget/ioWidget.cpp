@@ -55,5 +55,5 @@ void IOWidget::changePin(int numPin, bool state)
 void IOWidget::requestMCU(bool state)
 {
     IOItem *item = qobject_cast<IOItem *>(sender());
-    serial->write("0221" + QString::number(item->getNumberIO()) + QString::number(state));
+
 }

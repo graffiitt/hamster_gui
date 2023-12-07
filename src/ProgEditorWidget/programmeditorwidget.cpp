@@ -148,10 +148,8 @@ void ProgrammEditorWidget::on_programmView_clicked(const QModelIndex &index)
     case Command::Math:
     {
         this->on_mathButton_clicked();
-
         this->updateUIMathReg(index);
         this->updateUINumbers(index);
-
         break;
     }
     case Command::Point:
@@ -161,7 +159,6 @@ void ProgrammEditorWidget::on_programmView_clicked(const QModelIndex &index)
     case Command::Wait:
     {
         this->on_logicButton_clicked();
-
         ui->waitBox->setCurrentIndex(programmModel->getData(index, "waitType").toInt());
         if (programmModel->getData(index, "waitType").toInt() == 0)
             ui->waitSpinBox->setValue(programmModel->getData(index, "time").toInt());
@@ -172,7 +169,10 @@ void ProgrammEditorWidget::on_programmView_clicked(const QModelIndex &index)
     }
     case Command::Io:
     {
-        
+        this->on_logicButton_clicked();
+        // ui->ioCheckBox->
+        ui->ioComboBox->setCurrentIndex(programmModel->getData(index, "type").toInt());
+        ui->ioSpinBox->setValue(programmModel->getData(index, "pin").toInt());
         break;
     }
     }
@@ -181,12 +181,14 @@ void ProgrammEditorWidget::on_programmView_clicked(const QModelIndex &index)
 void ProgrammEditorWidget::on_commentButton_clicked()
 {
     QModelIndex idx = ui->programmView->currentIndex();
-
     commentCmd = new CommentCommand();
     programmModel->addComand(idx, commentCmd);
 
-    QString dt = programmModel->getData(idx, "data").toString();
-    ui->commentLineEdit->setText(dt);
+    if (idx.isValid())
+    {
+        QString dt = programmModel->getData(idx, "data").toString();
+        ui->commentLineEdit->setText(dt);
+    }
 }
 
 void ProgrammEditorWidget::on_commentLineEdit_textChanged(const QString &arg1)
@@ -490,6 +492,31 @@ void ProgrammEditorWidget::on_ifIOstate_stateChanged(int state)
 {
     QModelIndex idx = ui->programmView->currentIndex();
     programmModel->setData(state, "ioPinState_1", Command::If, idx);
+}
+
+void ProgrammEditorWidget::on_ioButton_clicked()
+{
+    QModelIndex idx = ui->programmView->currentIndex();
+    programmModel->addComand(idx, ioCmd);
+    ioCmd = new IoCommand();
+}
+
+void ProgrammEditorWidget::on_ioComboBox_activated(int index)
+{
+    QModelIndex idx = ui->programmView->currentIndex();
+    programmModel->setData(index, "type", Command::Io, idx);
+}
+
+void ProgrammEditorWidget::on_ioSpinBox_valueChanged(int arg1)
+{
+    QModelIndex idx = ui->programmView->currentIndex();
+    programmModel->setData(arg1, "pin", Command::Io, idx);
+}
+
+void ProgrammEditorWidget::on_ioCheckBox_stateChanged(int state)
+{
+    QModelIndex idx = ui->programmView->currentIndex();
+    programmModel->setData(state, "state", Command::Io, idx);
 }
 
 void ProgrammEditorWidget::on_waitBox_activated(int index)

@@ -49,6 +49,10 @@ Command ProgrammModel::getId(QModelIndex idx)
     return programm->value(idx.row())->getId();
 }
 
+bool ProgrammModel::isEmpty()
+{
+    return programm->isEmpty();
+}
 
 QJsonValue ProgrammModel::getData(QModelIndex idx, QString key)
 {

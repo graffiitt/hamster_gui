@@ -36,7 +36,7 @@ private slots:
     void on_addLineButton_clicked();
     void on_deleteButton_clicked();
     void on_programmView_clicked(const QModelIndex &index);
-    
+
     void on_commentButton_clicked();
     void on_commentLineEdit_textChanged(const QString &arg1);
 
@@ -64,6 +64,11 @@ private slots:
     void on_ifItem_2_Spin_2_valueChanged(int arg1);
     void on_iflLblBox_valueChanged(int arg1);
     void on_ifIOstate_stateChanged(int state);
+
+    void on_ioButton_clicked();
+    void on_ioComboBox_activated(int index);
+    void on_ioSpinBox_valueChanged(int arg1);
+    void on_ioCheckBox_stateChanged(int state);
 
     void on_waitButton_clicked();
     void on_waitBox_activated(int index);
