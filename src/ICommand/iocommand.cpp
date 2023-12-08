@@ -1,11 +1,5 @@
 #include "iocommand.h"
 
-enum PINOUT
-{
-    output,
-    input,
-};
-
 IoCommand::IoCommand()
 {
     _data.insert("pin", 1);

@@ -3,6 +3,12 @@
 
 #include "icommand.h"
 
+enum PINOUT
+{
+    output,
+    input,
+};
+
 class IoCommand : public ICommand
 {
 public:

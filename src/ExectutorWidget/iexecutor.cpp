@@ -39,8 +39,8 @@ void IExecutor::loadProgramm(QString pathFolder, QString ProgName)
 
 void IExecutor::changeExecLine(int line)
 {
-    if(programm.size() > line)
-    _currentLine = line;
+    if (programm.size() > line)
+        _currentLine = line;
 }
 
 void IExecutor::execCall(QJsonObject obj)
@@ -251,8 +251,18 @@ void IExecutor::execWait(QJsonObject obj)
 
 void IExecutor::execIO(QJsonObject obj)
 {
-
-IOWidget::changePin(8, true);
+    switch (obj["type"].toInt())
+    {
+    case PINOUT::input:
+    {
+        break;
+    }
+    case PINOUT::output:
+    {
+        IOWidget::changePin(obj["pin"].toInt(), obj["state"].toBool());
+        break;
+    }
+    }
 }
 
 void IExecutor::errorSlot(bool state)
