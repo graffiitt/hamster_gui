@@ -4,7 +4,8 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "~/Qt5.12.12/**"
+                "~/Qt5.12.12/**",
+                "/Users/vlad/Qt5.12.12/5.12.12/clang_64/lib/QtWidgets.framework/Versions/5/Headers"
             ],
             "defines": [],
             "macFrameworkPath": [
