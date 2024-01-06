@@ -21,10 +21,11 @@ signals:
     void changeState(bool state);
 
 private slots:
-    void on_button_cliked(bool state);
+    void on_button_cliked();
 
 private:
     int numberPin;
+    bool statePin;
     QLabel *label;
     QHBoxLayout *layout;
     QPushButton *button;
