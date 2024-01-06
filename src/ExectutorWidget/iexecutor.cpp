@@ -232,7 +232,7 @@ void IExecutor::execWait(QJsonObject obj)
         QTime timer = QTime::currentTime().addSecs(obj["time"].toInt());
         while (QTime::currentTime() < timer && !errorState && !this->isInterruptionRequested())
         {
-            QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
         }
         break;
     }
@@ -344,7 +344,6 @@ void IExecutor::run()
                 _currentLine = -1;
                 qDebug() << "exec break";
                 stepTrig = false;
-                // this->requestInterruption();
                 qDebug() << "stop requset";
             }
         }
