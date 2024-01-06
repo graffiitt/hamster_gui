@@ -515,8 +515,10 @@ void ProgrammEditorWidget::on_ioSpinBox_valueChanged(int arg1)
 
 void ProgrammEditorWidget::on_ioCheckBox_stateChanged(int state)
 {
+    bool st = true;
+    if (state == 0) st = false;
     QModelIndex idx = ui->programmView->currentIndex();
-    programmModel->setData(state, "state", Command::Io, idx);
+    programmModel->setData(st, "state", Command::Io, idx);
 }
 
 void ProgrammEditorWidget::on_waitBox_activated(int index)

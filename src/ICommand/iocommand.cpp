@@ -31,7 +31,7 @@ QString IoCommand::getPin(const int numPin)
 
 QString IoCommand::getState()
 {
-    if (_data["state"].toInt())
+    if (_data["state"].toBool())
     return "TRUE";
     else
     return "FALSE";

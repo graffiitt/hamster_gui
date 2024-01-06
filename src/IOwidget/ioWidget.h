@@ -31,6 +31,6 @@ private:
     static QList<IOItem *> ioItems;
 
     Safety *safety;
-    SerialTranslator *serial;
+    static SerialTranslator *serial;
 };
 #endif

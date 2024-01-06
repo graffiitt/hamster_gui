@@ -2,6 +2,7 @@
 #include "ui_ioWidget.h"
 
 QList<IOItem *> IOWidget::ioItems;
+SerialTranslator* IOWidget::serial;
 
 IOWidget::IOWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::IOWidget)
@@ -11,8 +12,7 @@ IOWidget::IOWidget(QWidget *parent)
     QVBoxLayout *vboxIN = new QVBoxLayout;
     for (size_t i = 0; i < 8; i++)
     {
-        IOItem *item = new IOItem(i);
-        item->setModeIO(true);
+        IOItem *item = new IOItem(i, true);
         ioItems.append(item);
         vboxIN->addWidget(item);
         connect(item, &IOItem::changeState, this, &IOWidget::requestMCU);
@@ -22,8 +22,7 @@ IOWidget::IOWidget(QWidget *parent)
     QVBoxLayout *vboxOUT = new QVBoxLayout;
     for (size_t i = 0; i < 8; i++)
     {
-        IOItem *item = new IOItem(i);
-        item->setModeIO(false);
+        IOItem *item = new IOItem(i, false);
         ioItems.append(item);
         vboxOUT->addWidget(item);
     }
@@ -45,13 +44,18 @@ IOWidget::~IOWidget()
 
 void IOWidget::readMCUpackage(QString data)
 {
+    qDebug()<<"iowidget "<<data;
 
+    
 }
 
 void IOWidget::changePin(int numPin, bool state)
 {
-    qDebug() << "io widget   " << numPin << " " << state;
-
+    QString str;
+    str = "IO010050" + QString::number(numPin) + QString::number(state);
+    qDebug() << str;
+    serial->write(str);
+    ioItems[numPin]->setStateIO(state);
 }
 
 void IOWidget::requestMCU(bool state)

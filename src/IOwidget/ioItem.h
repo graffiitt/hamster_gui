@@ -11,10 +11,9 @@ class IOItem : public QWidget
 {
     Q_OBJECT
 public:
-    IOItem(int number = 0, QWidget *parent = nullptr);
+    IOItem(int number = 0, bool OUTPUT = true, QWidget *parent = nullptr);
     ~IOItem();
 
-    void setModeIO(bool input);
     void setStateIO(bool state);
     int getNumberIO();
 
@@ -29,6 +28,8 @@ private:
     QLabel *label;
     QHBoxLayout *layout;
     QPushButton *button;
+
+    void setText(bool input);
 
     QString falseState = "background-color: #ff0000; color:#000000";
     QString trueState = "background-color: #00ff00; color:#000000";

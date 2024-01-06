@@ -19,7 +19,7 @@
      <item>
       <widget class="QGroupBox" name="inputBox">
        <property name="title">
-        <string>input</string>
+        <string>output</string>
        </property>
       </widget>
      </item>
@@ -43,7 +43,7 @@
      <item>
       <widget class="QGroupBox" name="outputBox">
        <property name="title">
-        <string>output</string>
+        <string>input</string>
        </property>
       </widget>
      </item>

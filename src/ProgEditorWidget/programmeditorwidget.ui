@@ -361,10 +361,10 @@
             <bool>false</bool>
            </property>
            <property name="minimum">
-            <number>1</number>
+            <number>0</number>
            </property>
            <property name="maximum">
-            <number>8</number>
+            <number>7</number>
            </property>
           </widget>
          </item>
