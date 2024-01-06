@@ -92,6 +92,11 @@ QList<ICommand *> JSONmodule::openFile(QString path)
                 programm.append(ifCmd);
                 break;
             }
+            case Command::Io:
+                IoCommand *ioCmd = new IoCommand();
+                ioCmd->setData(obj["description"].toObject());
+                programm.append(ioCmd);
+                break;
             }
         }
         JSONloader::changeName(path.split("/").back());

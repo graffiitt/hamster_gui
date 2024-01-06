@@ -1,12 +1,12 @@
 #include "ioItem.h"
 
-IOItem::IOItem(int number, QWidget *parent) : QWidget(parent)
+IOItem::IOItem(int number, bool OUTPUT, QWidget *parent) : QWidget(parent)
 {
     this->numberPin = number;
 
     layout = new QHBoxLayout;
     label = new QLabel;
-    label->setText("IN[" + QString::number(number) + "]");
+  
     layout->addWidget(label);
 
     button = new QPushButton;
@@ -14,6 +14,7 @@ IOItem::IOItem(int number, QWidget *parent) : QWidget(parent)
     button->setStyleSheet(falseState);
     layout->addWidget(button);
 
+    this->setText(OUTPUT);
     this->setLayout(layout);
 }
 
@@ -24,17 +25,17 @@ IOItem::~IOItem()
     delete layout;
 }
 
-void IOItem::setModeIO(bool input)
+void IOItem::setText(bool input)
 {
     if (input)
     {
         button->setCheckable(true);
         connect(button, &QPushButton::clicked, this, &IOItem::on_button_cliked);
-        label->setText("IN[" + QString::number(numberPin) + "]: ");
+        label->setText("OUT[" + QString::number(numberPin) + "]: ");
     }
     else
     {
-        label->setText("OUT[" + QString::number(numberPin) + "]: ");
+        label->setText("IN[" + QString::number(numberPin) + "]: ");
     }
 }
 
@@ -59,6 +60,6 @@ int IOItem::getNumberIO()
 
 void IOItem::on_button_cliked(bool state)
 {
-    this->setStateIO(state);
+   
     emit this->changeState(state);
 }

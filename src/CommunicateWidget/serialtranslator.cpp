@@ -50,7 +50,9 @@ void SerialTranslator::writeMCU(QString data)
 void SerialTranslator::readPort()
 {
     QByteArray data = port->readAll();
-    qDebug()<<QString(data)<<data;
+    qDebug()<<QString(data);
+
+
     emit this->read(data);
 }
 
@@ -73,6 +75,7 @@ void SerialTranslator::errorPort(QSerialPort::SerialPortError err)
     case QSerialPort::UnknownError:
     case QSerialPort::TimeoutError:
     {
+        safety->setInfo("port warp error");
         break;
     }
     case QSerialPort::OpenError:
