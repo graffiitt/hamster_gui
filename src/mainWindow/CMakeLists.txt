@@ -74,6 +74,8 @@ install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINA
 
 project(run_mainWindow)
 
+
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -83,10 +85,28 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(QRCFILE ../../resource/resource.qrc)
 
 add_executable(
-    ${PROJECT_NAME}
+    ${PROJECT_NAME} MACOSX_BUNDLE
     main.cpp
     ${QRCFILE}
- 
 )
+ 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${catkin_LIBRARIES} Qt5::Widgets Qt5::SerialPort mainWindow)
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+#install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+# Destination paths below are relative to ${CMAKE_INSTALL_PREFIX}
+install(TARGETS ${PROJECT_NAME}
+    BUNDLE DESTINATION . COMPONENT Runtime
+    RUNTIME DESTINATION bin COMPONENT Runtime
+    )
+
+# Note Mac specific extension .app
+set(APPS "\${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}.app")
+
+# Directories to look for dependencies
+set(DIRS ${CMAKE_BINARY_DIR})
+
+install(CODE "include(BundleUtilities)
+    fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")")
+
+set(CPACK_GENERATOR "DRAGNDROP")
+include(CPack)

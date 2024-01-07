@@ -58,10 +58,13 @@ void IOWidget::changePin(int numPin, bool state)
     qDebug() << str;
     serial->write(str);
     ioItems[numPin]->setStateIO(state);
-    while (!request)
-    {
-        QCoreApplication::processEvents(QEventLoop::AllEvents);
-    }
+
+    QEventLoop loop;
+    qDebug()<<"sa";
+    connect(serial, &SerialTranslator::read,  [&](){loop.exit();}); 
+    loop.exec();
+        qDebug()<<"mmf";
+
 }
 
 void IOWidget::requestMCU(bool state)
