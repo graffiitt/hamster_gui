@@ -516,7 +516,8 @@ void ProgrammEditorWidget::on_ioSpinBox_valueChanged(int arg1)
 void ProgrammEditorWidget::on_ioCheckBox_stateChanged(int state)
 {
     bool st = true;
-    if (state == 0) st = false;
+    if (state == 0)
+        st = false;
     QModelIndex idx = ui->programmView->currentIndex();
     programmModel->setData(st, "state", Command::Io, idx);
 }
@@ -524,6 +525,7 @@ void ProgrammEditorWidget::on_ioCheckBox_stateChanged(int state)
 void ProgrammEditorWidget::on_waitBox_activated(int index)
 {
     QModelIndex idx = ui->programmView->currentIndex();
+    if (!idx.isValid()) return;
     programmModel->setData(index, "waitType", Command::Wait, idx);
 
     if (index == 0)
@@ -535,7 +537,7 @@ void ProgrammEditorWidget::on_waitBox_activated(int index)
 void ProgrammEditorWidget::on_waitSpinBox_valueChanged(int arg1)
 {
     QModelIndex idx = ui->programmView->currentIndex();
-
+    if (!idx.isValid()) return;
     switch (programmModel->getData(idx, "waitType").toInt())
     {
     case WaitType::timer:
