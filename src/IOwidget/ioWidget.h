@@ -27,11 +27,10 @@ private slots:
     void readMCUpackage(QString data);
 
 private:
-    static bool request;
     Ui::IOWidget *ui;
     static QList<IOItem *> ioItems;
 
-    Safety *safety;
+    static Safety *safety;
     static SerialTranslator *serial;
 };
 #endif
