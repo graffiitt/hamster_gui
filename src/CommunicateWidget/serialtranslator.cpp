@@ -51,8 +51,6 @@ void SerialTranslator::readPort()
 {
     QByteArray data = port->readAll();
     qDebug()<<QString(data);
-
-
     emit this->read(data);
 }
 

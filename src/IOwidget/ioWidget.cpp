@@ -51,18 +51,28 @@ void IOWidget::readMCUpackage(QString data)
 void IOWidget::changePin(int numPin, bool state)
 {
     QString str;
+    QEventLoop loop;
+    bool trig = false;
+
+    connect(safety, &Safety::outError, [&]()
+            {
+        trig = true;
+        qDebug()<<"safety err io";
+        loop.exit(0); });
+
+    connect(serial, &SerialTranslator::read, [&]()
+            { 
+        trig = true;
+        ioItems[numPin]->setStateIO(state);
+        loop.exit(0); });
+
     str = "IO010050" + QString::number(numPin) + QString::number(state);
     serial->write(str);
-    
-    ioItems[numPin]->setStateIO(state);
 
     qDebug() << "event loop";
 
-    QEventLoop loop;
-    connect(serial, &SerialTranslator::read, [&]()
-            { loop.exit(); });
-            
-    loop.exec();
+    if (!trig)
+        loop.exec();
 
     qDebug() << "mmf";
 }

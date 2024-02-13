@@ -8,8 +8,7 @@
 #include "registerbase.h"
 #include "../JSONmodule/jsonmodule.h"
 
-
-class RegisterDTO: public QObject
+class RegisterDTO : public QObject
 {
     Q_OBJECT
 public:
@@ -25,7 +24,7 @@ public:
 
     QString getLine(QString type, int line);
 
-   private:
+private:
     static Registers *_registers;
     QString _path;
     JSONmodule *json;
@@ -37,7 +36,6 @@ signals:
 
 private slots:
     void saveToJson();
-
 };
 
 #endif // REGISTERDTO_H

@@ -2,7 +2,6 @@
 
 ICommand::~ICommand()
 {
-
 }
 
 

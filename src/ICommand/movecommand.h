@@ -3,6 +3,12 @@
 
 #include "icommand.h"
 
+enum TypePoint
+{
+    point,
+    poseRegister
+};
+
 class MoveCommand : public ICommand
 {
 public:
