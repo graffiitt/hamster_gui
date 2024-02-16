@@ -16,7 +16,6 @@ add_subdirectory(src/IOwidget)
 add_subdirectory(src/JSONmodule)
 add_subdirectory(src/mainWindow)
 add_subdirectory(src/ProgEditorWidget)
-
 add_subdirectory(src/RegisterWidget)
-
 add_subdirectory(src/stateWidget)
+add_subdirectory(src/moveEngine)

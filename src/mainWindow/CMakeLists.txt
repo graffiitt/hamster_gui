@@ -100,13 +100,10 @@ install(TARGETS ${PROJECT_NAME}
     )
 
 # Note Mac specific extension .app
-set(APPS "\${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}.app")
+set(APPS "/${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}.app")
 
 # Directories to look for dependencies
-set(DIRS ${CMAKE_BINARY_DIR})
-
-install(CODE "include(BundleUtilities)
-    fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")")
-
-set(CPACK_GENERATOR "DRAGNDROP")
+set(DIRS ${CMAKE_CURRENT_SOURCE_DIR})
+ 
+set(CPACK_GENERATOR "DragNDrop")
 include(CPack)

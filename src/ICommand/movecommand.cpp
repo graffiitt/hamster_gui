@@ -7,11 +7,12 @@ MoveCommand::MoveCommand()
     _data.insert("speed", 50);
     _data.insert("acc", 50);
 
-    QJsonObject point;
-    point.insert("", 0);
-    point.insert("", 0);
-    point.insert("", 0);
-    point.insert("", 0);
+    QJsonObject point; 
+    point.insert("coordType", "joint");
+    point.insert("j1", 0);
+    point.insert("j2", 0);
+    point.insert("j3", 0);
+    point.insert("j4", 0);
     _data.insert("point", point);
 
     _id = Point;
