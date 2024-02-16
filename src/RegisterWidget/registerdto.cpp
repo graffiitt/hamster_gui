@@ -6,7 +6,6 @@ RegisterDTO::RegisterDTO()
 {
     _path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
             "/GraffitRobotics/register.json";
-           // qDebug()<<"reg path  "<<_path;
     json = new JSONmodule();
 
     this->initObjectPool();

@@ -37,3 +37,4 @@ private:
 };
 
 #endif // SERIALTRANSLATOR_H
+ 

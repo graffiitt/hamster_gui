@@ -89,13 +89,22 @@ void ProgrammEditorWidget::on_mathButton_clicked()
 
 void ProgrammEditorWidget::on_addButton_clicked()
 {
+    QModelIndex idx = ui->programmView->currentIndex();
+
     switch (ui->toolEditWidget->currentIndex())
+    {
+    case 0:
+    {
+        programmModel->addComand(idx, moveCmd);
+        moveCmd = new MoveCommand();
+        break;
+    }
     case 2:
     {
-        QModelIndex idx = ui->programmView->currentIndex();
         programmModel->addComand(idx, mathCmd);
         mathCmd = new MathCommand();
         break;
+    }
     }
 }
 
@@ -525,7 +534,8 @@ void ProgrammEditorWidget::on_ioCheckBox_stateChanged(int state)
 void ProgrammEditorWidget::on_waitBox_activated(int index)
 {
     QModelIndex idx = ui->programmView->currentIndex();
-    if (!idx.isValid()) return;
+    if (!idx.isValid())
+        return;
     programmModel->setData(index, "waitType", Command::Wait, idx);
 
     if (index == 0)
@@ -537,7 +547,8 @@ void ProgrammEditorWidget::on_waitBox_activated(int index)
 void ProgrammEditorWidget::on_waitSpinBox_valueChanged(int arg1)
 {
     QModelIndex idx = ui->programmView->currentIndex();
-    if (!idx.isValid()) return;
+    if (!idx.isValid())
+        return;
     switch (programmModel->getData(idx, "waitType").toInt())
     {
     case WaitType::timer:
