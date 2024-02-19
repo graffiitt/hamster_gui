@@ -4,7 +4,7 @@
 #include <qDebug>
 #include <QList>
 #include <QJsonObject>
-
+#include "../stateWidget/safety.h"
 
 enum CoordType
 {
@@ -12,51 +12,50 @@ enum CoordType
     cartesian
 };
 
-// description joint state robot in point
-class DescriptionPointJoint
+class Joint
 {
-public:
-    float joint_1;
-    float joint_2;
-    float joint_3;
-    float joint_4;
-};
-
-// description cartesian state robot in point
-class DescriptionPointCartesian
-{
-public:
-    int x;
-    int y;
-    int z;
-    int a;
+    int speed;
+    int angle;
 };
 
 // description point velocity acceleration
-class Pose
+class PoseCartesian
 {
 public:
-    int speed;
-    DescriptionPointJoint pointJoint;
-    DescriptionPointCartesian pointCartesian;
+    int speedCartesian;
+    int cartesian[4];
+};
+
+class DataBasePositions
+{
+public:
+    QList<PoseCartesian *> cartesianPoints;
+    QList<Joint *> joint1;
+    QList<Joint *> joint2;
+    QList<Joint *> joint3;
+    QList<Joint *> joint4;
 };
 
 // controller for description pose
-// convert path
 class Trajectory
 {
 private:
-    QList<Pose *> _points;
-    Pose _targetPoint;
+    int limitSpeed;
+    int limitAcc;
+
+    int _targetPoint[4];
 
 public:
+    DataBasePositions *dataPoints;
+
+    Trajectory();
     ~Trajectory();
 
+    int getAccLimit();
+    int getSpeedLimit();
+    
     bool setTargetPoint(QJsonObject obj);
-    Pose getTargetPoint();
-    void addPoint(Pose *point);
-    Pose getPoint(int number);
-    int getCountPoints();
+    int *getTargetPoint();
 };
 
 #endif

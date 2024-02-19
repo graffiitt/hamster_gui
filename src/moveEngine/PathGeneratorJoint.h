@@ -8,12 +8,12 @@ class PathGeneratorJoint : public AbstractPathGenerator
 private:
     int _limitSpeed;
     int _limitAcc;
-    Pose *_targetPoint;
-    Pose *_currentPoint;
+    int* _targetPoint;
+    int* _currentPoint;
 
 public:
-    void setCurrentPoint(Pose point);
-    void setTargetPoint(Pose point);
+    void setCurrentPoint(int* currentPoint);
+    void setTargetPoint(int* targetPoint);
     void setLimits(int acceleration, int speedLimit);
     void computeTrajectory(Trajectory *trajectory);
 };

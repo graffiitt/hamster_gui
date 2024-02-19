@@ -1,13 +1,13 @@
 #include "PathGeneratorJoint.h"
 
-void PathGeneratorJoint::setCurrentPoint(Pose point)
+void PathGeneratorJoint::setCurrentPoint(int* currentPoint)
 {
-    this->_currentPoint = &point;
+    this->_currentPoint = currentPoint;
 }
 
-void PathGeneratorJoint::setTargetPoint(Pose point)
+void PathGeneratorJoint::setTargetPoint(int* targetPoint)
 {
-    this->_targetPoint = &point;
+    this->_targetPoint = targetPoint;
 }
 
 void PathGeneratorJoint::setLimits(int acceleration, int speedLimit)
@@ -18,5 +18,6 @@ void PathGeneratorJoint::setLimits(int acceleration, int speedLimit)
 
 void PathGeneratorJoint::computeTrajectory(Trajectory *trajectory)
 {
-    qDebug() << "genjoint  compute";
+
+    qDebug() << "genjoint  compute j3:"<< _targetPoint[2];
 }

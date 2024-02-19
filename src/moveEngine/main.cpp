@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     // exec
 
     Trajectory trajectory;
-    AbstractPathGenerator *pathGenerator[] = {new PathGeneratorJoint(), new PathGeneratorLine()};
+    AbstractPathGenerator *pathGenerator[] = {new PathGeneratorJoint() };
 
     qDebug() << "set point " << trajectory.setTargetPoint(_data);
 
@@ -37,5 +37,5 @@ int main(int argc, char *argv[])
     pathGene->computeTrajectory(&trajectory);
 
     delete pathGenerator[0];
-    delete pathGenerator[1];
+   // delete pathGenerator[1];
 }

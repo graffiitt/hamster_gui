@@ -1,52 +1,53 @@
 #include "DescriptionPose.h"
 
+Trajectory::Trajectory()
+{
+    dataPoints = new DataBasePositions();
+}
+
 Trajectory::~Trajectory()
 {
-    for (int i = _points.size(); i > 0; i--)
-        delete _points.takeAt(i - 1);
+    delete dataPoints;
+    // for (int i = _points.size(); i > 0; i--)
+    //     delete _points.takeAt(i - 1);
 }
 
-Pose Trajectory::getTargetPoint()
+int Trajectory::getAccLimit()
 {
-    return _targetPoint;
+    return limitAcc;
 }
 
-void Trajectory::addPoint(Pose *point)
+int Trajectory::getSpeedLimit()
 {
-    _points.append(point);
-}
-
-Pose Trajectory::getPoint(int number)
-{
-    return Pose();
-}
-
-int Trajectory::getCountPoints()
-{
-    return _points.size();
+    return limitSpeed;
 }
 
 // set and check valid point
 bool Trajectory::setTargetPoint(QJsonObject obj)
 {
-     qDebug()<<"target:";
-     obj = obj["point"].toObject();
+    qDebug() << "target:";
+    obj = obj["point"].toObject();
     if (obj["coordType"].toInt() == CoordType::joint)
     {
-        qDebug()<<"joint "<< obj;
-        _targetPoint.pointJoint.joint_1 = obj["j1"].toInt();
-        _targetPoint.pointJoint.joint_2 = obj["j2"].toInt();
-        _targetPoint.pointJoint.joint_3 = obj["j3"].toInt();
-        _targetPoint.pointJoint.joint_4 = obj["j4"].toInt();
+        qDebug() << "joint " << obj;
+        _targetPoint[0] = obj["j1"].toInt();
+        _targetPoint[1] = obj["j2"].toInt();
+        _targetPoint[2] = obj["j3"].toInt();
+        _targetPoint[3] = obj["j4"].toInt();
     }
     else if (obj["coordType"].toInt() == CoordType::cartesian)
     {
-        qDebug()<<"cart "<< obj;
-        _targetPoint.pointCartesian.x = obj["x"].toInt();
-        _targetPoint.pointCartesian.y = obj["y"].toInt();
-        _targetPoint.pointCartesian.z = obj["z"].toInt();
-        _targetPoint.pointCartesian.a = obj["a"].toInt();
+        qDebug() << "cart " << obj;
+        _targetPoint[0] = obj["x"].toInt();
+        _targetPoint[1] = obj["y"].toInt();
+        _targetPoint[2] = obj["z"].toInt();
+        _targetPoint[3] = obj["a"].toInt();
     }
 
     return false;
+}
+
+int *Trajectory::getTargetPoint()
+{
+    return _targetPoint;
 }

@@ -9,8 +9,8 @@ public:
     // AbstractPathGenerator();
     virtual ~AbstractPathGenerator(){};
 
-    virtual void setCurrentPoint(Pose point) = 0;
-    virtual void setTargetPoint(Pose point) = 0;
+    virtual void setCurrentPoint(int* currentPoint) = 0;
+    virtual void setTargetPoint(int* targetPoint) = 0;
     virtual void setLimits(int acceleration, int speedLimit) = 0;
     virtual void computeTrajectory(Trajectory *trajectory) = 0;
 };
