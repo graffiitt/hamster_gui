@@ -13,7 +13,6 @@ private:
 
     QList<Joint*> getFirtsPath(float dq);
     float getTimeTravel(QList<Joint*> joint);
-    float calcVelocity(float dq, float time);
     float solveSpeed(float dq, float time);
     void recomputePath(QList<Joint*> *joint, float timeTravel, float dq);
     void calcDistance(QList<Joint *> *joint);

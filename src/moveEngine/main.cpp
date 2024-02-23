@@ -40,6 +40,8 @@ int main(int argc, char *argv[])
     pathGene->setTargetPoint(trajectory.getTargetPoint());
     pathGene->computeTrajectory(&trajectory);
 
+    trajectory.clearMemoryPoints();
+
     delete pathGenerator[0];
    // delete pathGenerator[1];
 }

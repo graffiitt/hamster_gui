@@ -26,7 +26,6 @@ public:
     float angle;
 };
 
-// description point velocity acceleration
 class PoseCartesian
 {
 public:
@@ -45,7 +44,6 @@ public:
     QList<Joint *> joint4;
 };
 
-// controller for description pose
 class Trajectory
 {
 private:
@@ -64,6 +62,7 @@ public:
     float getSpeedLimit();
     bool setTargetPoint(QJsonObject obj);
     float *getTargetPoint();
+    void clearMemoryPoints();
 };
 
 #endif

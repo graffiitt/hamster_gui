@@ -29,11 +29,6 @@ float PathGeneratorJoint::getTimeTravel(QList<Joint *> joint)
     return joint.value(joint.size() - 1)->time;
 }
 
-float PathGeneratorJoint::calcVelocity(float dq, float time)
-{
-    return 0.0f;
-}
-
 float PathGeneratorJoint::solveSpeed(float dq, float time)
 {
     float d = time * time - 4 * 1 / _limitAcc * abs(dq);
@@ -76,14 +71,27 @@ void PathGeneratorJoint::recomputePath(QList<Joint *> *joint, float timeTravel, 
 
 void PathGeneratorJoint::calcDistance(QList<Joint *> *joint)
 {
-    joint->value(0)->angle = 0;
-    float dist_1 = _limitAcc * joint->value(1)->time * joint->value(1)->time / 2;
-    joint->value(1)->angle = dist_1;
-    float dist_2 = dist_1 + (joint->value(2)->time - joint->value(1)->time) * joint->value(2)->speed;
-    joint->value(2)->angle = dist_2;
-    float time_3 = joint->value(3)->time - joint->value(2)->time;
-    float dist_3 = dist_2 + _limitAcc * time_3 * time_3 / 2;
-    joint->value(3)->angle = dist_3;
+    if (joint->size() == 3)
+    {
+        joint->value(0)->angle = 0;
+        float dist_1 = _limitAcc * joint->value(1)->time * joint->value(1)->time / 2;
+        joint->value(1)->angle = dist_1;
+
+        float time_2 = joint->value(2)->time - joint->value(1)->time;
+        float dist_2 = dist_1 + _limitAcc * time_2 * time_2 / 2;
+        joint->value(2)->angle = dist_2;
+    }
+    else
+    {
+        joint->value(0)->angle = 0;
+        float dist_1 = _limitAcc * joint->value(1)->time * joint->value(1)->time / 2;
+        joint->value(1)->angle = dist_1;
+        float dist_2 = dist_1 + (joint->value(2)->time - joint->value(1)->time) * joint->value(2)->speed;
+        joint->value(2)->angle = dist_2;
+        float time_3 = joint->value(3)->time - joint->value(2)->time;
+        float dist_3 = dist_2 + _limitAcc * time_3 * time_3 / 2;
+        joint->value(3)->angle = dist_3;
+    }
 }
 
 void PathGeneratorJoint::setCurrentPoint(float *currentPoint)

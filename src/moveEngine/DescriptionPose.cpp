@@ -7,7 +7,19 @@ Trajectory::Trajectory()
 
 Trajectory::~Trajectory()
 {
+    for (int i = dataPoints->cartesianPoints.size(); i > 0; i--)
+        delete dataPoints->cartesianPoints.takeAt(i - 1);
+    for (size_t i = dataPoints->joint1.size(); i > 0; i--)
+        delete dataPoints->joint1.takeAt(i - 1);
+    for (size_t i = dataPoints->joint2.size(); i > 0; i--)
+        delete dataPoints->joint2.takeAt(i - 1);
+    for (size_t i = dataPoints->joint3.size(); i > 0; i--)
+        delete dataPoints->joint3.takeAt(i - 1);
+    for (size_t i = dataPoints->joint4.size(); i > 0; i--)
+        delete dataPoints->joint4.takeAt(i - 1);
+
     delete dataPoints;
+
     // for (int i = _points.size(); i > 0; i--)
     //     delete _points.takeAt(i - 1);
 }
@@ -50,4 +62,18 @@ bool Trajectory::setTargetPoint(QJsonObject obj)
 float *Trajectory::getTargetPoint()
 {
     return _targetPoint;
+}
+
+void Trajectory::clearMemoryPoints()
+{
+    for (int i = dataPoints->cartesianPoints.size(); i > 0; i--)
+        delete dataPoints->cartesianPoints.takeAt(i - 1);
+    for (size_t i = dataPoints->joint1.size(); i > 0; i--)
+        delete dataPoints->joint1.takeAt(i - 1);
+    for (size_t i = dataPoints->joint2.size(); i > 0; i--)
+        delete dataPoints->joint2.takeAt(i - 1);
+    for (size_t i = dataPoints->joint3.size(); i > 0; i--)
+        delete dataPoints->joint3.takeAt(i - 1);
+    for (size_t i = dataPoints->joint4.size(); i > 0; i--)
+        delete dataPoints->joint4.takeAt(i - 1);
 }
