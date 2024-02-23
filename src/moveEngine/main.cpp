@@ -33,6 +33,10 @@ int main(int argc, char *argv[])
 
     // comppute trajectory
     AbstractPathGenerator *pathGene = pathGenerator[_data["point"].toObject()["coordType"].toInt()];
+  
+    pathGene->setLimits(0.1, 1);
+    float curr[] = {0,0,0,0};
+    pathGene->setCurrentPoint(curr);
     pathGene->setTargetPoint(trajectory.getTargetPoint());
     pathGene->computeTrajectory(&trajectory);
 

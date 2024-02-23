@@ -14,16 +14,25 @@ enum CoordType
 
 class Joint
 {
-    int speed;
-    int angle;
+public:
+    Joint(){};
+    Joint(float time, float speed)
+    {
+        this->time = time;
+        this->speed = speed;
+    };
+    float time;
+    float speed;
+    float angle;
 };
 
 // description point velocity acceleration
 class PoseCartesian
 {
 public:
-    int speedCartesian;
-    int cartesian[4];
+    float time;
+    float speedCartesian;
+    float cartesian[4];
 };
 
 class DataBasePositions
@@ -40,10 +49,10 @@ public:
 class Trajectory
 {
 private:
-    int limitSpeed;
-    int limitAcc;
+    float limitSpeed;
+    float limitAcc;
 
-    int _targetPoint[4];
+    float _targetPoint[4];
 
 public:
     DataBasePositions *dataPoints;
@@ -51,11 +60,10 @@ public:
     Trajectory();
     ~Trajectory();
 
-    int getAccLimit();
-    int getSpeedLimit();
-    
+    float getAccLimit();
+    float getSpeedLimit();
     bool setTargetPoint(QJsonObject obj);
-    int *getTargetPoint();
+    float *getTargetPoint();
 };
 
 #endif

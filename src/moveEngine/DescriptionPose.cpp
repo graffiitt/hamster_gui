@@ -12,12 +12,12 @@ Trajectory::~Trajectory()
     //     delete _points.takeAt(i - 1);
 }
 
-int Trajectory::getAccLimit()
+float Trajectory::getAccLimit()
 {
     return limitAcc;
 }
 
-int Trajectory::getSpeedLimit()
+float Trajectory::getSpeedLimit()
 {
     return limitSpeed;
 }
@@ -47,7 +47,7 @@ bool Trajectory::setTargetPoint(QJsonObject obj)
     return false;
 }
 
-int *Trajectory::getTargetPoint()
+float *Trajectory::getTargetPoint()
 {
     return _targetPoint;
 }
