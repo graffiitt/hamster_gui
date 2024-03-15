@@ -37,7 +37,7 @@ float Trajectory::getSpeedLimit()
 // set and check valid point
 bool Trajectory::setTargetPoint(QJsonObject obj)
 {
-    qDebug() << "target:";
+    KinematicsSolver solverKin;
     obj = obj["point"].toObject();
     if (obj["coordType"].toInt() == CoordType::joint)
     {
@@ -46,6 +46,7 @@ bool Trajectory::setTargetPoint(QJsonObject obj)
         _targetPoint[1] = obj["j2"].toInt();
         _targetPoint[2] = obj["j3"].toInt();
         _targetPoint[3] = obj["j4"].toInt();
+        return solverKin.checkCoordJoint(_targetPoint);
     }
     else if (obj["coordType"].toInt() == CoordType::cartesian)
     {
@@ -54,8 +55,8 @@ bool Trajectory::setTargetPoint(QJsonObject obj)
         _targetPoint[1] = obj["y"].toInt();
         _targetPoint[2] = obj["z"].toInt();
         _targetPoint[3] = obj["a"].toInt();
+        return solverKin.checkCoordCart(_targetPoint);
     }
-
     return false;
 }
 

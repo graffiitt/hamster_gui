@@ -113,6 +113,7 @@ void PathGeneratorJoint::setLimits(float acceleration, float speedLimit)
 void PathGeneratorJoint::computeTrajectory(Trajectory *trajectory)
 {
     // convert point to joint if cartesian coords
+
     float deltaQ[] = {_targetPoint[0] - _currentPoint[0],
                       _targetPoint[1] - _currentPoint[1],
                       _targetPoint[2] - _currentPoint[2],
@@ -135,11 +136,4 @@ void PathGeneratorJoint::computeTrajectory(Trajectory *trajectory)
     recomputePath(&trajectory->dataPoints->joint2, maxTime, deltaQ[1]);
     recomputePath(&trajectory->dataPoints->joint3, maxTime, deltaQ[2]);
     recomputePath(&trajectory->dataPoints->joint4, maxTime, deltaQ[3]);
-
-    qDebug() << " timeTr: " << maxTime;
-
-    for (int i = 0; i < trajectory->dataPoints->joint1.size(); i++)
-        qDebug() << "1: t: " << trajectory->dataPoints->joint1.value(i)->time
-                 << "sp: " << trajectory->dataPoints->joint1.value(i)->speed
-                 << " dist:" << trajectory->dataPoints->joint1.value(i)->angle;
 }

@@ -39,7 +39,7 @@ void SerialTranslator::writeMCU(QString data)
 void SerialTranslator::readPort()
 {
     QByteArray data = port->readAll();
-    qDebug() << QString(data);
+    qDebug() << QString(data) <<" data: " << data;
     emit this->read(data);
 }
 
@@ -99,6 +99,9 @@ bool SerialTranslator::isConnected()
 void SerialTranslator::connect(const QSerialPortInfo &port)
 {
     this->port->setPort(port);
+
+    this->port->setBaudRate(115200);
+    
     this->port->open(QIODevice::ReadWrite);
     if (this->port->isOpen())
         emit this->connectSignal(true);

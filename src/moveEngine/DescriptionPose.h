@@ -5,6 +5,7 @@
 #include <QList>
 #include <QJsonObject>
 #include "../stateWidget/safety.h"
+#include "KinematicsSolver.h"
 
 enum CoordType
 {
@@ -44,19 +45,20 @@ public:
     QList<Joint *> joint4;
 };
 
+// keep joint states and limits
 class Trajectory
 {
 private:
     float limitSpeed;
     float limitAcc;
-
     float _targetPoint[4];
 
-public:
-    DataBasePositions *dataPoints;
 
+public:
     Trajectory();
     ~Trajectory();
+
+    DataBasePositions *dataPoints;
 
     float getAccLimit();
     float getSpeedLimit();

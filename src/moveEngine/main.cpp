@@ -2,6 +2,8 @@
 #include "PathGeneratorJoint.h"
 #include "PathGeneratorLine.h"
 
+#include "MoveEngine.h"
+
 enum TypePoint
 {
     point,
@@ -24,24 +26,7 @@ int main(int argc, char *argv[])
     point.insert("j4", 40);
     _data.insert("point", point);
 
-    // exec
-
-    Trajectory trajectory;
-    AbstractPathGenerator *pathGenerator[] = {new PathGeneratorJoint() };
-
-    qDebug() << "set point " << trajectory.setTargetPoint(_data);
-
-    // comppute trajectory
-    AbstractPathGenerator *pathGene = pathGenerator[_data["point"].toObject()["coordType"].toInt()];
-  
-    pathGene->setLimits(0.1, 1);
-    float curr[] = {0,0,0,0};
-    pathGene->setCurrentPoint(curr);
-    pathGene->setTargetPoint(trajectory.getTargetPoint());
-    pathGene->computeTrajectory(&trajectory);
-
-    trajectory.clearMemoryPoints();
-
-    delete pathGenerator[0];
-   // delete pathGenerator[1];
+    MoveEngine eng;
+    eng.setPoint(_data);
+    eng.execPoint();
 }

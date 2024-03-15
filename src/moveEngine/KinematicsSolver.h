@@ -1,15 +1,15 @@
 #ifndef KINEMATICSSOLVER_H
 #define KINEMATICSSOLVER_H
 
-#include "DescriptionPose.h"
+ 
 
 class KinematicsSolver
 {
-    public:
-
+public:
+    bool checkCoordCart(const float *arrPoints);
+    bool checkCoordJoint(const float *arrPoints);
     void forward();
     void inverse();
-
 };
 
 #endif
