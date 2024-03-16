@@ -16,10 +16,12 @@ public:
     void execPoint();
 
 private:
+    float maxSpeed;
+    float maxAcc;
+
     Trajectory trajectory;
     AbstractPathGenerator *pathGenerator[2];
     AbstractPathGenerator *pathGene;
-
 
     void followTrajectory(const DataBasePositions *point);
     void requestCurrentPose(float *pointArr);

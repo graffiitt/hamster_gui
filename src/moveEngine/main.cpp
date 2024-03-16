@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
     QJsonObject point;
     point.insert("coordType", CoordType::joint);
-    point.insert("j1", 10);
+    point.insert("j1", 0);
     point.insert("j2", 20);
     point.insert("j3", 30);
     point.insert("j4", 40);

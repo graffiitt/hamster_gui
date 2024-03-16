@@ -52,27 +52,25 @@ void IOWidget::changePin(int numPin, bool state)
 {
     QString str;
     QEventLoop loop;
-    bool trig = false;
 
     connect(safety, &Safety::outError, [&]()
-        {
-                // segmentation fault
-        trig = true;
-        qDebug()<<"safety err io";
-        loop.exit(0); });
+            {
+            // segmentation fault
+            qDebug()<<"safety err io";
+             if (serial->isConnected())
+            loop.exit(0); });
 
     connect(serial, &SerialTranslator::read, [&]()
             { 
-        trig = true;
-        ioItems[numPin]->setStateIO(state);
-        loop.exit(0); });
+            ioItems[numPin]->setStateIO(state);
+            loop.exit(0); });
 
     str = "IO010050" + QString::number(numPin) + QString::number(state);
     serial->write(str);
 
     qDebug() << "event loop";
 
-    if (!trig)
+    if (serial->isConnected())
         loop.exec();
 
     qDebug() << "mmf";

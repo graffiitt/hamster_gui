@@ -3,6 +3,12 @@
 QList<Joint *> PathGeneratorJoint::getFirtsPath(float dq)
 {
     QList<Joint *> points;
+    if (dq == 0)
+    {
+        qDebug()<<"dq = 0 ";
+        return points;
+    }
+    
     float q = _limitSpeed * _limitSpeed / _limitAcc;
     if (q < abs(dq))
     {
@@ -26,6 +32,8 @@ QList<Joint *> PathGeneratorJoint::getFirtsPath(float dq)
 
 float PathGeneratorJoint::getTimeTravel(QList<Joint *> joint)
 {
+    if (joint.size() == 0)
+        return 0;
     return joint.value(joint.size() - 1)->time;
 }
 
@@ -47,6 +55,10 @@ void PathGeneratorJoint::recomputePath(QList<Joint *> *joint, float timeTravel, 
     t4 = [0, double(var(1,1))/a4, t-double(var(1,1))/a4s, t];
     */
     // qDebug() << "speed joint recomp: " << solveSpeed(dq, timeTravel);
+if (dq == 0)
+{
+    return;
+}
 
     float speed = solveSpeed(dq, timeTravel);
 

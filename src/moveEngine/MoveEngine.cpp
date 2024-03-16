@@ -2,6 +2,8 @@
 
 MoveEngine::MoveEngine()
 {
+    maxAcc = 0.2;
+    maxSpeed = 3.14;
     pathGenerator[0] = new PathGeneratorJoint();
     // pathGenerator[1] = new PathGeneratorLine();
 }
@@ -17,6 +19,7 @@ bool MoveEngine::setPoint(QJsonObject JsonPoint)
     if (JsonPoint["moveType"].toInt() > 1)
         return false;
     pathGene = pathGenerator[JsonPoint["moveType"].toInt()];
+    pathGene->setLimits(maxAcc / 100 * JsonPoint["acc"].toInt(), maxSpeed / 100 * JsonPoint["speed"].toInt());
     return trajectory.setTargetPoint(JsonPoint);
 }
 
@@ -27,7 +30,6 @@ void MoveEngine::execPoint()
     requestCurrentPose(currentPose);
 
     // set values
-    pathGene->setLimits(0.1, 1);
     pathGene->setCurrentPoint(currentPose);
     pathGene->setTargetPoint(trajectory.getTargetPoint());
 
@@ -42,14 +44,15 @@ void MoveEngine::execPoint()
 
 void MoveEngine::followTrajectory(const DataBasePositions *point)
 {
-
-
-
- 
     for (int i = 0; i < point->joint1.size(); i++)
         qDebug() << "1: t: " << point->joint1.value(i)->time
                  << "sp: " << point->joint1.value(i)->speed
                  << " dist:" << point->joint1.value(i)->angle;
+    for (int i = 0; i < point->joint2.size(); i++)
+
+        qDebug() << "2: t: " << point->joint2.value(i)->time
+                 << "sp:   " << point->joint2.value(i)->speed
+                 << " dist:" << point->joint2.value(i)->angle;
 }
 
 void MoveEngine::requestCurrentPose(float *pointArr)
