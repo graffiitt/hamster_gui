@@ -163,6 +163,21 @@ void ProgrammEditorWidget::on_programmView_clicked(const QModelIndex &index)
     }
     case Command::Point:
     {
+        this->on_moveButton_clicked();
+        ui->moveTypeBox->setCurrentIndex(programmModel->getData(index, "moveType").toInt());
+        ui->moveTypePointBox->setCurrentIndex(programmModel->getData(index, "pointType").toInt());
+        ui->movePoseRegBox->setValue(programmModel->getData(index, "numberRegister").toInt());
+        ui->moveSpeedBox->setValue(programmModel->getData(index, "speed").toInt());
+        ui->moveAccBox->setValue(programmModel->getData(index, "acc").toInt());
+
+        QJsonObject obj = programmModel->getData(index, "point").toObject();
+        if (obj["coordType"].toInt() == CoordType::joint)
+        {
+            ui->moveDataBox_1->setValue(obj["j1"].toInt());
+            ui->moveDataBox_2->setValue(obj["j2"].toInt());
+            ui->moveDataBox_3->setValue(obj["j3"].toInt());
+            ui->moveDataBox_4->setValue(obj["j4"].toInt());
+        }
         break;
     }
     case Command::Wait:
@@ -185,6 +200,49 @@ void ProgrammEditorWidget::on_programmView_clicked(const QModelIndex &index)
         break;
     }
     }
+}
+
+void ProgrammEditorWidget::on_moveOverwriteButton_clicked()
+{
+    QModelIndex idx = ui->programmView->currentIndex();
+    QJsonObject point;
+    point.insert("coordType", CoordType::joint);
+    point.insert("j1", ui->moveDataBox_1->value());
+    point.insert("j2", ui->moveDataBox_2->value());
+    point.insert("j3", ui->moveDataBox_3->value());
+    point.insert("j4", ui->moveDataBox_4->value());
+
+    programmModel->setData(point, "point", Command::Point, idx);
+}
+
+void ProgrammEditorWidget::on_moveTypePointBox_activated(int arg1)
+{
+    QModelIndex idx = ui->programmView->currentIndex();
+    programmModel->setData(arg1, "pointType", Command::Point, idx);
+}
+
+void ProgrammEditorWidget::on_moveTypeBox_activated(int arg1)
+{
+    QModelIndex idx = ui->programmView->currentIndex();
+    programmModel->setData(arg1, "moveType", Command::Point, idx);
+}
+
+void ProgrammEditorWidget::on_moveAccBox_valueChanged(int arg1)
+{
+    QModelIndex idx = ui->programmView->currentIndex();
+    programmModel->setData(arg1, "acc", Command::Point, idx);
+}
+
+void ProgrammEditorWidget::on_moveSpeedBox_valueChanged(int arg1)
+{
+    QModelIndex idx = ui->programmView->currentIndex();
+    programmModel->setData(arg1, "speed", Command::Point, idx);
+}
+
+void ProgrammEditorWidget::on_movePoseRegBox_valueChanged(int arg1)
+{
+    QModelIndex idx = ui->programmView->currentIndex();
+    programmModel->setData(arg1, "numberRegister", Command::Point, idx);
 }
 
 void ProgrammEditorWidget::on_commentButton_clicked()

@@ -8,6 +8,7 @@
 #include "../JSONmodule/jsonmodule.h"
 #include "../RegisterWidget/registerdto.h"
 #include "../IOwidget/ioWidget.h"
+#include "../moveEngine/MoveEngine.h"
 
 class IExecutor : public QThread
 {

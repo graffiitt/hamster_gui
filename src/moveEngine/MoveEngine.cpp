@@ -14,9 +14,9 @@ MoveEngine::~MoveEngine()
 
 bool MoveEngine::setPoint(QJsonObject JsonPoint)
 {
-    if (JsonPoint["point"].toObject()["coordType"].toInt() > 1)
+    if (JsonPoint["moveType"].toInt() > 1)
         return false;
-    pathGene = pathGenerator[JsonPoint["point"].toObject()["coordType"].toInt()];
+    pathGene = pathGenerator[JsonPoint["moveType"].toInt()];
     return trajectory.setTargetPoint(JsonPoint);
 }
 
@@ -42,8 +42,10 @@ void MoveEngine::execPoint()
 
 void MoveEngine::followTrajectory(const DataBasePositions *point)
 {
-    // qDebug() << " timeTr: " << maxTime;
 
+
+
+ 
     for (int i = 0; i < point->joint1.size(); i++)
         qDebug() << "1: t: " << point->joint1.value(i)->time
                  << "sp: " << point->joint1.value(i)->speed

@@ -221,6 +221,10 @@ int IExecutor::searchLBLtoJump(int lbl)
 
 void IExecutor::execPoint(QJsonObject obj)
 {
+    qDebug()<<"exec point:\n"<<obj;
+    MoveEngine eng;
+    eng.setPoint(obj);
+    eng.execPoint();
 }
 
 /// @brief 
@@ -316,6 +320,7 @@ void IExecutor::run()
         }
         case Command::Point:
         {
+            this->execPoint(obj);
             break;
         }
         case Command::Wait:

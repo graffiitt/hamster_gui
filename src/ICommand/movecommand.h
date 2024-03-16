@@ -3,6 +3,18 @@
 
 #include "icommand.h"
 
+enum MoveType
+{
+    m_joint,
+    m_linear,
+};
+
+enum CoordType
+{
+    joint,
+    cartesian
+};
+
 enum TypePoint
 {
     point,

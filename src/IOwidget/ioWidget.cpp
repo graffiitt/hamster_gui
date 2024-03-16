@@ -55,7 +55,8 @@ void IOWidget::changePin(int numPin, bool state)
     bool trig = false;
 
     connect(safety, &Safety::outError, [&]()
-            {
+        {
+                // segmentation fault
         trig = true;
         qDebug()<<"safety err io";
         loop.exit(0); });

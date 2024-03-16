@@ -7,11 +7,13 @@
 #include "../stateWidget/safety.h"
 #include "KinematicsSolver.h"
 
+#ifndef MOVECOMMAND_H
 enum CoordType
 {
     joint,
     cartesian
 };
+#endif
 
 class Joint
 {
@@ -52,7 +54,6 @@ private:
     float limitSpeed;
     float limitAcc;
     float _targetPoint[4];
-
 
 public:
     Trajectory();

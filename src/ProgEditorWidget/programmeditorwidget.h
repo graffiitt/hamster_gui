@@ -37,6 +37,13 @@ private slots:
     void on_deleteButton_clicked();
     void on_programmView_clicked(const QModelIndex &index);
 
+    void on_moveOverwriteButton_clicked();
+    void on_moveTypePointBox_activated(int arg1);
+    void on_moveTypeBox_activated(int arg1);
+    void on_moveAccBox_valueChanged(int arg1);
+    void on_moveSpeedBox_valueChanged(int arg1);
+    void on_movePoseRegBox_valueChanged(int arg1);
+
     void on_commentButton_clicked();
     void on_commentLineEdit_textChanged(const QString &arg1);
 

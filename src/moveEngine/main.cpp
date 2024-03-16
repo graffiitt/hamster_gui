@@ -4,6 +4,12 @@
 
 #include "MoveEngine.h"
 
+enum MoveType
+{
+    m_joint,
+    m_linear,
+};
+
 enum TypePoint
 {
     point,
@@ -13,8 +19,9 @@ enum TypePoint
 int main(int argc, char *argv[])
 {
     QJsonObject _data;
-    _data.insert("moveType", "linear");
+    _data.insert("moveType", MoveType::m_joint);
     _data.insert("pointType", TypePoint::point);
+    _data.insert("numberRegister", 0);
     _data.insert("speed", 50);
     _data.insert("acc", 50);
 
