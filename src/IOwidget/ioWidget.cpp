@@ -31,8 +31,6 @@ IOWidget::IOWidget(QWidget *parent)
 
     safety = Safety::getInstance();
     serial = SerialTranslator::getInstance();
-
-    connect(serial, &SerialTranslator::read, this, &IOWidget::readMCUpackage, Qt::DirectConnection);
 }
 
 IOWidget::~IOWidget()
@@ -43,39 +41,27 @@ IOWidget::~IOWidget()
     ioItems.clear();
 }
 
-void IOWidget::readMCUpackage(QString data)
-{
-    qDebug() << "iowidget " << data;
-}
-
 void IOWidget::changePin(int numPin, bool state)
 {
-    QString str;
     QEventLoop loop;
+    QString str = "IO010050" + QString::number(numPin) + QString::number(state);
 
- qDebug() << "event loop";
+    if (!serial->isConnected())
+    {
+        safety->setError("mcu not connect");
+        return;
+    }
 
-    connect(safety, &Safety::outError, [&]()
-            {
-            // segmentation fault
-            qDebug()<<"safety err io";
-            if (serial->isConnected())
-            loop.exit(0); });
+    qDebug() << "event loop start";
 
     connect(serial, &SerialTranslator::read, [&]()
-            { 
+            {
             ioItems[numPin]->setStateIO(state);
-            loop.exit(0); });
+            loop.exit(); });
 
-    str = "IO010050" + QString::number(numPin) + QString::number(state);
     serial->write(str);
-
-    if (serial->isConnected())
-        loop.exec();
-    else
-        safety->setError("mcu not connected");
-    qDebug() << "mmf";
-    disconnect(safety, &Safety::outError, 0, 0);
+    loop.exec();
+    qDebug() << "event stop";
     disconnect(serial, &SerialTranslator::read, 0, 0);
 }
 

@@ -2,6 +2,7 @@
 #define IOWIDGET_H
 
 #include <QWidget>
+#include "QEventLoop"
 #include "ioItem.h"
 #include "../stateWidget/safety.h"
 #include "../CommunicateWidget/serialtranslator.h"
@@ -23,13 +24,14 @@ public:
     static void changePin(int numPin, bool state);
 
 private slots:
+    
     void requestMCU(bool state);
     void readMCUpackage(QString data);
 
 private:
     Ui::IOWidget *ui;
-    static QList<IOItem *> ioItems;
 
+    static QList<IOItem *> ioItems;
     static Safety *safety;
     static SerialTranslator *serial;
 };
