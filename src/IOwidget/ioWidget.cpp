@@ -53,11 +53,13 @@ void IOWidget::changePin(int numPin, bool state)
     QString str;
     QEventLoop loop;
 
+ qDebug() << "event loop";
+
     connect(safety, &Safety::outError, [&]()
             {
             // segmentation fault
             qDebug()<<"safety err io";
-             if (serial->isConnected())
+            if (serial->isConnected())
             loop.exit(0); });
 
     connect(serial, &SerialTranslator::read, [&]()
@@ -68,12 +70,13 @@ void IOWidget::changePin(int numPin, bool state)
     str = "IO010050" + QString::number(numPin) + QString::number(state);
     serial->write(str);
 
-    qDebug() << "event loop";
-
     if (serial->isConnected())
         loop.exec();
-
+    else
+        safety->setError("mcu not connected");
     qDebug() << "mmf";
+    disconnect(safety, &Safety::outError, 0, 0);
+    disconnect(serial, &SerialTranslator::read, 0, 0);
 }
 
 void IOWidget::requestMCU(bool state)

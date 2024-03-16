@@ -221,26 +221,27 @@ int IExecutor::searchLBLtoJump(int lbl)
 
 void IExecutor::execPoint(QJsonObject obj)
 {
-    qDebug()<<"exec point:\n"<<obj;
+    qDebug() << "exec point:\n"
+             << obj;
     MoveEngine eng;
     eng.setPoint(obj);
     eng.execPoint();
 }
 
-/// @brief 
-///переделать на eventloop
-/// @param ref 
+/// @brief
+/// переделать на eventloop
+/// @param ref
 void IExecutor::execWait(QJsonObject obj)
 {
     switch (obj["waitType"].toInt())
     {
     case WaitType::timer: // time
     {
-       QTime timer = QTime::currentTime().addSecs(obj["time"].toInt());
+        QTime timer = QTime::currentTime().addSecs(obj["time"].toInt());
         while (QTime::currentTime() < timer && !errorState && !this->isInterruptionRequested())
         {
             QCoreApplication::processEvents(QEventLoop::AllEvents);
-        } 
+        }
         break;
     }
     case WaitType::ioHigh: // pinIn
