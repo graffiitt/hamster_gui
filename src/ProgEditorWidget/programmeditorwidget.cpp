@@ -554,9 +554,10 @@ void ProgrammEditorWidget::on_iflLblBox_valueChanged(int arg1)
     QModelIndex idx = ui->programmView->currentIndex();
     programmModel->setData(arg1, "jumpLBL", Command::If, idx);
 }
-
+ 
 void ProgrammEditorWidget::on_ifIOstate_stateChanged(int state)
 {
+    qDebug()<<state;
     QModelIndex idx = ui->programmView->currentIndex();
     programmModel->setData(state, "ioPinState_1", Command::If, idx);
 }

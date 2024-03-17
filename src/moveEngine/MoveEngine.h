@@ -19,6 +19,7 @@ private:
     float maxSpeed;
     float maxAcc;
 
+    SerialTranslator *serial;
     Trajectory trajectory;
     AbstractPathGenerator *pathGenerator[2];
     AbstractPathGenerator *pathGene;

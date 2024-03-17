@@ -156,12 +156,14 @@ int IExecutor::getNumber(int num, QJsonObject obj)
 
 void IExecutor::execIf(QJsonObject obj)
 {
-    bool compressionResult;
+    bool compressionResult = false;
     if (obj["itemType_1"].toInt() == TypeItem::IO)
     {
         // requestMCU;
-        bool IOstate = true;
-        compressionResult = IOstate == obj[""].toBool();
+        int IOstate = IOWidget::readPin(obj["pin"].toInt(), 3);
+        if (IOstate == obj["ioPinState_1"].toInt())
+            compressionResult = true;
+        qDebug() << compressionResult << " " << obj["ioPinState_1"].toInt() << IOstate;
     }
     else
         compressionResult = this->compressionItem(obj);
@@ -246,12 +248,12 @@ void IExecutor::execWait(QJsonObject obj)
     }
     case WaitType::ioHigh: // pinIn
     {
-
+        IOWidget::readPin(obj["pinIn"].toInt(), 1);
         break;
     }
     case WaitType::ioLow:
     {
-
+        IOWidget::readPin(obj["pinIn"].toInt(), 0);
         break;
     }
     }

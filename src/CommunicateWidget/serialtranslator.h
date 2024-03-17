@@ -22,8 +22,8 @@ public:
 
 signals:
     void read(QString data);
-    void readMove(QString data);
     void readIO(QString data);
+    void readMV(QString data);
     void write(QString data);
     void connectSignal(bool state);
 

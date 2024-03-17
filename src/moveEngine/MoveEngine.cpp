@@ -5,6 +5,7 @@ MoveEngine::MoveEngine()
     maxAcc = 0.2;
     maxSpeed = 3.14;
     pathGenerator[0] = new PathGeneratorJoint();
+    serial = SerialTranslator::getInstance();
     // pathGenerator[1] = new PathGeneratorLine();
 }
 

@@ -22,6 +22,7 @@ public:
     IOWidget(QWidget *parent = nullptr);
     ~IOWidget();
     static void changePin(int numPin, bool state);
+    static int readPin(int numPin, int cmd = 0);
 
 private slots:
     
