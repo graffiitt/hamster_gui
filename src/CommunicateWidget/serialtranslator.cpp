@@ -38,8 +38,17 @@ void SerialTranslator::writeMCU(QString data)
 
 void SerialTranslator::readPort()
 {
+    QString cmdIO = "IO";
     QByteArray data = port->readAll();
-    qDebug() << QString(data) <<" data: " << data;
+    QString msg = data;
+    
+    qDebug() << QString(data) << " data: " << data;
+
+    if (msg.contains(cmdIO))
+    {
+        emit this->readIO(msg);
+        return;
+    }
     emit this->read(data);
 }
 
@@ -101,7 +110,7 @@ void SerialTranslator::connect(const QSerialPortInfo &port)
     this->port->setPort(port);
 
     this->port->setBaudRate(115200);
-    
+
     this->port->open(QIODevice::ReadWrite);
     if (this->port->isOpen())
         emit this->connectSignal(true);

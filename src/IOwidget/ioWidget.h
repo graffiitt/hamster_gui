@@ -26,7 +26,7 @@ public:
 private slots:
     
     void requestMCU(bool state);
-    void readMCUpackage(QString data);
+  //  void readMCUpackage(QString data);
 
 private:
     Ui::IOWidget *ui;
