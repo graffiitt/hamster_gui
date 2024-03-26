@@ -27,12 +27,17 @@ private:
     RegisterDTO *regDTO;
 
     int _currentLine;
-    bool stepMode, stepTrig, errorState, updateTable;
+    bool stepMode;
+    bool stepTrig;
+    bool errorState;
+    bool updateTable;
     QString pathFolder;
+    
     QList<QString> listProgram;
     QList<int> lineProgramm;
 
     virtual void run() override;
+    void execFunction();
     void execCall(QJsonObject obj);
     void execMath(QJsonObject obj);
     int getNumber(int num, QJsonObject obj);

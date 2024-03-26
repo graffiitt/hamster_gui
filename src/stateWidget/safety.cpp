@@ -10,7 +10,7 @@ Safety::Safety()
     connect(this, &Safety::info, this, &Safety::informator);
     connect(this, &Safety::run, this, &Safety::setRun, Qt::DirectConnection);
     connect(this, &Safety::step, this, &Safety::setStep);
-    connect(this, &Safety::changeCurrentLine, this, &Safety::showCurrentLine);
+    connect(this, &Safety::changeCurrentLine, this, &Safety::showCurrentLine, Qt::DirectConnection);
     connect(this, &Safety::changeNameProg, this, &Safety::setName);
     connect(this, &Safety::setIO, this, &Safety::changeIO);
     connect(this, &Safety::setMCU, this, &Safety::changeMCU);

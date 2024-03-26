@@ -2,6 +2,7 @@
 #define STATEWIDGET_H
 
 #include <QWidget>
+#include <qDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class StateWidget; }

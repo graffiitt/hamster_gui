@@ -52,7 +52,7 @@ void IOWidget::changePin(int numPin, bool state)
     }
 
     qDebug() << "event loop start";
-    connect(serial, &SerialTranslator::readIO, [&]()
+    connect(serial, &SerialTranslator::readIO, [&](QString msg)
             {
             ioItems[numPin]->setStateIO(state);
             loop.exit(); });

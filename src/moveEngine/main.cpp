@@ -4,6 +4,9 @@
 
 #include "MoveEngine.h"
 
+#include "MoveController.h"
+#include <QApplication>
+
 enum MoveType
 {
     m_joint,
@@ -18,6 +21,11 @@ enum TypePoint
 
 int main(int argc, char *argv[])
 {
+    QApplication a(argc, argv);
+    MoveController w;
+    w.show();
+    
+    
     QJsonObject _data;
     _data.insert("moveType", MoveType::m_joint);
     _data.insert("pointType", TypePoint::point);
@@ -36,4 +44,7 @@ int main(int argc, char *argv[])
     MoveEngine eng;
     eng.setPoint(_data);
     eng.execPoint();
+
+ 
+    return a.exec();
 }

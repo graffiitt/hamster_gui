@@ -1,17 +1,17 @@
 #ifndef COMMUNICATORWIDGET_H
 #define COMMUNICATORWIDGET_H
 
-
 #include <QDialog>
 #include <QTranslator>
 #include <QListWidgetItem>
 #include "serialtranslator.h"
 
-
 QT_BEGIN_NAMESPACE
-namespace Ui { class CommunicatorWidget; }
+namespace Ui
+{
+    class CommunicatorWidget;
+}
 QT_END_NAMESPACE
-
 
 class CommunicatorWidget : public QDialog
 {
@@ -23,7 +23,6 @@ public:
 
     void updateComPorts();
     void show();
-
 
 private slots:
     void on_closeButton_clicked();
@@ -40,7 +39,5 @@ private:
     QTranslator translate;
 
     void updateLanguage();
-
-
 };
 #endif // COMMUNICATORWIDGET_H

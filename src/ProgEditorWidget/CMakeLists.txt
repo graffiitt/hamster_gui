@@ -13,8 +13,6 @@ find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 include_directories(${catkin_INCLUDE_DIRS})
 
 
-
-
 ###########
 ## Build ##
 ###########

@@ -46,6 +46,7 @@ void IExecutor::changeExecLine(int line)
 void IExecutor::execCall(QJsonObject obj)
 {
     Q_UNUSED(obj);
+    
     QString progName = programm.at(_currentLine)->getData()["namePrg"].toString();
     QString path = pathFolder + "/" + progName;
 
@@ -282,92 +283,105 @@ void IExecutor::errorSlot(bool state)
 
 void IExecutor::run()
 {
-    qDebug() << "exec start err " << errorState << "stpe " << stepTrig;
-    safety->run(true);
-    stepTrig = true;
-
-    while (!errorState && stepTrig && programm.size() != _currentLine && !this->isInterruptionRequested())
+    qDebug() << "exec start";
+    try
     {
-        QJsonObject obj = programm.at(_currentLine)->getData();
-        safety->changeCurrentLine(_currentLine);
-        switch (programm.at(_currentLine)->getId())
-        {
-        case Command::Call:
-        {
-            this->execCall(obj);
-            break;
-        }
-        case Command::Math:
-        {
-            this->execMath(obj);
-            break;
-        }
-        case Command::Comment:
-        {
-            safety->info(obj.value("data").toString());
-            break;
-        }
-        case Command::Empty:
-        {
-            break;
-        }
-        case Command::If:
-        {
-            this->execIf(obj);
-            break;
-        }
-        case Command::Jump:
-        {
-            this->execJump(obj);
-            break;
-        }
-        case Command::Point:
-        {
-            this->execPoint(obj);
-            break;
-        }
-        case Command::Wait:
-        {
-            this->execWait(obj);
-            break;
-        }
-        case Command::Io:
-        {
-            this->execIO(obj);
-            break;
-        }
-        }
+        safety->run(true);
+        stepTrig = true;
 
-        if (programm.size() == _currentLine + 1)
+        while (!errorState && stepTrig && programm.size() != _currentLine && !this->isInterruptionRequested())
         {
-            if (listProgram.size() != 1)
+            this->execFunction();
+
+            if (programm.size() == _currentLine + 1) // конец программы
             {
-                qDebug() << "change prog";
+                if (listProgram.size() != 1)
+                {
+                    qDebug() << "change prog";
 
-                _currentLine = lineProgramm.takeLast() + 1;
-                listProgram.removeLast();
-                programm = jsonLoad->openFile(pathFolder + "/" + listProgram.last());
-                emit updateModel(pathFolder + "/" + listProgram.last());
-                safety->changeCurrentLine(_currentLine);
+                    _currentLine = lineProgramm.takeLast() + 1;
+                    listProgram.removeLast();
+                    programm = jsonLoad->openFile(pathFolder + "/" + listProgram.last());
+                    emit updateModel(pathFolder + "/" + listProgram.last());
+                    safety->changeCurrentLine(_currentLine);
+                }
+                else
+                {
+                    _currentLine = -1;
+                    qDebug() << "exec break";
+                    stepTrig = false;
+                    qDebug() << "stop requset";
+                }
             }
-            else
+
+            if (stepMode)
             {
-                _currentLine = -1;
-                qDebug() << "exec break";
                 stepTrig = false;
-                qDebug() << "stop requset";
             }
+            _currentLine++;
         }
-
-        if (stepMode)
-        {
-            stepTrig = false;
-        }
-
-        _currentLine++;
+        safety->run(false);
     }
-    safety->run(false);
+    catch (const std::exception &e)
+    {
+        qDebug() << e.what() << '\n'
+                 << "IExecutor";
+    }
     qDebug() << "exec stop";
+}
+
+void IExecutor::execFunction()
+{
+
+    QJsonObject obj = programm.at(_currentLine)->getData();
+    safety->changeCurrentLine(_currentLine);
+    switch (programm.at(_currentLine)->getId())
+    {
+    case Command::Call:
+    {
+        this->execCall(obj);
+        break;
+    }
+    case Command::Math:
+    {
+        this->execMath(obj);
+        break;
+    }
+    case Command::Comment:
+    {
+        safety->info(obj.value("data").toString());
+        break;
+    }
+    case Command::Empty:
+    {
+        break;
+    }
+    case Command::If:
+    {
+        this->execIf(obj);
+        break;
+    }
+    case Command::Jump:
+    {
+        this->execJump(obj);
+        break;
+    }
+    case Command::Point:
+    {
+        this->execPoint(obj);
+        break;
+    }
+    case Command::Wait:
+    {
+        this->execWait(obj);
+        break;
+    }
+    case Command::Io:
+    {
+        this->execIO(obj);
+        break;
+    }
+    }
 }
 
 void IExecutor::changeMode(bool stepMode)

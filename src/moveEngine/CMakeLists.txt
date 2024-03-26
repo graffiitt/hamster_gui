@@ -43,13 +43,26 @@ foreach(source ${HFILE})
     message("  - " ${source})
 endforeach(source)
 
+file(GLOB UIFILE "*.ui")
+
+message("Adding ${PROJECT_NAME} UI files: " )
+foreach(source ${UIFILE})
+    message("  - " ${source})
+endforeach(source)
+
+set(QRCFILE ../../resource/resource.qrc)
+qt5_create_translation(TSFILE ${CMAKE_CURRENT_SOURCE_DIR} moveController_en_US.ts  moveController_ru_RU.ts)
+
 message("buliding ${PROJECT_NAME} node: ")
 
 add_library(
-    ${PROJECT_NAME} SHARED
+    ${PROJECT_NAME} 
     ${CPPFILE}
     ${HFILE}
-     )
+    ${UIFILE}
+    ${QRCFILE}
+    ${TSFILE}
+    )
 
 
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} Qt5::Widgets Qt5::SerialPort CommunicateWidget)
@@ -59,9 +72,8 @@ install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINA
 project(run_moveEngine)
 
 add_executable(
-    ${PROJECT_NAME} MACOSX_BUNDLE
+    ${PROJECT_NAME} 
     main.cpp
-    ${QRCFILE}
 )
  
 target_link_libraries(${PROJECT_NAME} PRIVATE ${catkin_LIBRARIES} Qt5::Widgets moveEngine)

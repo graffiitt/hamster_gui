@@ -14,6 +14,8 @@ ExecturtorWidget::ExecturtorWidget(QWidget *parent)
     safety = Safety::getInstance();
 
     connect(exec, &IExecutor::updateModel, this, &ExecturtorWidget::changeProgramm, Qt::DirectConnection);
+    connect(exec, &IExecutor::finished, []()
+            { qDebug() << "thread finish"; });
     connect(safety, &Safety::changeCurrentLine, this, &ExecturtorWidget::changeCurrLine);
     connect(this, &ExecturtorWidget::updateProgFinished, exec, &IExecutor::finishUpdateTable, Qt::DirectConnection);
 }
@@ -41,6 +43,7 @@ void ExecturtorWidget::updateLanguage()
 
 void ExecturtorWidget::on_runButton_clicked()
 {
+    qDebug() << "button clicked " << exec->isRunning();
     exec->start();
 }
 
@@ -65,7 +68,7 @@ void ExecturtorWidget::on_fileBox_activated(int index)
 void ExecturtorWidget::on_tableView_clicked(const QModelIndex &index)
 {
     if (exec->isFinished())
-    exec->changeExecLine(index.row());
+        exec->changeExecLine(index.row());
 }
 
 void ExecturtorWidget::changeProgramm(QString path)
@@ -80,8 +83,8 @@ void ExecturtorWidget::changeProgramm(QString path)
 
 void ExecturtorWidget::changeCurrLine(int line)
 {
-    if(line <= programm->size())
-    ui->tableView->selectRow(line);
+    if (line <= programm->size())
+        ui->tableView->selectRow(line);
 }
 
 void ExecturtorWidget::changeEvent(QEvent *event)
