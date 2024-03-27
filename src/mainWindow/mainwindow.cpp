@@ -22,13 +22,15 @@ MainWindow::MainWindow(QWidget *parent)
     ioWidget = new IOWidget();
     ui->ioLayout->addWidget(ioWidget);
 
+    moveController = new MoveController();
+
     _path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) +
             "/GraffitRobotics";
     _pathProgramm = _path + "/default.json";
     _pathRegisters = _path + "/register.json";
     programmWidget->openProgramm(_pathProgramm);
 
-   // this->on_changeLanguageRussian_triggered();
+    // this->on_changeLanguageRussian_triggered();
 }
 
 MainWindow::~MainWindow()
@@ -39,6 +41,7 @@ MainWindow::~MainWindow()
     delete execWidget;
     delete safety;
     delete connectWidget;
+    delete moveController;
 
     delete ioWidget;
 }
@@ -135,8 +138,8 @@ void MainWindow::on_saveAsFileAction_triggered()
 
 void MainWindow::on_motorContrlAction_triggered()
 {
+    moveController->show();
 }
-
 void MainWindow::on_resetAction_triggered()
 {
     safety->resetErrors();

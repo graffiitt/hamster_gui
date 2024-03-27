@@ -39,14 +39,21 @@ void SerialTranslator::writeMCU(QString data)
 void SerialTranslator::readPort()
 {
     QString cmdIO = "IO";
+    QString cmdMV = "MV";
+
     QByteArray data = port->readAll();
     QString msg = data;
-    
+
     qDebug() << QString(data) << " data: " << data;
 
     if (msg.contains(cmdIO))
     {
         emit this->readIO(msg);
+        return;
+    }
+    if (msg.contains(cmdMV))
+    {
+        emit this->readMV(msg);
         return;
     }
     emit this->read(data);

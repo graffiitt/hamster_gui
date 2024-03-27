@@ -56,7 +56,7 @@ qt5_create_translation(TSFILE ${CMAKE_CURRENT_SOURCE_DIR} moveController_en_US.t
 message("buliding ${PROJECT_NAME} node: ")
 
 add_library(
-    ${PROJECT_NAME} 
+    ${PROJECT_NAME} SHARED
     ${CPPFILE}
     ${HFILE}
     ${UIFILE}

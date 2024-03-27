@@ -28,7 +28,7 @@
     <message>
         <location filename="MoveController.ui" line="52"/>
         <source>calibrate</source>
-        <translation type="unfinished"></translation>
+        <translation>калибровка</translation>
     </message>
     <message>
         <location filename="MoveController.ui" line="59"/>

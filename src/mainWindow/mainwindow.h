@@ -13,6 +13,7 @@
 #include "../RegisterWidget/registerwidget.h"
 #include "../CommunicateWidget/communicatorwidget.h"
 #include "../IOwidget/ioWidget.h"
+#include "../moveEngine/MoveController.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -60,6 +61,7 @@ private:
     RegisterWidget *regWidget;
     CommunicatorWidget *connectWidget;
     IOWidget *ioWidget;
+    MoveController *moveController;
 
     QTranslator translate;
     QLocale locale;
