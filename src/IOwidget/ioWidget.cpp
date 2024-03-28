@@ -45,21 +45,21 @@ void IOWidget::changePin(int numPin, bool state)
 {
     QEventLoop loop;
     QString str = "IO010050" + QString::number(numPin) + QString::number(state);
+   
     if (!serial->isConnected())
     {
         safety->setError("mcu not connect");
         return;
     }
 
-    qDebug() << "event loop start";
     connect(serial, &SerialTranslator::readIO, [&](QString msg)
             {
-            ioItems[numPin]->setStateIO(state);
+            ioItems[msg[6].digitValue()]->setStateIO(msg[8].digitValue());
             loop.exit(); });
 
     serial->write(str);
     loop.exec();
-    qDebug() << "event stop";
+
     disconnect(serial, &SerialTranslator::read, 0, 0);
 }
 
@@ -69,10 +69,24 @@ void IOWidget::changePin(int numPin, bool state)
 // 0 -- false  2 -- true
 int IOWidget::readPin(int numPin, int cmd)
 {
+    int state = 0; // false
+
+    switch (cmd)
+    {
+    case 0:
+        /* code */
+        break;
+    case 1:
+        break;
+    case 2:
+        break;
+    }
+
     qDebug() << numPin;
-    return 2;
+    return state;
 }
 
+// изменение через ui
 void IOWidget::requestMCU(bool state)
 {
     IOItem *item = qobject_cast<IOItem *>(sender());
