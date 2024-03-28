@@ -14,8 +14,7 @@ ExecturtorWidget::ExecturtorWidget(QWidget *parent)
     safety = Safety::getInstance();
 
     connect(exec, &IExecutor::updateModel, this, &ExecturtorWidget::changeProgramm, Qt::DirectConnection);
-    connect(exec, &IExecutor::finished, []()
-            { qDebug() << "thread finish"; });
+    connect(exec, &IExecutor::finished, this, &ExecturtorWidget::on_executorFinished);
     connect(safety, &Safety::changeCurrentLine, this, &ExecturtorWidget::changeCurrLine);
     connect(this, &ExecturtorWidget::updateProgFinished, exec, &IExecutor::finishUpdateTable, Qt::DirectConnection);
 }
@@ -43,6 +42,7 @@ void ExecturtorWidget::updateLanguage()
 
 void ExecturtorWidget::on_runButton_clicked()
 {
+    safety->run(true);
     qDebug() << "button clicked " << exec->isRunning();
     exec->start();
 }
@@ -85,6 +85,12 @@ void ExecturtorWidget::changeCurrLine(int line)
 {
     if (line <= programm->size())
         ui->tableView->selectRow(line);
+}
+
+void ExecturtorWidget::on_executorFinished()
+{
+    safety->run(false);
+    qDebug() << "exec finish signal";
 }
 
 void ExecturtorWidget::changeEvent(QEvent *event)

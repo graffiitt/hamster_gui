@@ -286,7 +286,6 @@ void IExecutor::run()
     qDebug() << "exec start";
     try
     {
-        safety->run(true);
         stepTrig = true;
 
         while (!errorState && stepTrig && programm.size() != _currentLine && !this->isInterruptionRequested())
@@ -320,7 +319,6 @@ void IExecutor::run()
             }
             _currentLine++;
         }
-        safety->run(false);
     }
     catch (const std::exception &e)
     {

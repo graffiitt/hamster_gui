@@ -39,6 +39,7 @@ private slots:
     void changeProgramm(QString path);
     void changeCurrLine(int line);
 
+    void on_executorFinished();
     void changeEvent(QEvent *event);
 
 private:
